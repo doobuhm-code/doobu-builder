@@ -204,8 +204,9 @@ app.get('/api/hotspots', async (req, res) => {
 
 // ================= 자유게시판 API =================
 app.get('/api/board', async (req, res) => {
+  const { category } = req.query;
   try {
-    const list = await db.board.getAll();
+    const list = await db.board.getAll(category);
     res.json({ success: true, data: list });
   } catch (err) {
     console.error('게시판 조회 에러:', err);
@@ -214,12 +215,12 @@ app.get('/api/board', async (req, res) => {
 });
 
 app.post('/api/board', async (req, res) => {
-  const { title, content, author, password } = req.body;
+  const { title, content, author, password, category } = req.body;
   if (!title || !content || !author || !password) {
     return res.status(400).json({ success: false, message: '모든 필드를 입력해 주세요.' });
   }
   try {
-    await db.board.insert(title, content, author, password);
+    await db.board.insert(title, content, author, password, category || 'free');
     res.json({ success: true, message: '게시글이 성공적으로 등록되었습니다!' });
   } catch (err) {
     console.error('게시글 등록 에러:', err);

@@ -803,9 +803,9 @@
             <span class="pc-text">역대 로또 번호 조회</span>
             <span class="mobile-text"><span>번호</span><span>조회</span></span>
           </button>
-          <button class="tab-btn" onclick="switchTab('lotto', 'news')">
-            <span class="pc-text">뉴스 & 칼럼 포털</span>
-            <span class="mobile-text"><span>뉴스</span><span>칼럼</span></span>
+          <button class="tab-btn" onclick="switchTab('lotto', 'board')">
+            <span class="pc-text">로또 토크 게시판</span>
+            <span class="mobile-text"><span>로또</span><span>톡</span></span>
           </button>
         </div>
 
@@ -1000,31 +1000,31 @@
             </div>
           </div>
 
-          <div id="lotto-tab-news" class="tab-content" style="flex-direction: column; width: 100%;">
+          <div id="lotto-tab-board" class="tab-content" style="flex-direction: column; width: 100%;">
             <div class="tab-header">
-              <h1>📰 로또 뉴스 & 정보 칼럼 포털</h1>
-              <p>최신 로또 소식과 유용한 공익 정보를 읽고, 자신만의 행운 일기 및 로또 노트를 작성하여 저장해 보세요.</p>
+              <h1>💬 로또 토크 게시판</h1>
+              <p>이번 회차 로또 명당 방문 후기, 추천 패턴 전략을 자유롭게 남겨 함께 행운을 기원해 보세요.</p>
             </div>
 
-            <div style="width: 100%; display: flex; flex-direction: column; gap: 20px; max-width: 720px; margin: 0 auto; text-align: left;">
-              <!-- 1. 뉴스 작성 폼 카드 -->
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; text-align: left;">
+              <!-- 글쓰기 카드 -->
               <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
-                <h3 style="font-size: 16px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 나만의 로또 노트 & 컬럼 작성</h3>
+                <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 로또 토크 작성</h3>
                 <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
                   <div style="display: flex; gap: 10px; width: 100%;">
-                    <input type="text" id="newsTitleInput" placeholder="노트 제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="text" id="newsAuthorInput" placeholder="작성자명 (기본: 익명)" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="text" id="lottoBoardTitleInput" placeholder="제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="text" id="lottoBoardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="password" id="lottoBoardPasswordInput" placeholder="비밀번호" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
                   </div>
-                  <textarea id="newsContentInput" placeholder="나만의 행운 비결이나 꿈 분석 일지, 또는 유용한 복권 칼럼 메모를 남겨보세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
-                  <button class="action-btn" onclick="saveNewsArticle()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">💾 노트 저장하기</button>
+                  <textarea id="lottoBoardContentInput" placeholder="대박 기원 로또 이야기를 나눠주세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
+                  <button class="action-btn" onclick="saveLottoBoardPost()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">📝 토크 등록</button>
                 </div>
               </div>
 
-              <!-- 2. 뉴스 및 컬럼 리스트 영역 -->
+              <!-- 피드 리스트 -->
               <div style="width: 100%;">
-                <h3 style="font-size: 16px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">📰 저장된 뉴스 및 컬럼 피드</h3>
-                <div id="newsFeedList" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
-                  <div style="color: var(--text-sub); text-align: center; padding: 20px;">칼럼을 불러오는 중...</div>
+                <div id="lottoBoardPostList" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                  <div style="color: var(--text-sub); text-align: center; padding: 20px;">글목록을 불러오는 중...</div>
                 </div>
               </div>
             </div>
@@ -1046,6 +1046,10 @@
           <button class="tab-btn" onclick="switchTab('pension', 'history')">
             <span class="pc-text">역대 연금복권 조회</span>
             <span class="mobile-text"><span>번호</span><span>조회</span></span>
+          </button>
+          <button class="tab-btn" onclick="switchTab('pension', 'board')">
+            <span class="pc-text">연금 토크 게시판</span>
+            <span class="mobile-text"><span>연금</span><span>톡</span></span>
           </button>
         </div>
 
@@ -1240,6 +1244,36 @@
               <div class="balls-container" id="pension-history-balls"></div>
             </div>
           </div>
+
+          <div id="pension-tab-board" class="tab-content" style="flex-direction: column; width: 100%;">
+            <div class="tab-header">
+              <h1>💬 연금복권 토크 게시판</h1>
+              <p>매월 546만원 실수령의 주인공은 나! 자유로운 연금복권 이야기를 남겨주세요.</p>
+            </div>
+
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; text-align: left;">
+              <!-- 글쓰기 카드 -->
+              <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
+                <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 연금 토크 작성</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                  <div style="display: flex; gap: 10px; width: 100%;">
+                    <input type="text" id="pensionBoardTitleInput" placeholder="제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="text" id="pensionBoardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="password" id="pensionBoardPasswordInput" placeholder="비밀번호" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  </div>
+                  <textarea id="pensionBoardContentInput" placeholder="풍요로운 매달 연금복권 수다를 떨어보세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
+                  <button class="action-btn" onclick="savePensionBoardPost()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">📝 토크 등록</button>
+                </div>
+              </div>
+
+              <!-- 피드 리스트 -->
+              <div style="width: 100%;">
+                <div id="pensionBoardPostList" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                  <div style="color: var(--text-sub); text-align: center; padding: 20px;">글목록을 불러오는 중...</div>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
 
@@ -1247,12 +1281,8 @@
       <div id="guide-section" style="display: none; width: 100%;">
         <div class="menu-card">
           <button class="tab-btn active" onclick="switchTab('guide', 'hotspots')">
-            <span class="pc-text">로또 전국 명당</span>
-            <span class="mobile-text"><span>전국</span><span>명당</span></span>
-          </button>
-          <button class="tab-btn" onclick="switchTab('guide', 'news')">
-            <span class="pc-text">최신 뉴스 기사</span>
-            <span class="mobile-text"><span>최신</span><span>뉴스</span></span>
+            <span class="pc-text">지역별 로또 명당</span>
+            <span class="mobile-text"><span>로또</span><span>명당</span></span>
           </button>
           <button class="tab-btn" onclick="switchTab('guide', 'board')">
             <span class="pc-text">자유 게시판</span>
@@ -1268,22 +1298,26 @@
           <!-- 1. 전국 명당 -->
           <div id="guide-tab-hotspots" class="tab-content active" style="flex-direction: column; width: 100%;">
             <div class="tab-header">
-              <h1>🗺️ 전국 로또 당첨 최다 명당 리스트</h1>
-              <p>전국에서 1등 당첨자를 가장 많이 배출해 낸 부동의 복권 명소 지도를 확인하세요.</p>
+              <h1>🗺️ 지역별 로또 당첨 최다 명당 리스트</h1>
+              <p>원하는 지역 버튼을 클릭하여 해당 지역 최고의 1등 배출 복권 명가를 확인해 보세요.</p>
             </div>
+
+            <!-- 지역별 필터 선택 바 -->
+            <div id="regionFilterBar" style="display: flex; justify-content: center; flex-wrap: wrap; gap: 6px; margin: 10px auto 20px; max-width: 600px; width: 100%;">
+              <button class="region-filter-btn active" onclick="filterHotspotsByRegion('전체')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: #764ba2; color: #ffffff; cursor: pointer; transition: all 0.2s;">전체</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('서울')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">서울</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('경기')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">경기</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('부산')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">부산</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('대구')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">대구</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('대전')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">대전</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('충청')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">충청</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('경상')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">경상</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('전라')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">전라</button>
+              <button class="region-filter-btn" onclick="filterHotspotsByRegion('제주')" style="padding: 6px 12px; font-size: 12px; font-weight: bold; border-radius: 8px; border: 1px solid var(--game-item-border); background: var(--game-item-bg); color: var(--text-main); cursor: pointer; transition: all 0.2s;">제주</button>
+            </div>
+
             <div id="hotspotsFeedList" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; margin: 0 auto; text-align: left;">
               <div style="color: var(--text-sub); text-align: center; padding: 20px;">전국 명당 데이터를 디비에서 가져오는 중...</div>
-            </div>
-          </div>
-
-          <!-- 2. 최신 뉴스 기사 -->
-          <div id="guide-tab-news" class="tab-content" style="flex-direction: column; width: 100%;">
-            <div class="tab-header">
-              <h1>📰 최신 복권 소식 & 정보 뉴스 피드</h1>
-              <p>기획재정부 복권위원회 소식과 화제의 복권 당첨 후기 등 최신 기사를 모아 보여드립니다.</p>
-            </div>
-            <div id="guideNewsFeedList" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; margin: 0 auto; text-align: left;">
-              <div style="color: var(--text-sub); text-align: center; padding: 20px;">기사를 실시간 수집하는 중...</div>
             </div>
           </div>
 
@@ -1574,11 +1608,11 @@
       contents.forEach(c => c.classList.remove('active'));
 
       if (section === 'guide') {
-        const guideTabMap = { hotspots: 0, news: 1, board: 2, tips: 3 };
+        const guideTabMap = { hotspots: 0, board: 1, tips: 2 };
         const idx = guideTabMap[tabName];
         if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
       } else {
-        const tabMap = { recommend: 0, check: 1, history: 2, news: 3 };
+        const tabMap = { recommend: 0, check: 1, history: 2, board: 3 };
         const idx = tabMap[tabName];
         if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
       }
@@ -1592,12 +1626,12 @@
         generateSinglePensionGame();
       } else if (tabName === 'history') {
         fetchLatestDefaults();
-      } else if (section === 'lotto' && tabName === 'news') {
-        fetchNewsArticles();
+      } else if (section === 'lotto' && tabName === 'board') {
+        fetchLottoBoardPosts();
+      } else if (section === 'pension' && tabName === 'board') {
+        fetchPensionBoardPosts();
       } else if (section === 'guide' && tabName === 'hotspots') {
         fetchHotspots();
-      } else if (section === 'guide' && tabName === 'news') {
-        fetchGuideNews();
       } else if (section === 'guide' && tabName === 'board') {
         fetchBoardPosts();
       }
@@ -2753,6 +2787,8 @@
       }
     }
 
+    let loadedHotspots = [];
+
     async function fetchHotspots() {
       const container = document.getElementById('hotspotsFeedList');
       if (!container) return;
@@ -2762,69 +2798,62 @@
         const response = await fetch(`${API_BASE_URL}/api/hotspots`);
         const result = await response.json();
 
-        if (!result.success || !result.data || result.data.length === 0) {
+        if (result.success && result.data) {
+          loadedHotspots = result.data;
+          filterHotspotsByRegion('전체');
+        } else {
           container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">등록된 명당 정보가 없습니다.</div>';
-          return;
         }
-
-        let html = '';
-        result.data.forEach((item, index) => {
-          html += `
-            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
-              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--game-item-border); padding-bottom: 8px; margin-bottom: 4px;">
-                <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0;">🔥 ${index + 1}위: ${item.name}</h4>
-                <span style="font-size: 12px; font-weight: bold; color: #764ba2; background: rgba(118, 75, 162, 0.1); padding: 2px 8px; border-radius: 6px;">${item.wins}</span>
-              </div>
-              <p style="font-size: 13.5px; color: var(--text-main); line-height: 1.6; margin: 4px 0;">${item.description}</p>
-              <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 4px;">
-                📍 주소: ${item.address}
-              </div>
-            </div>
-          `;
-        });
-        container.innerHTML = html;
       } catch (e) {
         console.error('명당 조회 실패:', e);
         container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 명당을 불러올 수 없습니다.</div>';
       }
     }
 
-    async function fetchGuideNews() {
-      const container = document.getElementById('guideNewsFeedList');
+    function filterHotspotsByRegion(region) {
+      const container = document.getElementById('hotspotsFeedList');
       if (!container) return;
-      container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">기사 피드를 불러오는 중...</div>';
 
-      try {
-        const response = await fetch(`${API_BASE_URL}/api/news`);
-        const result = await response.json();
-
-        if (!result.success || !result.data || result.data.length === 0) {
-          container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">등록된 뉴스 기사가 없습니다.</div>';
-          return;
-        }
-
-        let html = '';
-        result.data.forEach(item => {
-          const dateStr = new Date(item.createdAt || item.created_at).toLocaleDateString('ko-KR', {
-            year: 'numeric', month: 'long', day: 'numeric'
-          });
-          
-          html += `
-            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
-              <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0; line-height: 1.4;">📰 ${item.title}</h4>
-              <p style="font-size: 13.5px; color: var(--text-sub); line-height: 1.6; margin: 4px 0; white-space: pre-wrap;">${item.content}</p>
-              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; border-top: 1px dashed var(--game-item-border); padding-top: 8px; font-size: 11px; color: #94a3b8;">
-                <span>✍️ 기사 제공: ${item.author}</span>
-                <span>📅 발행일: ${dateStr}</span>
-              </div>
-            </div>
-          `;
+      // Update active filter button styling
+      const filterBar = document.getElementById('regionFilterBar');
+      if (filterBar) {
+        const buttons = filterBar.querySelectorAll('.region-filter-btn');
+        buttons.forEach(btn => {
+          if (btn.textContent.trim() === region) {
+            btn.style.background = '#764ba2';
+            btn.style.color = '#ffffff';
+          } else {
+            btn.style.background = 'var(--game-item-bg)';
+            btn.style.color = 'var(--text-main)';
+          }
         });
-        container.innerHTML = html;
-      } catch (e) {
-        console.error('가이드 뉴스 조회 실패:', e);
-        container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 뉴스를 불러올 수 없습니다.</div>';
       }
+
+      const filtered = region === '전체' 
+        ? loadedHotspots 
+        : loadedHotspots.filter(h => h.region === region);
+
+      if (filtered.length === 0) {
+        container.innerHTML = `<div style="color: var(--text-sub); text-align: center; padding: 20px;">'${region}' 지역에 등록된 명당 정보가 없습니다.</div>`;
+        return;
+      }
+
+      let html = '';
+      filtered.forEach((item, index) => {
+        html += `
+          <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
+            <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--game-item-border); padding-bottom: 8px; margin-bottom: 4px;">
+              <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0;">🔥 [${item.region}] ${item.name}</h4>
+              <span style="font-size: 12px; font-weight: bold; color: #764ba2; background: rgba(118, 75, 162, 0.1); padding: 2px 8px; border-radius: 6px;">${item.wins}</span>
+            </div>
+            <p style="font-size: 13.5px; color: var(--text-main); line-height: 1.6; margin: 4px 0;">${item.description}</p>
+            <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 4px;">
+              📍 주소: ${item.address}
+            </div>
+          </div>
+        `;
+      });
+      container.innerHTML = html;
     }
 
     async function fetchBoardPosts() {
@@ -2833,7 +2862,7 @@
       container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">게시판 글 목록을 디비에서 긁어오는 중...</div>';
 
       try {
-        const response = await fetch(`${API_BASE_URL}/api/board`);
+        const response = await fetch(`${API_BASE_URL}/api/board?category=free`);
         const result = await response.json();
 
         if (!result.success || !result.data || result.data.length === 0) {
@@ -2894,7 +2923,8 @@
             title: title,
             content: content,
             author: author,
-            password: password
+            password: password,
+            category: 'free'
           })
         });
 
@@ -2934,6 +2964,242 @@
         if (result.success) {
           alert(result.message);
           fetchBoardPosts();
+        } else {
+          alert('삭제 실패: ' + result.message);
+        }
+      } catch (e) {
+        console.error('삭제 에러:', e);
+        alert('서버 통신 실패로 삭제하지 못했습니다.');
+      }
+    }
+
+    // ================= 로또 게시판 API 연동 함수 =================
+    async function fetchLottoBoardPosts() {
+      const container = document.getElementById('lottoBoardPostList');
+      if (!container) return;
+      container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">로또 게시판 글 목록을 디비에서 긁어오는 중...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board?category=lotto`);
+        const result = await response.json();
+
+        if (!result.success || !result.data || result.data.length === 0) {
+          container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">로또 게시글이 없습니다. 첫 이야기를 남겨보세요!</div>';
+          return;
+        }
+
+        let html = '';
+        result.data.forEach(item => {
+          const dateStr = new Date(item.createdAt || item.created_at).toLocaleDateString('ko-KR', {
+            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+          });
+
+          html += `
+            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                <h4 style="font-size: 14.5px; font-weight: bold; color: var(--text-main); margin: 0; line-height: 1.4;">${item.title}</h4>
+                <button onclick="deleteLottoBoardPost(${item.id})" style="background: none; border: none; color: #e53e3e; font-size: 11px; cursor: pointer; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(229, 62, 62, 0.2); transition: all 0.2s;">삭제</button>
+              </div>
+              <p style="font-size: 13px; color: var(--text-sub); line-height: 1.6; margin: 4px 0; white-space: pre-wrap;">${item.content}</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; border-top: 1px dashed var(--game-item-border); padding-top: 8px; font-size: 11px; color: #94a3b8;">
+                <span style="font-weight: bold; color: #764ba2;">💬 ${item.author}</span>
+                <span>📅 ${dateStr}</span>
+              </div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        console.error('로또 게시판 조회 실패:', e);
+        container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 게시판을 불러올 수 없습니다.</div>';
+      }
+    }
+
+    async function saveLottoBoardPost() {
+      const titleInput = document.getElementById('lottoBoardTitleInput');
+      const authorInput = document.getElementById('lottoBoardAuthorInput');
+      const passwordInput = document.getElementById('lottoBoardPasswordInput');
+      const contentInput = document.getElementById('lottoBoardContentInput');
+
+      if (!titleInput || !contentInput || !authorInput || !passwordInput) return;
+
+      const title = titleInput.value.trim();
+      const author = authorInput.value.trim();
+      const password = passwordInput.value.trim();
+      const content = contentInput.value.trim();
+
+      if (!title) { alert('제목을 입력해 주세요.'); return; }
+      if (!author) { alert('닉네임을 입력해 주세요.'); return; }
+      if (!password) { alert('비밀번호를 입력해 주세요.'); return; }
+      if (!content) { alert('내용을 입력해 주세요.'); return; }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            content: content,
+            author: author,
+            password: password,
+            category: 'lotto'
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert(result.message);
+          titleInput.value = '';
+          authorInput.value = '';
+          passwordInput.value = '';
+          contentInput.value = '';
+          fetchLottoBoardPosts();
+        } else {
+          alert('등록 실패: ' + result.message);
+        }
+      } catch (e) {
+        console.error('등록 에러:', e);
+        alert('서버 통신 실패로 등록하지 못했습니다.');
+      }
+    }
+
+    async function deleteLottoBoardPost(id) {
+      const password = prompt('이 게시글을 삭제하려면 작성 시 설정한 비밀번호를 입력하세요:');
+      if (password === null) return; 
+      if (!password.trim()) { alert('비밀번호를 입력해야 합니다.'); return; }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board/delete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: id,
+            password: password
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert(result.message);
+          fetchLottoBoardPosts();
+        } else {
+          alert('삭제 실패: ' + result.message);
+        }
+      } catch (e) {
+        console.error('삭제 에러:', e);
+        alert('서버 통신 실패로 삭제하지 못했습니다.');
+      }
+    }
+
+    // ================= 연금복권 게시판 API 연동 함수 =================
+    async function fetchPensionBoardPosts() {
+      const container = document.getElementById('pensionBoardPostList');
+      if (!container) return;
+      container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">연금 게시판 글 목록을 디비에서 긁어오는 중...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board?category=pension`);
+        const result = await response.json();
+
+        if (!result.success || !result.data || result.data.length === 0) {
+          container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">연금 게시글이 없습니다. 첫 이야기를 남겨보세요!</div>';
+          return;
+        }
+
+        let html = '';
+        result.data.forEach(item => {
+          const dateStr = new Date(item.createdAt || item.created_at).toLocaleDateString('ko-KR', {
+            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+          });
+
+          html += `
+            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                <h4 style="font-size: 14.5px; font-weight: bold; color: var(--text-main); margin: 0; line-height: 1.4;">${item.title}</h4>
+                <button onclick="deletePensionBoardPost(${item.id})" style="background: none; border: none; color: #e53e3e; font-size: 11px; cursor: pointer; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(229, 62, 62, 0.2); transition: all 0.2s;">삭제</button>
+              </div>
+              <p style="font-size: 13px; color: var(--text-sub); line-height: 1.6; margin: 4px 0; white-space: pre-wrap;">${item.content}</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; border-top: 1px dashed var(--game-item-border); padding-top: 8px; font-size: 11px; color: #94a3b8;">
+                <span style="font-weight: bold; color: #764ba2;">💬 ${item.author}</span>
+                <span>📅 ${dateStr}</span>
+              </div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        console.error('연금 게시판 조회 실패:', e);
+        container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 게시판을 불러올 수 없습니다.</div>';
+      }
+    }
+
+    async function savePensionBoardPost() {
+      const titleInput = document.getElementById('pensionBoardTitleInput');
+      const authorInput = document.getElementById('pensionBoardAuthorInput');
+      const passwordInput = document.getElementById('pensionBoardPasswordInput');
+      const contentInput = document.getElementById('pensionBoardContentInput');
+
+      if (!titleInput || !contentInput || !authorInput || !passwordInput) return;
+
+      const title = titleInput.value.trim();
+      const author = authorInput.value.trim();
+      const password = passwordInput.value.trim();
+      const content = contentInput.value.trim();
+
+      if (!title) { alert('제목을 입력해 주세요.'); return; }
+      if (!author) { alert('닉네임을 입력해 주세요.'); return; }
+      if (!password) { alert('비밀번호를 입력해 주세요.'); return; }
+      if (!content) { alert('내용을 입력해 주세요.'); return; }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            content: content,
+            author: author,
+            password: password,
+            category: 'pension'
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert(result.message);
+          titleInput.value = '';
+          authorInput.value = '';
+          passwordInput.value = '';
+          contentInput.value = '';
+          fetchPensionBoardPosts();
+        } else {
+          alert('등록 실패: ' + result.message);
+        }
+      } catch (e) {
+        console.error('등록 에러:', e);
+        alert('서버 통신 실패로 등록하지 못했습니다.');
+      }
+    }
+
+    async function deletePensionBoardPost(id) {
+      const password = prompt('이 게시글을 삭제하려면 작성 시 설정한 비밀번호를 입력하세요:');
+      if (password === null) return; 
+      if (!password.trim()) { alert('비밀번호를 입력해야 합니다.'); return; }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board/delete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: id,
+            password: password
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert(result.message);
+          fetchPensionBoardPosts();
         } else {
           alert('삭제 실패: ' + result.message);
         }
