@@ -5,10 +5,65 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>행운의 복권 포털</title>
   <style>
+    :root {
+      --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      --wrapper-bg: rgba(255, 255, 255, 0.4);
+      --wrapper-border: rgba(255, 255, 255, 0.6);
+      --card-bg: #ffffff;
+      --text-main: #333333;
+      --text-sub: #666666;
+      --ear-bg: #cbd5e1;
+      --ear-active-bg: #ffffff;
+      --ear-text: #475569;
+      --ear-active-text: #764ba2;
+      --menu-bg: #ffffff;
+      --btn-recommend-text: #764ba2;
+      --tab-btn-text: #888888;
+      --match-item-bg: #ffffff;
+      --match-item-border: #cbd5e1;
+      --match-header-text: #1e293b;
+      --game-item-bg: #f8fafc;
+      --game-item-border: #e2e8f0;
+      --pension-single-bg: #f8fafc;
+      --pension-single-border: #cbd5e1;
+      --input-border: #dddddd;
+      --input-bg: #ffffff;
+      --input-text: #333333;
+      --date-info-text: #444444;
+    }
+
+    [data-theme="dark"] {
+      --bg-gradient: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      --wrapper-bg: rgba(30, 41, 59, 0.4);
+      --wrapper-border: rgba(255, 255, 255, 0.1);
+      --card-bg: #1e293b;
+      --text-main: #f8fafc;
+      --text-sub: #94a3b8;
+      --ear-bg: #334155;
+      --ear-active-bg: #1e293b;
+      --ear-text: #94a3b8;
+      --ear-active-text: #a78bfa;
+      --menu-bg: #1e293b;
+      --btn-recommend-text: #a78bfa;
+      --tab-btn-text: #94a3b8;
+      --match-item-bg: #1e293b;
+      --match-item-border: #475569;
+      --match-header-text: #f1f5f9;
+      --game-item-bg: #0f172a;
+      --game-item-border: #334155;
+      --pension-single-bg: #0f172a;
+      --pension-single-border: #334155;
+      --input-border: #475569;
+      --input-bg: #0f172a;
+      --input-text: #f8fafc;
+      --date-info-text: #e2e8f0;
+    }
+
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
       font-family: 'Pretendard', -apple-system, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      background: var(--bg-gradient);
+      color: var(--text-main);
       min-height: 100vh; 
       display: flex; 
       flex-direction: column;
@@ -16,6 +71,42 @@
       align-items: center; 
       padding: 20px;
       gap: 20px;
+      position: relative;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      padding: 10px 18px;
+      border-radius: 30px;
+      border: 1px solid var(--wrapper-border);
+      background: var(--card-bg);
+      color: var(--text-main);
+      font-size: 14px;
+      font-weight: bold;
+      cursor: pointer;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      transition: all 0.2s ease;
+      z-index: 1000;
+    }
+    .theme-toggle:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 16px rgba(0, 0, 0, 0.12);
+    }
+    .theme-toggle:active {
+      transform: translateY(0);
+    }
+
+    @media (max-width: 600px) {
+      .theme-toggle {
+        position: static;
+        margin-bottom: 10px;
+        align-self: flex-end;
+      }
     }
     
     .ad-banner {
@@ -37,9 +128,9 @@
     .main-wrapper {
       width: 100%;
       max-width: 860px;
-      background: rgba(255, 255, 255, 0.4);
+      background: var(--wrapper-bg);
       backdrop-filter: blur(10px);
-      border: 1px solid rgba(255, 255, 255, 0.6);
+      border: 1px solid var(--wrapper-border);
       border-radius: 24px;
       padding: 65px 35px 35px; 
       box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
@@ -70,11 +161,11 @@
     .rabbit-ear {
       width: 140px;
       height: 50px;
-      background: #cbd5e1;
+      background: var(--ear-bg);
       border: none;
       font-size: 15px;
       font-weight: bold;
-      color: #475569;
+      color: var(--ear-text);
       cursor: pointer;
       border-top-left-radius: 18px;
       border-top-right-radius: 18px;
@@ -87,8 +178,8 @@
     }
 
     .rabbit-ear.active {
-      background: white;
-      color: #764ba2;
+      background: var(--ear-active-bg);
+      color: var(--ear-active-text);
       height: 60px;
       font-size: 16px;
       font-weight: 800;
@@ -99,7 +190,8 @@
       position: sticky;
       top: 10px;
       z-index: 20;
-      background: white; 
+      background: var(--menu-bg); 
+      border: 1px solid var(--wrapper-border);
       padding: 0 10px; 
       height: 62px;
       width: 100%;
@@ -120,7 +212,7 @@
       border: none; 
       font-size: 15px; 
       font-weight: bold; 
-      color: #888; 
+      color: var(--tab-btn-text); 
       padding: 0; 
       cursor: pointer; 
       border-radius: 15px; 
@@ -139,7 +231,8 @@
     }
 
     .content-card {
-      background: white; 
+      background: var(--card-bg); 
+      border: 1px solid var(--wrapper-border);
       padding: 30px 35px; 
       border-radius: 20px;
       box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
@@ -174,8 +267,8 @@
     }
     
     .tab-header { width: 100%; text-align: center; margin-bottom: 25px; }
-    h1 { color: #333; margin-bottom: 6px; font-size: 22px; }
-    p { color: #666; font-size: 14.5px; margin-bottom: 0; }
+    h1 { color: var(--text-main); margin-bottom: 6px; font-size: 22px; }
+    p { color: var(--text-sub); font-size: 14.5px; margin-bottom: 0; }
     
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -210,10 +303,10 @@
     .mini-ball.unmatched { background: #e2e8f0; color: #475569; }
 
     .match-item {
-      padding: 10px; background: white; border-radius: 12px; margin-top: 6px; border: 1px solid #cbd5e1; text-align: left; width: 100%;
+      padding: 10px; background: var(--match-item-bg); border-radius: 12px; margin-top: 6px; border: 1px solid var(--match-item-border); text-align: left; width: 100%;
     }
     .match-header {
-      display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: bold; font-size: 13.5px; color: #1e293b;
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: bold; font-size: 13.5px; color: var(--match-header-text);
     }
     .match-balls {
       display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
@@ -251,17 +344,17 @@
     .game-list { display: flex; flex-direction: column; gap: 8px; width: 100%; align-items: center; }
     .game-item {
       display: flex; align-items: center; justify-content: flex-start;
-      background: #f8fafc; padding: 6px 16px; border-radius: 12px; border: 1px solid #e2e8f0;
+      background: var(--game-item-bg); padding: 6px 16px; border-radius: 12px; border: 1px solid var(--game-item-border);
       height: 52px; width: 100%; max-width: 600px;
     }
-    .game-label { font-weight: bold; font-size: 14.5px; color: #764ba2; width: 75px; text-align: left; flex-shrink: 0; }
+    .game-label { font-weight: bold; font-size: 14.5px; color: var(--btn-recommend-text); width: 75px; text-align: left; flex-shrink: 0; }
     .game-item .balls-container { flex-grow: 1; justify-content: center; gap: 10px; }
 
     .pension-single-box {
-      background: #f8fafc;
+      background: var(--pension-single-bg);
       padding: 30px 20px;
       border-radius: 16px;
-      border: 2px dashed #cbd5e1;
+      border: 2px dashed var(--pension-single-border);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -286,10 +379,10 @@
     }
     
     .search-box { display: flex; justify-content: center; gap: 10px; width: 100%; margin-bottom: 20px; }
-    .search-box input { width: 180px; padding: 10px; border: 2px solid #ddd; border-radius: 12px; text-align: center; font-size: 15px; font-weight: bold; }
+    .search-box input { width: 180px; padding: 10px; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 12px; text-align: center; font-size: 15px; font-weight: bold; }
     
     .num-inputs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; width: 100%; max-width: 600px; margin-bottom: 20px; }
-    .num-inputs input { width: 100%; padding: 11px 0; border: 2px solid #ddd; border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold; }
+    .num-inputs input { width: 100%; padding: 11px 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold; }
     
     .pension-search-row {
       display: flex;
@@ -307,7 +400,7 @@
       flex-grow: 1;
     }
     .pension-inputs-6 input {
-      width: 100%; padding: 11px 0; border: 2px solid #ddd; border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold;
+      width: 100%; padding: 11px 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold;
     }
 
     .result-box { 
@@ -323,16 +416,17 @@
       margin-top: 15px;
     }
     .result-box.safe { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; text-align: center; }
+    [data-theme="dark"] .result-box.safe { background: #1b5e20; color: #e8f5e9; border: 1px solid #2e7d32; }
 
-    .date-info { font-size: 14.5px; color: #444; font-weight: 600; }
+    .date-info { font-size: 14.5px; color: var(--date-info-text); font-weight: 600; }
 
     @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
   </style>
 </head>
 <body>
 
-  <!-- 상단 광고 배너 영역 -->
-  <!-- <div class="ad-banner">[ 상단 광고 영역 ]</div> -->
+  <!-- 테마 토글 버튼 -->
+  <button id="theme-toggle-btn" class="theme-toggle" onclick="toggleTheme()">🌙 다크 모드</button>
 
   <!-- 전체 통합 레이아웃 박스 -->
   <div class="main-wrapper">
@@ -463,10 +557,35 @@
     </div>
   </div>
 
-  <!-- 하단 광고 배너 영역 -->
-  <div class="ad-banner">[ 하단 광고 영역 ]</div>
+  <!-- 하단 광고 영역 제거됨 -->
 
   <script>
+    // 테마 설정 (깜빡임 방지용 즉시 실행 함수)
+    (function() {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      document.documentElement.setAttribute('data-theme', savedTheme);
+    })();
+
+    function toggleTheme() {
+      const currentTheme = document.documentElement.getAttribute('data-theme');
+      const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', newTheme);
+      localStorage.setItem('theme', newTheme);
+      updateThemeButton(newTheme);
+    }
+
+    function updateThemeButton(theme) {
+      const themeBtn = document.getElementById('theme-toggle-btn');
+      if (themeBtn) {
+        themeBtn.innerHTML = theme === 'dark' ? '☀️ 라이트 모드' : '🌙 다크 모드';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedTheme = localStorage.getItem('theme') || 'light';
+      updateThemeButton(savedTheme);
+    });
+
     let isDataLoaded = false;
 
     async function fetchLatestDefaults() {
