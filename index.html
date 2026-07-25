@@ -110,6 +110,10 @@
 
     /* ================= 모바일 전용 반응형 스타일 (PC는 기존 유지) ================= */
     @media (max-width: 600px) {
+      body {
+        padding: 4px !important; /* 바깥 여백 극소화로 사용 영역 극대화 */
+      }
+
       .pc-text { display: none !important; }
       .mobile-text { display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
       .mobile-text span { display: block; line-height: 1.1; }
@@ -123,17 +127,17 @@
       }
 
       .main-wrapper {
-        padding: 20px 8px 15px; /* 모바일에서 좌우 패딩을 더 줄여 콘텐츠 너비 극대화 */
-        margin-top: 15px;
+        padding: 15px 4px 10px; /* 바깥레이아웃 여백을 더 작게 줄여 공 짤림 방지 */
+        margin-top: 10px;
         border-radius: 16px;
       }
 
       .content-card {
-        padding: 15px 6px; /* 모바일에서 카드 여백 최적화로 공간 극대화 */
+        padding: 12px 4px; /* 그다음 레이아웃(카드) 여백을 최소화하여 사용 공간 확대 */
         min-height: auto;
         height: auto;
         border-radius: 14px;
-        margin-top: 6px; /* 중메뉴(menu-card)와 밀착 배치 */
+        margin-top: 4px; /* 중메뉴(menu-card)와 완전 밀착 배치 */
       }
 
       .tab-content {
@@ -212,15 +216,15 @@
       }
 
       .ball {
-        width: 25px; /* 로또 공 크기 축소로 한 줄 정렬 보장 */
-        height: 25px;
-        font-size: 10px;
+        width: 21px !important; /* 로또 공 크기를 줄여서 화면 밖 이탈 방지 */
+        height: 21px !important;
+        font-size: 8.5px !important;
       }
 
       .pension-ball {
-        width: 28px; /* 연금복권 공 크기 축소 */
-        height: 28px;
-        font-size: 11.5px;
+        width: 23px !important; /* 연금복권 공 크기를 줄여서 정렬 보장 */
+        height: 23px !important;
+        font-size: 9.5px !important;
       }
 
       .pension-all-group-badge {
@@ -259,16 +263,16 @@
       }
 
       .game-label {
-        width: 42px; /* 라벨 가로폭 최소화로 공 공간 확보 */
+        width: 32px !important; /* 라벨 가로폭 최소화로 공 공간 확보 */
         text-align: left;
-        font-size: 11px;
+        font-size: 10px !important;
         flex-shrink: 0;
       }
 
       .game-item .balls-container {
         flex-wrap: nowrap !important;
         justify-content: flex-end;
-        gap: 3px;
+        gap: 2px !important; /* 공 사이 간격을 줄여 한 줄 출력 보장 */
       }
 
       #pension-recommend-games, #history-balls, #pension-history-balls {
