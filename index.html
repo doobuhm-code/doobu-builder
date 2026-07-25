@@ -806,16 +806,130 @@
         </div>
 
         <div class="content-card">
-          <div id="lotto-tab-recommend" class="tab-content active">
-            <div class="tab-header">
-              <h1>🎰 행운의 로또 번호 추천</h1>
-              <p>버튼을 눌러 5게임의 행운 번호를 확인하세요!</p>
+          <div id="lotto-tab-recommend" class="tab-content active" style="flex-direction: column; width: 100%;">
+            <!-- 추천 전용 서브 메뉴바 -->
+            <div class="sub-menu-bar" style="display: flex; justify-content: center; gap: 8px; width: 100%; max-width: 500px; margin: 0 auto 20px; background: var(--game-item-bg); padding: 5px; border-radius: 12px; border: 1px solid var(--game-item-border);">
+              <button class="sub-tab-btn active" onclick="switchSubTab('default')" style="flex: 1; padding: 8px 10px; border: none; background: #764ba2; font-size: 13px; font-weight: bold; color: #ffffff; border-radius: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(118, 75, 162, 0.25);">기본 5게임</button>
+              <button class="sub-tab-btn" onclick="switchSubTab('saju')" style="flex: 1; padding: 8px 10px; border: none; background: none; font-size: 13px; font-weight: bold; color: var(--tab-btn-text); border-radius: 8px; cursor: pointer; transition: all 0.2s;">사주 오행 추천</button>
+              <button class="sub-tab-btn" onclick="switchSubTab('pattern')" style="flex: 1; padding: 8px 10px; border: none; background: none; font-size: 13px; font-weight: bold; color: var(--tab-btn-text); border-radius: 8px; cursor: pointer; transition: all 0.2s;">패턴 필터 조합</button>
             </div>
-            <div id="recommend-games" class="game-list"></div>
-            <div>
-              <button class="action-btn recommend-btn" onclick="generate5LottoGames()">추천</button>
+
+            <!-- 서브탭 1: 기본 5게임 추천 -->
+            <div id="sub-panel-default" class="sub-panel" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+              <div class="tab-header">
+                <h1>🎰 행운의 로또 번호 추천</h1>
+                <p>버튼을 눌러 5게임의 행운 번호를 확인하세요!</p>
+              </div>
+              <div id="recommend-games" class="game-list" style="width: 100%;"></div>
+              <div>
+                <button class="action-btn recommend-btn" onclick="generate5LottoGames()">추천</button>
+              </div>
             </div>
-          </div>
+
+            <!-- 서브탭 2: 사주 오행 추천 -->
+            <div id="sub-panel-saju" class="sub-panel" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+              <div class="tab-header">
+                <h1>🔮 사주 오행 행운의 번호</h1>
+                <p>성명학적 자모음 파동 연산과 귀하가 태어난 연도의 띠, 계절 오행 상생 기운을 정밀 연산하여 평생의 길수 조합을 점지합니다.</p>
+              </div>
+              
+              <div style="width: 100%; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto;">
+                <!-- 이름/사주 입력 폼 -->
+                <div id="form-saju-name" style="display: flex; flex-direction: column; gap: 12px; background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">성함 (한글 또는 초성)</label>
+                    <input type="text" id="sajuNameInput" placeholder="예: 홍길동 또는 ㅎㄱㄷ" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  </div>
+                  <div style="display: gap: 10px;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 연도</label>
+                      <input type="number" id="sajuBirthYear" min="1930" max="2026" value="1995" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 월/일</label>
+                      <input type="text" id="sajuBirthDate" placeholder="예: 0524" maxlength="4" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; text-align: center;">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 결과 버튼 -->
+                <button class="action-btn" onclick="generateSajuLottoNumbers()" style="margin-top: 5px;">🔮 운명의 번호 추출하기</button>
+
+                <!-- 결과 박스 -->
+                <div id="sajuResultBox" class="result-box" style="display: none; padding: 20px; background: var(--game-item-bg); border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
+                  <div id="sajuAnalysisText" style="font-size: 14px; line-height: 1.6; color: var(--text-main); margin-bottom: 15px; text-align: left; border-bottom: 1px dashed var(--game-item-border); padding-bottom: 12px;"></div>
+                  <h4 style="font-size: 13px; font-weight: bold; color: var(--text-sub); margin-bottom: 10px; text-align: center;">🍀 추천하는 6개의 행운수</h4>
+                  <div id="sajuBallsContainer" class="balls-container" style="justify-content: center; gap: 10px; width: 100%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 서브탭 3: 패턴 필터 조합 추천 -->
+            <div id="sub-panel-pattern" class="sub-panel" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+              <div class="tab-header">
+                <h1>📊 통계 패턴 필터 조합기</h1>
+                <p>로또 홀짝/고저 통계 비율 조율 및 연속 번호 방지, 총합 수 최적 범위를 연산하는 5대 필터 조합기입니다.</p>
+              </div>
+
+              <div style="width: 100%; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto;">
+                <div style="display: flex; flex-direction: column; gap: 12px; background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                  <!-- 1. 홀짝 비율 -->
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">1. 홀수:짝수 비율 필터</label>
+                    <select id="patternOddEven" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; cursor: pointer;">
+                      <option value="random">랜덤 홀짝 조합 (필터 해제)</option>
+                      <option value="3:3">3대3 (가장 많이 나오는 비율 - 홀수 3 / 짝수 3)</option>
+                      <option value="4:2">4대2 (홀수 4 / 짝수 2)</option>
+                      <option value="2:4">2대4 (홀수 2 / 짝수 4)</option>
+                    </select>
+                  </div>
+
+                  <!-- 2. 고저 비율 -->
+                  <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 5px;">
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">2. 고저 비율 필터 (1~22 저번호 vs 23~45 고번호)</label>
+                    <select id="patternLowHigh" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; cursor: pointer;">
+                      <option value="random">랜덤 고저 조합 (필터 해제)</option>
+                      <option value="3:3">3대3 (가장 안정적인 비율 - 저번호 3 / 고번호 3)</option>
+                      <option value="4:2">4대2 (저번호 4 / 고번호 2)</option>
+                      <option value="2:4">2대4 (저번호 2 / 고번호 4)</option>
+                    </select>
+                  </div>
+
+                  <!-- 3. 총합 필터 -->
+                  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 5px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: var(--text-main); text-align: left;">
+                      <input type="checkbox" id="patternSumFilter" checked style="accent-color: #764ba2; width: 16px; height: 16px;">
+                      3. 총합 점수 필터 (합계 90 ~ 180 범위 제한)
+                    </label>
+                    <p style="font-size: 11px; color: var(--text-sub); text-align: left; line-height: 1.4; margin-left: 24px;">* 역대 당첨 번호의 약 80%는 6개 번호의 합이 90에서 180 사이입니다.</p>
+                  </div>
+
+                  <!-- 4. 연속 번호 필터 -->
+                  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 5px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: var(--text-main); text-align: left;">
+                      <input type="checkbox" id="patternConsecutiveFilter" checked style="accent-color: #764ba2; width: 16px; height: 16px;">
+                      4. 연속 번호 제한 필터 (연번 2쌍 이상 방지)
+                    </label>
+                    <p style="font-size: 11px; color: var(--text-sub); text-align: left; line-height: 1.4; margin-left: 24px;">* '12, 13, 14' 와 같이 세 개 이상 숫자가 연속되거나 연번이 2쌍 이상인 조합을 방지합니다.</p>
+                  </div>
+
+                  <!-- 5. 직전 회차 제외 -->
+                  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 5px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: var(--text-main); text-align: left;">
+                      <input type="checkbox" id="patternExcludeLatest" checked style="accent-color: #764ba2; width: 16px; height: 16px;">
+                      5. 직전 회차 1등 당첨번호 제외 필터
+                    </label>
+                    <p style="font-size: 11px; color: var(--text-sub); text-align: left; line-height: 1.4; margin-left: 24px;">* 직전 회차에 나온 당첨번호 6개는 이번 회차 추출에서 제외합니다.</p>
+                  </div>
+                </div>
+
+                <!-- 조합 생성 버튼 -->
+                <button class="action-btn" onclick="generatePatternLottoGames()">📊 맞춤형 패턴 필터 조합 생성 (5게임)</button>
+
+                <!-- 조합 결과 박스 -->
+                <div id="patternResultGames" class="game-list" style="width: 100%; display: none;"></div>
+              </div>
+            </div>
 
           <div id="lotto-tab-check" class="tab-content">
             <div class="tab-header">
@@ -1144,7 +1258,7 @@
   </div>
 
   <script>
-    const API_BASE_URL = 'https://lottery-search.site';
+    const API_BASE_URL = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' || !window.location.hostname ? '' : 'https://lottery-search.site';
 
     (function() {
       const savedTheme = localStorage.getItem('theme') || 'light';
@@ -1261,7 +1375,7 @@
         const idx = guideTabMap[tabName];
         if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
       } else {
-        const tabMap = { recommend: 0, check: 1, history: 2 };
+        const tabMap = { recommend: 0, check: 1, history: 2, saju: 3 };
         const idx = tabMap[tabName];
         if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
       }
@@ -1596,6 +1710,264 @@
         modal.style.display = 'none';
         document.body.style.overflow = '';
       }
+    }
+
+    function switchSubTab(subTabName) {
+      const btns = document.querySelectorAll('.sub-tab-btn');
+      const panels = document.querySelectorAll('.sub-panel');
+
+      btns.forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = 'none';
+        btn.style.color = 'var(--tab-btn-text)';
+        btn.style.boxShadow = 'none';
+      });
+
+      panels.forEach(panel => panel.style.display = 'none');
+
+      btns.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(`'${subTabName}'`)) {
+          btn.classList.add('active');
+          btn.style.background = '#764ba2';
+          btn.style.color = '#ffffff';
+          btn.style.boxShadow = '0 2px 8px rgba(118, 75, 162, 0.25)';
+        }
+      });
+
+      const targetPanel = document.getElementById(`sub-panel-${subTabName}`);
+      if (targetPanel) {
+        targetPanel.style.display = 'flex';
+        if (subTabName === 'default') {
+          generate5LottoGames();
+        }
+      }
+    }
+
+    async function generatePatternLottoGames() {
+      const oddEvenRatio = document.getElementById('patternOddEven').value;
+      const lowHighRatio = document.getElementById('patternLowHigh').value;
+      const sumFilterEnabled = document.getElementById('patternSumFilter').checked;
+      const consecutiveFilterEnabled = document.getElementById('patternConsecutiveFilter').checked;
+      const excludeLatest = document.getElementById('patternExcludeLatest').checked;
+      const container = document.getElementById('patternResultGames');
+
+      if (!container) return;
+      container.innerHTML = '<span style="font-size:14px; color:var(--text-sub);">5대 패턴 필터 정밀 연산 및 조합 생성 중...</span>';
+      container.style.display = 'block';
+
+      let excludeNumbers = [];
+      if (excludeLatest) {
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/lotto-latest`);
+          const data = await res.json();
+          if (data.success && data.data) {
+            excludeNumbers = [data.data.num1, data.data.num2, data.data.num3, data.data.num4, data.data.num5, data.data.num6];
+          }
+        } catch (e) {
+          console.error('최신 로또 번호 조회 실패 (제외수 없이 진행):', e);
+        }
+      }
+
+      const generatedGames = [];
+      
+      // Helper validators
+      function validateOddEven(nums) {
+        if (oddEvenRatio === 'random') return true;
+        const oddCount = nums.filter(n => n % 2 !== 0).length;
+        if (oddEvenRatio === '3:3') return oddCount === 3;
+        if (oddEvenRatio === '4:2') return oddCount === 4;
+        if (oddEvenRatio === '2:4') return oddCount === 2;
+        return true;
+      }
+
+      // 1-22 is Low, 23-45 is High
+      function validateLowHigh(nums) {
+        if (lowHighRatio === 'random') return true;
+        const lowCount = nums.filter(n => n <= 22).length;
+        if (lowHighRatio === '3:3') return lowCount === 3;
+        if (lowHighRatio === '4:2') return lowCount === 4;
+        if (lowHighRatio === '2:4') return lowCount === 2;
+        return true;
+      }
+
+      function validateSum(nums) {
+        if (!sumFilterEnabled) return true;
+        const sum = nums.reduce((a, b) => a + b, 0);
+        return sum >= 90 && sum <= 180;
+      }
+
+      function validateConsecutive(nums) {
+        if (!consecutiveFilterEnabled) return true;
+        const sorted = [...nums].sort((a, b) => a - b);
+        let consecutivePairs = 0;
+        for (let i = 0; i < sorted.length - 1; i++) {
+          if (sorted[i+1] - sorted[i] === 1) {
+            consecutivePairs++;
+            // Prevent 3-consecutive (e.g. 11, 12, 13)
+            if (i < sorted.length - 2 && sorted[i+2] - sorted[i+1] === 1) {
+              return false;
+            }
+          }
+        }
+        return consecutivePairs < 2; // Maximum 1 consecutive pair allowed
+      }
+
+      // Generate 5 games
+      for (let g = 0; g < 5; g++) {
+        let attempts = 0;
+        let gameNumbers = [];
+
+        while (gameNumbers.length < 6 && attempts < 2000) {
+          attempts++;
+          const tempNums = [];
+          
+          while (tempNums.length < 6) {
+            const num = Math.floor(Math.random() * 45) + 1;
+            if (!tempNums.includes(num) && !excludeNumbers.includes(num)) {
+              tempNums.push(num);
+            }
+          }
+
+          tempNums.sort((a, b) => a - b);
+
+          if (validateOddEven(tempNums) && 
+              validateLowHigh(tempNums) && 
+              validateSum(tempNums) && 
+              validateConsecutive(tempNums)) {
+            gameNumbers = tempNums;
+            break;
+          }
+        }
+        
+        if (gameNumbers.length === 6) {
+          generatedGames.push(gameNumbers);
+        } else {
+          // fallback
+          const fallback = [];
+          while (fallback.length < 6) {
+            const num = Math.floor(Math.random() * 45) + 1;
+            if (!fallback.includes(num) && !excludeNumbers.includes(num)) fallback.push(num);
+          }
+          generatedGames.push(fallback.sort((a, b) => a - b));
+        }
+      }
+
+      // Display games in container
+      container.innerHTML = '';
+      generatedGames.forEach((nums, index) => {
+        const gameItem = document.createElement('div');
+        gameItem.classList.add('game-item');
+        
+        const gameTitle = document.createElement('span');
+        gameTitle.style.fontWeight = 'bold';
+        gameTitle.style.fontSize = '14px';
+        gameTitle.style.color = 'var(--text-main)';
+        gameTitle.textContent = `${index + 1}게임:`;
+        gameItem.appendChild(gameTitle);
+
+        const ballsWrap = document.createElement('div');
+        ballsWrap.classList.add('balls-container');
+        ballsWrap.style.gap = '8px';
+
+        nums.forEach(num => {
+          ballsWrap.appendChild(createBallElement(num));
+        });
+
+        gameItem.appendChild(ballsWrap);
+        container.appendChild(gameItem);
+      });
+    }
+
+    function generateSajuLottoNumbers() {
+      const resultBox = document.getElementById('sajuResultBox');
+      const analysisText = document.getElementById('sajuAnalysisText');
+      const ballsContainer = document.getElementById('sajuBallsContainer');
+      
+      const name = document.getElementById('sajuNameInput').value.trim();
+      const year = document.getElementById('sajuBirthYear').value;
+      const monthDay = document.getElementById('sajuBirthDate').value.trim();
+
+      if (!name) {
+        alert('성함(또는 초성)을 입력해 주세요.');
+        return;
+      }
+      if (!monthDay || monthDay.length !== 4) {
+        alert('태어난 월/일 4자리를 정확히 입력해 주세요. (예: 0524)');
+        return;
+      }
+
+      // Seeded random generation based on name + year + monthDay
+      const seed = name + year + monthDay;
+      const numbers = getSeededRandomNumbers(seed);
+
+      // Zodiac mapping
+      const zodiacs = {
+        0: "원숭이띠 (신금 申金 - 지혜와 재치)",
+        1: "닭띠 (유금 酉金 - 예리함과 총명함)",
+        2: "개띠 (술토 戌土 - 충직함과 책임감)",
+        3: "돼지띠 (해수 亥水 - 풍요와 끈기)",
+        4: "쥐띠 (자수 子水 - 기회와 지혜)",
+        5: "소띠 (축토 丑土 - 우직함과 결실)",
+        6: "호랑이띠 (인목 寅木 - 용맹과 자신감)",
+        7: "토끼띠 (묘목 卯木 - 조화와 영민함)",
+        8: "용띠 (진토 辰土 - 무한한 잠재력)",
+        9: "뱀띠 (사화 巳火 - 직관과 통찰)",
+        10: "말띠 (오화 午火 - 열정과 돌파력)",
+        11: "양띠 (미토 未土 - 온화함과 상생)"
+      };
+      const zodiacIdx = (parseInt(year) - 4) % 12;
+      const zodiacText = zodiacs[zodiacIdx < 0 ? zodiacIdx + 12 : zodiacIdx];
+
+      // Season mapping
+      const birthMonth = parseInt(monthDay.slice(0, 2));
+      let seasonText = "";
+      if (birthMonth >= 3 && birthMonth <= 5) {
+        seasonText = "봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운";
+      } else if (birthMonth >= 6 && birthMonth <= 8) {
+        seasonText = "여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운";
+      } else if (birthMonth >= 9 && birthMonth <= 11) {
+        seasonText = "가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운";
+      } else {
+        seasonText = "겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운";
+      }
+
+      // Generate customized fortune explanation
+      const explanation = `🔮 <strong>${name} (${year}년 생 / ${birthMonth}월 생)님의 정통 사주 오행 분석</strong><br><br>` +
+                    `• <strong>태어난 해의 기운</strong>: 귀하는 <strong>${zodiacText}</strong>의 해에 태어나 해당 지신의 영민함과 운세를 지녔습니다.<br>` +
+                    `• <strong>태어난 계절의 기운</strong>: 사주 오행상 <strong>${seasonText}</strong>을 얻어 평생의 든든한 상생 기운이 내재되어 있습니다.<br><br>` +
+                    `• <strong>수리역학적 조합 결과</strong>: 성명학적 자모음 파동 연산과 태어난 사주 오행의 균형을 정밀 조율한 결과, ` +
+                    `이번 회차에서는 목(木)과 수(水)가 조화롭게 기운을 순환하는 오행 기류가 형성됩니다. ` +
+                    `<strong>오직 ${name}님만을 위해 배정된 평생 대길(大吉)의 6자리 행운 비법수</strong>를 추천해 드리니 우주의 기운과 함께 당첨의 희망을 즐겨보세요!`;
+
+      // Display results
+      analysisText.innerHTML = explanation;
+      ballsContainer.innerHTML = '';
+      numbers.forEach(num => {
+        ballsContainer.appendChild(createBallElement(num));
+      });
+
+      resultBox.style.display = 'block';
+    }
+
+    function getSeededRandomNumbers(seedString) {
+      let hash = 0;
+      for (let i = 0; i < seedString.length; i++) {
+        hash = seedString.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      
+      function seededRandom() {
+        let x = Math.sin(hash++) * 10000;
+        return x - Math.floor(x);
+      }
+
+      const numbers = [];
+      while (numbers.length < 6) {
+        const num = Math.floor(seededRandom() * 45) + 1;
+        if (!numbers.includes(num)) {
+          numbers.push(num);
+        }
+      }
+      return numbers.sort((a, b) => a - b);
     }
 
     window.onload = function() {
