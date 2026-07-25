@@ -1721,6 +1721,119 @@
       }
     }
 
+    function calculateSajuAndLuckyDigits(year, month, day) {
+      const yearNum = parseInt(year);
+      const monthNum = parseInt(month);
+      const dayNum = parseInt(day);
+
+      const stems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
+      const stemsHanja = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
+      const branches = ['자', '축', '인', '묘', '진', '사', '오', '미', '신', '유', '술', '해'];
+      const branchesHanja = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
+
+      // 1. 년주 (Year Pillar)
+      const yearStemIdx = (yearNum - 4) % 10;
+      const yearBranchIdx = (yearNum - 4) % 12;
+      const yearStem = stems[yearStemIdx < 0 ? yearStemIdx + 10 : yearStemIdx];
+      const yearStemHanja = stemsHanja[yearStemIdx < 0 ? yearStemIdx + 10 : yearStemIdx];
+      const yearBranch = branches[yearBranchIdx < 0 ? yearBranchIdx + 12 : yearBranchIdx];
+      const yearBranchHanja = branchesHanja[yearBranchIdx < 0 ? yearBranchIdx + 12 : yearBranchIdx];
+
+      // 2. 월주 (Month Pillar - rough approximation by solar branches)
+      const monthBranchIdx = (monthNum) % 12; // Jan is 축 (index 1), Feb is 인 (index 2), etc.
+      const monthBranch = branches[monthBranchIdx];
+      const monthBranchHanja = branchesHanja[monthBranchIdx];
+
+      // 3. 일주 (Day Pillar)
+      // Base date: Jan 1, 1900 was 甲戌 (Stem: 0, Branch: 10, sexagenary index 10)
+      const baseDate = new Date(1900, 0, 1);
+      const targetDate = new Date(yearNum, monthNum - 1, dayNum);
+      const diffTime = targetDate - baseDate;
+      const daysElapsed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
+      
+      const dayIndex = (daysElapsed + 10) % 60;
+      const dayStemIdx = dayIndex % 10;
+      const dayBranchIdx = dayIndex % 12;
+      const dayStem = stems[dayStemIdx < 0 ? dayStemIdx + 10 : dayStemIdx];
+      const dayStemHanja = stemsHanja[dayStemIdx < 0 ? dayStemIdx + 10 : dayStemIdx];
+      const dayBranch = branches[dayBranchIdx < 0 ? dayBranchIdx + 12 : dayBranchIdx];
+      const dayBranchHanja = branchesHanja[dayBranchIdx < 0 ? dayBranchIdx + 12 : dayBranchIdx];
+
+      // 4. 오행 맵핑
+      const elementMap = {
+        '갑': '목', '을': '목', '인': '목', '묘': '목',
+        '병': '화', '정': '화', '사': '화', '오': '화',
+        '무': '토', '기': '토', '진': '토', '술': '토', '축': '토', '미': '토',
+        '경': '금', '신': '금', '유': '금',
+        '임': '수', '계': '수', '해': '수', '자': '수'
+      };
+
+      const dayMasterElement = elementMap[dayStem]; // 일간 오행
+      const birthSeasonElement = elementMap[monthBranch]; // 월지 오행 (태어난 계절의 기운)
+
+      // 5. 용신(Favorable Element) 및 희신 연산
+      let favorableElements = [];
+      let favorableExplanation = "";
+
+      if (dayMasterElement === '화') {
+        if (birthSeasonElement === '화' || birthSeasonElement === '목') {
+          favorableElements = ['수', '금'];
+          favorableExplanation = "귀하는 열정적이고 외향적인 화(火)의 일간을 타고났으나 태어난 계절의 기운 또한 화(火)가 강성하여 사주 전체가 강해집니다. 따라서 과도한 열을 식혀주고 절제해 주는 <strong>수(水 - 깊은 통찰력)</strong>와 <strong>금(金 - 결단력 및 재물)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.";
+        } else {
+          favorableElements = ['목', '화'];
+          favorableExplanation = "귀하는 밝고 명랑한 화(火)의 일간을 타고났으나 태어난 달의 기운이 척박하거나 겨울이어서 일간이 힘을 잃기 쉽습니다. 따라서 지혜의 근원이 되는 <strong>목(木 - 사색 및 조력자)</strong>과 열정을 일으켜 세우는 <strong>화(火 - 독립심 및 추진력)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        }
+      } else if (dayMasterElement === '수') {
+        if (birthSeasonElement === '수' || birthSeasonElement === '금') {
+          favorableElements = ['목', '화'];
+          favorableExplanation = "귀하는 지혜롭고 깊이 있는 수(수)의 일간을 타고났으나 태어난 계절 또한 차가운 수(水)나 토(土)가 많아 기류가 넘쳐납니다. 따라서 유연하게 흐를 수 있게 해주는 <strong>목(木 - 발산 및 창의력)</strong>과 쾌적하게 비춰주는 <strong>화(火 - 재물 및 사교성)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        } else {
+          favorableElements = ['금', '수'];
+          favorableExplanation = "귀하는 맑고 유연한 수(水)의 일간을 타고났으나 태어난 계절의 화기(火氣)가 너무 뜨거워 수의 근원이 약해집니다. 따라서 영양분이 되어주는 <strong>금(金 - 배움 및 조력)</strong>과 지지대가 되는 <strong>수(水 - 지혜 및 인덕)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        }
+      } else if (dayMasterElement === '목') {
+        if (birthSeasonElement === '목' || birthSeasonElement === '수') {
+          favorableElements = ['화', '금'];
+          favorableExplanation = "귀하는 성장과 창조를 뜻하는 목(木)의 일간을 타고났으나 태어난 계절 또한 수목(水木)이 풍부하여 기세가 한껏 신강해집니다. 따라서 기운을 개화시켜 줄 <strong>화(火 - 예술 및 표현력)</strong>와 올바른 절제를 유도하는 <strong>금(金 - 명예 및 절제력)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        } else {
+          favorableElements = ['수', '목'];
+          favorableExplanation = "귀하는 우직한 나무 같은 목(木)의 일간을 타고났으나 태어난 계절의 기운이 매우 건조하거나 차가워 뿌리가 상하기 쉽습니다. 따라서 성장에 꼭 필요한 생명수 같은 <strong>수(水 - 문서운 및 지혜)</strong>와 단단히 버텨줄 <strong>목(木 - 주체성 및 동료)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        }
+      } else if (dayMasterElement === '금') {
+        if (birthSeasonElement === '금' || birthSeasonElement === '토') {
+          favorableElements = ['수', '목'];
+          favorableExplanation = "귀하는 결단력과 정의감이 가득한 금(金)의 일간을 타고났으나 태어난 달의 대지가 단단하여 기운이 다소 과하게 신강해집니다. 굳은 의지를 유연하게 풀어줄 <strong>수(水 - 사색 및 융통성)</strong>와 현실적인 성취를 안겨다 줄 <strong>목(木 - 재물 및 결과)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        } else {
+          favorableElements = ['토', '금'];
+          favorableExplanation = "귀하는 날카롭고 고귀한 금(金)의 일간을 타고났으나 태어난 계절의 뜨거운 불길이나 척박한 흐름으로 일간이 상하기 쉽습니다. 일간을 포근히 감싸 안아줄 <strong>토(土 - 대지 및 포용력)</strong>와 단단함을 회복시켜 줄 <strong>금(金 - 결단 및 지지대)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        }
+      } else { // 토 (무, 기)
+        if (birthSeasonElement === '토' || birthSeasonElement === '화') {
+          favorableElements = ['금', '수'];
+          favorableExplanation = "귀하는 포용력과 신뢰가 무거운 토(土)의 일간을 타고났으나 태어난 달의 기운 또한 여름이거나 견고한 대지여서 사주가 신강(身强)해집니다. 굳어버린 흙을 일깨우고 씨앗을 심을 <strong>금(金 - 재능 발현 및 창작)</strong>과 대지를 비옥하게 해 줄 <strong>수(水 - 재물 및 유통)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        } else {
+          favorableElements = ['화', '토'];
+          favorableExplanation = "귀하는 만물의 어머니 같은 토(土)의 일간을 타고났으나 태어난 계절의 기운이 너무 춥거나 척박하여 일간이 힘을 잃기 쉽습니다. 대지를 온화하게 데워줄 <strong>화(화 - 조력자 및 인심)</strong>와 든든히 받쳐줄 <strong>토(土 - 기반 및 신뢰)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+        }
+      }
+
+      // 6. 행운의 숫자 매핑 (전통 오행 수리)
+      const numberMap = { '목': [3, 8], '화': [2, 7], '토': [5, 0], '금': [4, 9], '수': [1, 6] };
+      const luckyDigits = [];
+      favorableElements.forEach(el => {
+        luckyDigits.push(...numberMap[el]);
+      });
+
+      return {
+        yearPillar: `${yearStem}${yearBranch} (${yearStemHanja}${yearBranchHanja})`,
+        dayPillar: `${dayStem}${dayBranch} (${dayStemHanja}${dayBranchHanja})`,
+        dayMaster: `${dayStem} (${dayStemHanja}) 일간`,
+        favorableElements: favorableElements,
+        luckyDigits: luckyDigits,
+        favorableExplanation: favorableExplanation
+      };
+    }
+
     function generatePensionSajuNumbers() {
       const resultBox = document.getElementById('pSajuResultBox');
       const analysisText = document.getElementById('pSajuAnalysisText');
@@ -1739,10 +1852,15 @@
         return;
       }
 
-      // Seeded random generation based on name + year + monthDay
-      const seed = name + year + monthDay + "pension";
+      const birthMonth = monthDay.slice(0, 2);
+      const birthDay = monthDay.slice(2, 4);
+
+      // 1. Calculate actual Saju and Favorable lucky digits
+      const saju = calculateSajuAndLuckyDigits(year, birthMonth, birthDay);
+
+      // 2. Generate seeded random based on name + saju parameters
+      const seed = name + year + monthDay + saju.favorableElements.join("");
       
-      // Seeded random number generator
       let hash = 0;
       for (let i = 0; i < seed.length; i++) {
         hash = seed.charCodeAt(i) + ((hash << 5) - hash);
@@ -1752,53 +1870,34 @@
         return x - Math.floor(x);
       }
 
-      // Generate group (1 to 5)
+      // Deciding favorable group (1~5) based on seeded random
       const group = Math.floor(seededRandom() * 5) + 1;
 
-      // Generate 6 digits
-      const digits = [];
-      for (let i = 0; i < 6; i++) {
-        digits.push(Math.floor(seededRandom() * 10));
+      // Construct weighted pool of digits 0-9 bias to Saju lucky digits
+      const pool = [];
+      for (let d = 0; d <= 9; d++) {
+        let weight = 1;
+        if (saju.luckyDigits.includes(d)) {
+          weight = 4; // 400% higher probability for Saju lucky digits!
+        }
+        for (let w = 0; w < weight; w++) {
+          pool.push(d);
+        }
       }
 
-      // Zodiac mapping
-      const zodiacs = {
-        0: "원숭이띠 (신금 申金 - 지혜와 재치)",
-        1: "닭띠 (유금 酉金 - 예리함과 총명함)",
-        2: "개띠 (술토 戌土 - 충직함과 책임감)",
-        3: "돼지띠 (해수 亥水 - 풍요와 끈기)",
-        4: "쥐띠 (자수 子水 - 기회와 지혜)",
-        5: "소띠 (축토 丑土 - 우직함과 결실)",
-        6: "호랑이띠 (인목 寅木 - 용맹과 자신감)",
-        7: "토끼띠 (묘목 卯木 - 조화와 영민함)",
-        8: "용띠 (진토 辰土 - 무한한 잠재력)",
-        9: "뱀띠 (사화 巳火 - 직관과 통찰)",
-        10: "말띠 (오화 午火 - 열정과 돌파력)",
-        11: "양띠 (미토 未土 - 온화함과 상생)"
-      };
-      const zodiacIdx = (parseInt(year) - 4) % 12;
-      const zodiacText = zodiacs[zodiacIdx < 0 ? zodiacIdx + 12 : zodiacIdx];
-
-      // Season mapping
-      const birthMonth = parseInt(monthDay.slice(0, 2));
-      let seasonText = "";
-      if (birthMonth >= 3 && birthMonth <= 5) {
-        seasonText = "봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운";
-      } else if (birthMonth >= 6 && birthMonth <= 8) {
-        seasonText = "여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운";
-      } else if (birthMonth >= 9 && birthMonth <= 11) {
-        seasonText = "가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운";
-      } else {
-        seasonText = "겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운";
+      const digits = [];
+      for (let i = 0; i < 6; i++) {
+        const idx = Math.floor(seededRandom() * pool.length);
+        digits.push(pool[idx]);
       }
 
       // Generate customized fortune explanation
-      const explanation = `🔮 <strong>${name} (${year}년 생 / ${birthMonth}월 생)님의 정통 연금 사주 분석</strong><br><br>` +
-                    `• <strong>태어난 해의 기운</strong>: 귀하는 <strong>${zodiacText}</strong>의 해에 태어나 해당 지신의 풍요로운 조력 성향을 지녔습니다.<br>` +
-                    `• <strong>태어난 계절의 기운</strong>: 계절상 <strong>${seasonText}</strong>을 얻어 일평생 끊이지 않는 상생 수류(水流) 기류가 깃들어 있습니다.<br><br>` +
-                    `• <strong>연금형 수리역학 연산 결과</strong>: 성명학적 자모음 파동 수치와 사주 음양의 상생 가치를 종합 조율한 결과, ` +
-                    `일정하고 차분하게 매달 연금식으로 들어오는 복권의 성질과 가장 길하게 궁합을 이루는 오행 기류가 형성됩니다. ` +
-                    `<strong>오직 ${name}님만을 위해 배정된 행운의 조 및 6자리 길수</strong>를 도출해 드렸으니 대박의 기운과 함께 풍요의 기쁨을 누려보세요!`;
+      const explanation = `🔮 <strong>${name} (${year}년 ${parseInt(birthMonth)}월 ${parseInt(birthDay)}일 생)님의 연금 사주 분석</strong><br><br>` +
+                    `• <strong>사주 원국</strong>: 귀하는 <strong>${saju.yearPillar}</strong> 년에 태어나 일주가 <strong>${saju.dayPillar}</strong>인 <strong>${saju.dayMaster}</strong>입니다.<br>` +
+                    `• <strong>사주 오행 해설</strong>: ${saju.favorableExplanation}<br><br>` +
+                    `• <strong>연금 수리 오행 조합 결과</strong>: 성명 자음 파동과 용신 오행 수리 역학(<strong>${saju.favorableElements.join(', ')}</strong>)에 입각하여 ` +
+                    `당첨의 길수가 가장 유기적으로 공명하는 자릿수를 정밀 편향 매칭했습니다. ` +
+                    `귀하의 평생 행운수 4자리(<strong>${saju.luckyDigits.join(', ')}</strong>) 기류가 400% 가중 배정된 **행운의 ${group}조 및 6자리 길수**를 점지해 드렸으니 당첨의 무한한 에너지를 만끽해 보세요!`;
 
       // Display results
       analysisText.innerHTML = explanation;
@@ -2234,48 +2333,22 @@
         return;
       }
 
-      // Seeded random generation based on name + year + monthDay
+      const birthMonth = monthDay.slice(0, 2);
+      const birthDay = monthDay.slice(2, 4);
+
+      // 1. Calculate actual Saju and Favorable lucky digits
+      const saju = calculateSajuAndLuckyDigits(year, birthMonth, birthDay);
+
+      // 2. Generate seeded random lotto numbers biased toward Saju lucky digits
       const seed = name + year + monthDay;
-      const numbers = getSeededRandomNumbers(seed);
-
-      // Zodiac mapping
-      const zodiacs = {
-        0: "원숭이띠 (신금 申金 - 지혜와 재치)",
-        1: "닭띠 (유금 酉金 - 예리함과 총명함)",
-        2: "개띠 (술토 戌土 - 충직함과 책임감)",
-        3: "돼지띠 (해수 亥水 - 풍요와 끈기)",
-        4: "쥐띠 (자수 子水 - 기회와 지혜)",
-        5: "소띠 (축토 丑土 - 우직함과 결실)",
-        6: "호랑이띠 (인목 寅木 - 용맹과 자신감)",
-        7: "토끼띠 (묘목 卯木 - 조화와 영민함)",
-        8: "용띠 (진토 辰土 - 무한한 잠재력)",
-        9: "뱀띠 (사화 巳火 - 직관과 통찰)",
-        10: "말띠 (오화 午火 - 열정과 돌파력)",
-        11: "양띠 (미토 未土 - 온화함과 상생)"
-      };
-      const zodiacIdx = (parseInt(year) - 4) % 12;
-      const zodiacText = zodiacs[zodiacIdx < 0 ? zodiacIdx + 12 : zodiacIdx];
-
-      // Season mapping
-      const birthMonth = parseInt(monthDay.slice(0, 2));
-      let seasonText = "";
-      if (birthMonth >= 3 && birthMonth <= 5) {
-        seasonText = "봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운";
-      } else if (birthMonth >= 6 && birthMonth <= 8) {
-        seasonText = "여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운";
-      } else if (birthMonth >= 9 && birthMonth <= 11) {
-        seasonText = "가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운";
-      } else {
-        seasonText = "겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운";
-      }
+      const numbers = getSajuBiasedLottoNumbers(seed, saju.luckyDigits);
 
       // Generate customized fortune explanation
-      const explanation = `🔮 <strong>${name} (${year}년 생 / ${birthMonth}월 생)님의 정통 사주 오행 분석</strong><br><br>` +
-                    `• <strong>태어난 해의 기운</strong>: 귀하는 <strong>${zodiacText}</strong>의 해에 태어나 해당 지신의 영민함과 운세를 지녔습니다.<br>` +
-                    `• <strong>태어난 계절의 기운</strong>: 사주 오행상 <strong>${seasonText}</strong>을 얻어 평생의 든든한 상생 기운이 내재되어 있습니다.<br><br>` +
-                    `• <strong>수리역학적 조합 결과</strong>: 성명학적 자모음 파동 연산과 태어난 사주 오행의 균형을 정밀 조율한 결과, ` +
-                    `이번 회차에서는 목(木)과 수(水)가 조화롭게 기운을 순환하는 오행 기류가 형성됩니다. ` +
-                    `<strong>오직 ${name}님만을 위해 배정된 평생 대길(大吉)의 6자리 행운 비법수</strong>를 추천해 드리니 우주의 기운과 함께 당첨의 희망을 즐겨보세요!`;
+      const explanation = `🔮 <strong>${name} (${year}년 ${parseInt(birthMonth)}월 ${parseInt(birthDay)}일 생)님의 정통 사주 오행 분석</strong><br><br>` +
+                    `• <strong>사주 원국</strong>: 귀하는 <strong>${saju.yearPillar}</strong> 년에 태어나 일주가 <strong>${saju.dayPillar}</strong>인 <strong>${saju.dayMaster}</strong>입니다.<br>` +
+                    `• <strong>사주 오행 해설</strong>: ${saju.favorableExplanation}<br><br>` +
+                    `• <strong>수리역학적 조합 결과</strong>: 성명 자모음 파동 기류와 용신 오행(<strong>${saju.favorableElements.join(', ')}</strong>)에 공명하는 주파수를 적용했습니다. ` +
+                    `귀하의 평생 행운 번호(<strong>${saju.luckyDigits.join(', ')}</strong>)가 끝자리에 매칭되거나 포함될 확률이 400% 대폭 가중된 **대길(大吉)의 6자리 행운 비법수**를 추천해 드립니다. 우주의 조화로운 에너지와 함께 최고의 행운을 누려보세요!`;
 
       // Display results
       analysisText.innerHTML = explanation;
@@ -2287,7 +2360,7 @@
       resultBox.style.display = 'block';
     }
 
-    function getSeededRandomNumbers(seedString) {
+    function getSajuBiasedLottoNumbers(seedString, luckyDigits) {
       let hash = 0;
       for (let i = 0; i < seedString.length; i++) {
         hash = seedString.charCodeAt(i) + ((hash << 5) - hash);
@@ -2298,13 +2371,32 @@
         return x - Math.floor(x);
       }
 
-      const numbers = [];
-      while (numbers.length < 6) {
-        const num = Math.floor(seededRandom() * 45) + 1;
-        if (!numbers.includes(num)) {
-          numbers.push(num);
+      // Create a weighted pool from 1 to 45
+      // Base weight is 1. If the number ends in any of the lucky digits, give it a weight of 4!
+      const pool = [];
+      for (let num = 1; num <= 45; num++) {
+        let weight = 1;
+        const numStr = num.toString();
+        luckyDigits.forEach(digit => {
+          if (numStr.endsWith(digit.toString())) {
+            weight = 4;
+          }
+        });
+        for (let w = 0; w < weight; w++) {
+          pool.push(num);
         }
       }
+
+      // Extract 6 unique numbers from weighted pool
+      const numbers = [];
+      while (numbers.length < 6) {
+        const idx = Math.floor(seededRandom() * pool.length);
+        const selected = pool[idx];
+        if (!numbers.includes(selected)) {
+          numbers.push(selected);
+        }
+      }
+
       return numbers.sort((a, b) => a - b);
     }
 
