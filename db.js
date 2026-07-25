@@ -426,6 +426,7 @@ const hotspots = {
   initialize: () => {
     if (isPg) {
       return pgPool.query(`
+        DROP TABLE IF EXISTS lotto_hotspots;
         CREATE TABLE IF NOT EXISTS lotto_hotspots (
           id SERIAL PRIMARY KEY,
           name TEXT NOT NULL,
@@ -454,34 +455,37 @@ const hotspots = {
       });
     } else {
       return new Promise((resolve, reject) => {
-        lottoSqlite.run(`
-          CREATE TABLE IF NOT EXISTS lotto_hotspots (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            name TEXT NOT NULL,
-            address TEXT NOT NULL,
-            wins TEXT NOT NULL,
-            description TEXT NOT NULL,
-            region TEXT DEFAULT '전국'
-          );
-        `, (err) => {
+        lottoSqlite.run('DROP TABLE IF EXISTS lotto_hotspots', (err) => {
           if (err) return reject(err);
-          lottoSqlite.get('SELECT COUNT(*) as count FROM lotto_hotspots', [], (err2, row) => {
+          lottoSqlite.run(`
+            CREATE TABLE IF NOT EXISTS lotto_hotspots (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              name TEXT NOT NULL,
+              address TEXT NOT NULL,
+              wins TEXT NOT NULL,
+              description TEXT NOT NULL,
+              region TEXT DEFAULT '전국'
+            );
+          `, (err2) => {
             if (err2) return reject(err2);
-            if (row.count === 0) {
-              const stmt = lottoSqlite.prepare('INSERT INTO lotto_hotspots (name, address, wins, description, region) VALUES (?, ?, ?, ?, ?)');
-              stmt.run('스파복권방', '서울 노원구 상계동 707-3', '1등 48회 / 2등 180회 이상', '전국 부동의 1위 명당으로 주말마다 대기열이 수백 미터에 달하는 대한민국 최고의 로또 명소', '서울');
-              stmt.run('천하명당복권방', '부산 동구 범일동 830-195', '1등 39회 / 2등 150회 이상', '부산과 영남 지역을 대표하는 전통 명문 명당으로 신기할 정도로 끊임없이 당첨자를 배출하는 곳', '부산');
-              stmt.run('세진글라스', '대구 서구 평리동 1094-4', '1등 24회 / 2등 80회 이상', '안경점 내부에 위치한 대구 최고의 당첨 기류를 가득 안은 행운의 중심지', '대구');
-              stmt.run('로또휴게실', '경기 용인시 기흥구 하갈동 143-4', '1등 22회 / 2등 70회 이상', '국도변 기흥 저수지 옆에 위치하여 운전자들의 필수 코스로 각광받는 경기 최대의 명소', '경기');
-              stmt.run('로또명당인천점', '충남 아산시 인주면 서해로 512-2', '1등 17회 / 2등 50회 이상', '충청권 최고의 1등 배출 명가로 아산만 방조제 길목에 위치하여 많은 방문객이 모여드는 성지', '충청');
-              stmt.run('목화휴게소', '경남 사천시 용현면 주문리 4', '1등 19회 / 2등 60회 이상', '삼천포 앞바다가 훤히 트인 수려한 비경과 함께 엄청난 행운을 안겨주는 영남권 대박 명소', '경상');
-              stmt.run('알리바이', '광주 광산구 신창동 1252-11', '1등 12회 / 2등 40회 이상', '호남 지역의 최대 복권 판매점이자 광주 전남을 아우르는 최고의 1등 노다지 명소', '전라');
-              stmt.run('제주복권방', '제주 제주시 노형동 911-3', '1등 9회 / 2등 25회 이상', '제주도 노형동의 핵심 입지에 자리하여 수많은 현지인과 관광객들이 줄지어 찾는 섬나라 최고 명당', '제주');
-              stmt.run('복권나라', '대전 대덕구 중리동 365-15', '1등 15회 / 2등 45회 이상', '대전 대덕구의 전통 깊은 복권명당으로 한결같이 높은 1등 출현율을 자랑하는 한밭의 자랑', '대전');
-              stmt.finalize((err3) => {
-                if (err3) reject(err3); else resolve();
-              });
-            } else resolve();
+            lottoSqlite.get('SELECT COUNT(*) as count FROM lotto_hotspots', [], (err3, row) => {
+              if (err3) return reject(err3);
+              if (row.count === 0) {
+                const stmt = lottoSqlite.prepare('INSERT INTO lotto_hotspots (name, address, wins, description, region) VALUES (?, ?, ?, ?, ?)');
+                stmt.run('스파복권방', '서울 노원구 상계동 707-3', '1등 48회 / 2등 180회 이상', '전국 부동의 1위 명당으로 주말마다 대기열이 수백 미터에 달하는 대한민국 최고의 로또 명소', '서울');
+                stmt.run('천하명당복권방', '부산 동구 범일동 830-195', '1등 39회 / 2등 150회 이상', '부산과 영남 지역을 대표하는 전통 명문 명당으로 신기할 정도로 끊임없이 당첨자를 배출하는 곳', '부산');
+                stmt.run('세진글라스', '대구 서구 평리동 1094-4', '1등 24회 / 2등 80회 이상', '안경점 내부에 위치한 대구 최고의 당첨 기류를 가득 안은 행운의 중심지', '대구');
+                stmt.run('로또휴게실', '경기 용인시 기흥구 하갈동 143-4', '1등 22회 / 2등 70회 이상', '국도변 기흥 저수지 옆에 위치하여 운전자들의 필수 코스로 각광받는 경기 최대의 명소', '경기');
+                stmt.run('로또명당인천점', '충남 아산시 인주면 서해로 512-2', '1등 17회 / 2등 50회 이상', '충청권 최고의 1등 배출 명가로 아산만 방조제 길목에 위치하여 많은 방문객이 모여드는 성지', '충청');
+                stmt.run('목화휴게소', '경남 사천시 용현면 주문리 4', '1등 19회 / 2등 60회 이상', '삼천포 앞바다가 훤히 트인 수려한 비경과 함께 엄청난 행운을 안겨주는 영남권 대박 명소', '경상');
+                stmt.run('알리바이', '광주 광산구 신창동 1252-11', '1등 12회 / 2등 40회 이상', '호남 지역의 최대 복권 판매점이자 광주 전남을 아우르는 최고의 1등 노다지 명소', '전라');
+                stmt.run('제주복권방', '제주 제주시 노형동 911-3', '1등 9회 / 2등 25회 이상', '제주도 노형동의 핵심 입지에 자리하여 수많은 현지인과 관광객들이 줄지어 찾는 섬나라 최고 명당', '제주');
+                stmt.run('복권나라', '대전 대덕구 중리동 365-15', '1등 15회 / 2등 45회 이상', '대전 대덕구의 전통 깊은 복권명당으로 한결같이 높은 1등 출현율을 자랑하는 한밭의 자랑', '대전');
+                stmt.finalize((err4) => {
+                  if (err4) reject(err4); else resolve();
+                });
+              } else resolve();
+            });
           });
         });
       });
@@ -505,6 +509,7 @@ const board = {
   initialize: () => {
     if (isPg) {
       return pgPool.query(`
+        DROP TABLE IF EXISTS board_posts;
         CREATE TABLE IF NOT EXISTS board_posts (
           id SERIAL PRIMARY KEY,
           title TEXT NOT NULL,
@@ -529,30 +534,33 @@ const board = {
       });
     } else {
       return new Promise((resolve, reject) => {
-        lottoSqlite.run(`
-          CREATE TABLE IF NOT EXISTS board_posts (
-            id INTEGER PRIMARY KEY AUTOINCREMENT,
-            title TEXT NOT NULL,
-            content TEXT NOT NULL,
-            author TEXT,
-            password TEXT,
-            category TEXT DEFAULT 'free',
-            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-          );
-        `, (err) => {
+        lottoSqlite.run('DROP TABLE IF EXISTS board_posts', (err) => {
           if (err) return reject(err);
-          lottoSqlite.get('SELECT COUNT(*) as count FROM board_posts', [], (err2, row) => {
+          lottoSqlite.run(`
+            CREATE TABLE IF NOT EXISTS board_posts (
+              id INTEGER PRIMARY KEY AUTOINCREMENT,
+              title TEXT NOT NULL,
+              content TEXT NOT NULL,
+              author TEXT,
+              password TEXT,
+              category TEXT DEFAULT 'free',
+              created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+            );
+          `, (err2) => {
             if (err2) return reject(err2);
-            if (row.count === 0) {
-              const stmt = lottoSqlite.prepare('INSERT INTO board_posts (title, content, author, password, category) VALUES (?, ?, ?, ?, ?)');
-              stmt.run('로또 대박 기원합니다!', '오늘 역학 패턴 필터로 뽑아낸 조합으로 5천원씩 사왔습니다. 이번 회차 모두 대박 나세요!', '행운충전', '1234', 'lotto');
-              stmt.run('사주 오행 번호 소름 돋네요.', '태어난 시간까지 넣어서 사주 돌렸는데 나온 평생 행운수 4개가 실제로 지난주 2등 번호랑 많이 겹칩니다... 이번 주 믿고 갑니다!', '만세력왕', '1234', 'lotto');
-              stmt.run('연금복권 1등 세후 546만원 수령 후기 보고 왔습니다.', '정말 꿈의 직장이네요. 매달 세금 떼고 546만원이 꼬박꼬박 20년 동안 들어오면 소원이 없겠습니다. 다들 대박나세요!', '연금바라기', '1234', 'pension');
-              stmt.run('게시판 개설 축하합니다!', '복권 정보 공유하고 소소하게 잡담 나눌 수 있어서 좋네요. 자주 오겠습니다.', '단골예약', '1234', 'free');
-              stmt.finalize((err3) => {
-                if (err3) reject(err3); else resolve();
-              });
-            } else resolve();
+            lottoSqlite.get('SELECT COUNT(*) as count FROM board_posts', [], (err3, row) => {
+              if (err3) return reject(err3);
+              if (row.count === 0) {
+                const stmt = lottoSqlite.prepare('INSERT INTO board_posts (title, content, author, password, category) VALUES (?, ?, ?, ?, ?)');
+                stmt.run('로또 대박 기원합니다!', '오늘 역학 패턴 필터로 뽑아낸 조합으로 5천원씩 사왔습니다. 이번 회차 모두 대박 나세요!', '행운충전', '1234', 'lotto');
+                stmt.run('사주 오행 번호 소름 돋네요.', '태어난 시간까지 넣어서 사주 돌렸는데 나온 평생 행운수 4개가 실제로 지난주 2등 번호랑 많이 겹칩니다... 이번 주 믿고 갑니다!', '만세력왕', '1234', 'lotto');
+                stmt.run('연금복권 1등 세후 546만원 수령 후기 보고 왔습니다.', '정말 꿈의 직장이네요. 매달 세금 떼고 546만원이 꼬박꼬박 20년 동안 들어오면 소원이 없겠습니다. 다들 대박나세요!', '연금바라기', '1234', 'pension');
+                stmt.run('게시판 개설 축하합니다!', '복권 정보 공유하고 소소하게 잡담 나눌 수 있어서 좋네요. 자주 오겠습니다.', '단골예약', '1234', 'free');
+                stmt.finalize((err4) => {
+                  if (err4) reject(err4); else resolve();
+                });
+              } else resolve();
+            });
           });
         });
       });

@@ -1011,10 +1011,12 @@
               <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
                 <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 로또 토크 작성</h3>
                 <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                  <div style="display: flex; gap: 10px; width: 100%;">
-                    <input type="text" id="lottoBoardTitleInput" placeholder="제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="text" id="lottoBoardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="password" id="lottoBoardPasswordInput" placeholder="비밀번호" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                    <input type="text" id="lottoBoardTitleInput" placeholder="제목을 입력하세요." style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                      <input type="text" id="lottoBoardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                      <input type="password" id="lottoBoardPasswordInput" placeholder="비밀번호" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    </div>
                   </div>
                   <textarea id="lottoBoardContentInput" placeholder="대박 기원 로또 이야기를 나눠주세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
                   <button class="action-btn" onclick="saveLottoBoardPost()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">📝 토크 등록</button>
@@ -1256,10 +1258,12 @@
               <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
                 <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 연금 토크 작성</h3>
                 <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                  <div style="display: flex; gap: 10px; width: 100%;">
-                    <input type="text" id="pensionBoardTitleInput" placeholder="제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="text" id="pensionBoardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="password" id="pensionBoardPasswordInput" placeholder="비밀번호" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                    <input type="text" id="pensionBoardTitleInput" placeholder="제목을 입력하세요." style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                      <input type="text" id="pensionBoardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                      <input type="password" id="pensionBoardPasswordInput" placeholder="비밀번호" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    </div>
                   </div>
                   <textarea id="pensionBoardContentInput" placeholder="풍요로운 매달 연금복권 수다를 떨어보세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
                   <button class="action-btn" onclick="savePensionBoardPost()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">📝 토크 등록</button>
@@ -1333,10 +1337,12 @@
               <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
                 <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 자유게시판 글쓰기</h3>
                 <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
-                  <div style="display: flex; gap: 10px; width: 100%;">
-                    <input type="text" id="boardTitleInput" placeholder="제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="text" id="boardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
-                    <input type="password" id="boardPasswordInput" placeholder="비밀번호 (삭제용)" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  <div style="display: flex; flex-direction: column; gap: 8px; width: 100%;">
+                    <input type="text" id="boardTitleInput" placeholder="제목을 입력하세요." style="width: 100%; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <div style="display: flex; gap: 10px; width: 100%;">
+                      <input type="text" id="boardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                      <input type="password" id="boardPasswordInput" placeholder="비밀번호 (삭제용)" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    </div>
                   </div>
                   <textarea id="boardContentInput" placeholder="게시글 내용을 자유롭게 남겨주세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
                   <button class="action-btn" onclick="saveBoardPost()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">📝 글 등록하기</button>
