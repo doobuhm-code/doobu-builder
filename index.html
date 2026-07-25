@@ -111,7 +111,7 @@
     /* ================= 모바일 전용 반응형 스타일 (PC는 기존 유지) ================= */
     @media (max-width: 600px) {
       body {
-        padding: 4px !important; /* 바깥 여백 극소화로 사용 영역 극대화 */
+        padding: 0px !important; /* 바깥 여백 극소화로 사용 영역 극대화 */
       }
 
       .pc-text { display: none !important; }
@@ -121,23 +121,25 @@
       .theme-toggle {
         position: static;
         margin-bottom: 5px;
+        margin-right: 5px;
         align-self: flex-end;
         font-size: 11px;
         padding: 5px 10px;
       }
 
       .main-wrapper {
-        padding: 10px 2px; /* 바깥레이아웃 여백을 더 작게 줄여 공 짤림 방지 */
-        margin-top: 10px;
-        border-radius: 16px;
+        padding: 10px 1px; /* 바깥레이아웃 좌우 여백을 거의 없애 공간 극대화 */
+        margin-top: 5px;
+        border-radius: 10px;
       }
 
       .content-card {
-        padding: 10px 2px; /* 그다음 레이아웃(카드) 여백을 최소화하여 사용 공간 확대 */
+        padding: 10px 1px; /* 카드 여백도 최소화 */
         min-height: auto;
         height: auto;
-        border-radius: 14px;
+        border-radius: 8px;
         margin-top: 4px; /* 중메뉴(menu-card)와 완전 밀착 배치 */
+        width: 100%;
       }
 
       .tab-content {
