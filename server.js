@@ -176,6 +176,75 @@ app.delete('/api/news/:id', async (req, res) => {
   }
 });
 
+// ================= 사주 사전 테이블 API =================
+app.get('/api/saju', async (req, res) => {
+  try {
+    const list = await db.saju.getAll();
+    const dict = { zodiac: {}, season: {}, element: {} };
+    list.forEach(item => {
+      dict[item.category][item.key] = item.value;
+    });
+    res.json({ success: true, data: dict });
+  } catch (err) {
+    console.error('사주 데이터 조회 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
+// ================= 로또 전국 명당 API =================
+app.get('/api/hotspots', async (req, res) => {
+  try {
+    const list = await db.hotspots.getAll();
+    res.json({ success: true, data: list });
+  } catch (err) {
+    console.error('명당 조회 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
+// ================= 자유게시판 API =================
+app.get('/api/board', async (req, res) => {
+  try {
+    const list = await db.board.getAll();
+    res.json({ success: true, data: list });
+  } catch (err) {
+    console.error('게시판 조회 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
+app.post('/api/board', async (req, res) => {
+  const { title, content, author, password } = req.body;
+  if (!title || !content || !author || !password) {
+    return res.status(400).json({ success: false, message: '모든 필드를 입력해 주세요.' });
+  }
+  try {
+    await db.board.insert(title, content, author, password);
+    res.json({ success: true, message: '게시글이 성공적으로 등록되었습니다!' });
+  } catch (err) {
+    console.error('게시글 등록 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
+app.post('/api/board/delete', async (req, res) => {
+  const { id, password } = req.body;
+  if (!id || !password) {
+    return res.status(400).json({ success: false, message: '게시글 ID와 비밀번호를 입력해 주세요.' });
+  }
+  try {
+    const deleted = await db.board.delete(id, password);
+    if (deleted) {
+      res.json({ success: true, message: '게시글이 성공적으로 삭제되었습니다.' });
+    } else {
+      res.status(403).json({ success: false, message: '비밀번호가 일치하지 않습니다.' });
+    }
+  } catch (err) {
+    console.error('게시글 삭제 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
 // ================= 서버 구동 및 자동 수집 실행 =================
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`🚀 복권 포털 서버 실행 중: http://localhost:${PORT}`);
@@ -184,8 +253,11 @@ app.listen(PORT, '0.0.0.0', async () => {
     // 1. PostgreSQL 연결 환경일 시 테이블 자동 초기화
     await db.initPgTables();
     
-    // 2. 뉴스 및 컬럼 테이블 자동 초기화 및 시딩
+    // 2. 모든 테이블 자동 초기화 및 시딩 (뉴스, 사주, 명당, 게시판)
     await db.news.initialize();
+    await db.saju.initialize();
+    await db.hotspots.initialize();
+    await db.board.initialize();
     
     // 3. 서버 실행 시 누락된 최신 데이터 백그라운드에서 즉시 수집 시작
     console.log('🔄 [자동 수집] 최신 복권 당첨 정보를 동기화하는 중...');

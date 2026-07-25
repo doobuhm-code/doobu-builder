@@ -308,10 +308,296 @@ const news = {
   }
 };
 
+const saju = {
+  initialize: () => {
+    if (isPg) {
+      return pgPool.query(`
+        CREATE TABLE IF NOT EXISTS saju_data (
+          id SERIAL PRIMARY KEY,
+          category TEXT NOT NULL,
+          key TEXT NOT NULL,
+          value TEXT NOT NULL
+        );
+      `).then(() => {
+        return pgPool.query('SELECT COUNT(*) FROM saju_data').then(res => {
+          if (parseInt(res.rows[0].count) === 0) {
+            return pgPool.query(`
+              INSERT INTO saju_data (category, key, value) VALUES 
+              ('zodiac', '0', '원숭이띠 (신금 申金 - 지혜와 재치)의 타고난 영민함과 끈기를 얻었습니다.'),
+              ('zodiac', '1', '닭띠 (유금 酉金 - 예리함과 총명함)의 비범함과 판단력을 타고났습니다.'),
+              ('zodiac', '2', '개띠 (술토 戌土 - 충직함과 책임감)의 우직함과 강인한 인격을 타고났습니다.'),
+              ('zodiac', '3', '돼지띠 (해수 亥水 - 풍요와 끈기)의 축복을 받아 태어난 풍요의 결실 기류가 깃들어 있습니다.'),
+              ('zodiac', '4', '쥐띠 (자수 子水 - 기회와 지혜)의 영석함과 빠른 직관을 얻어 기회포착이 유리합니다.'),
+              ('zodiac', '5', '소띠 (축토 丑土 - 우직함과 결실)의 성실함과 견고한 끈기를 타고나 대성하는 운입니다.'),
+              ('zodiac', '6', '호랑이띠 (인목 寅木 - 용맹과 자신감)의 당당함과 개척적인 자립 추진력이 있습니다.'),
+              ('zodiac', '7', '토끼띠 (묘목 卯木 - 조화와 영민함)의 온화한 처세술과 조화로운 균형 감각을 지녔습니다.'),
+              ('zodiac', '8', '용띠 (진토 辰土 - 무한한 잠재력)의 웅장한 도량과 변화무쌍한 에너지를 부여받았습니다.'),
+              ('zodiac', '9', '뱀띠 (사화 巳火 - 직관과 통찰)의 날카로운 분석력과 철두철미한 추진력을 지녔습니다.'),
+              ('zodiac', '10', '말띠 (오화 午火 - 열정과 돌파력)의 질주하는 정열과 거침없는 행동력을 얻었습니다.'),
+              ('zodiac', '11', '양띠 (미토 未土 - 온화함과 상생)의 따뜻한 인덕과 상생하는 온기를 타고났습니다.'),
+              ('season', '봄', '봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운'),
+              ('season', '여름', '여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운'),
+              ('season', '가을', '가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운'),
+              ('season', '겨울', '겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운'),
+              ('element', '화_신강', '귀하는 열정적이고 외향적인 화(火)의 일간을 타고났으나 태어난 계절의 기운 또한 화(火)가 강성하여 사주 전체의 화기가 다소 신강(身强)해집니다. 따라서 뜨거운 기운을 지혜롭게 차단하고 조화롭게 식혀주는 <strong>수(수 - 깊은 통찰력)</strong>와 <strong>금(금 - 결단력 및 재물)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'),
+              ('element', '화_신약', '귀하는 온화하고 밝게 빛나는 화(火)의 일간을 타고났으나 주변 계절이나 시각의 기운이 이를 든든하게 받쳐주지 못해 사주가 다소 신약(身弱)해집니다. 따라서 나에게 따뜻한 활력과 인덕을 채워주는 <strong>목(목 - 배움 및 조력)</strong>과 자립심을 든든하게 받쳐줄 <strong>화(화 - 독립심 및 추진력)</strong>의 기운이 귀인 오행(용신)이 됩니다.'),
+              ('element', '수_신강', '귀하는 지혜롭고 깊이 있는 수(수)의 일간을 타고났으나 태어난 계절 또한 차가운 수(수)나 토(토)가 많아 기류가 넘쳐납니다. 따라서 유연하게 흐를 수 있게 해주는 <strong>목(목 - 발산 및 창의력)</strong>과 쾌적하게 비춰주는 <strong>화(화 - 재물 및 사교성)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'),
+              ('element', '수_신약', '귀하는 유연하게 흐르는 수(수)의 일간을 타고났으나 태어난 달이나 시각의 마른 대지나 뜨거운 기운 때문에 물줄기가 다소 신약(身弱)해집니다. 이를 채우고 자양해 주는 단단한 <strong>금(금 - 자양분 및 지혜)</strong>과 기운의 근원을 돕는 <strong>수(수 - 지혜 및 인덕)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'),
+              ('element', '목_신강', '귀하는 성장과 창조를 뜻하는 목(목)의 일간을 타고났으나 태어난 계절 또한 수목(수목)이 풍부하여 기세가 한껏 신강해집니다. 따라서 기운을 개화시켜 줄 <strong>화(화 - 예술 및 표현력)</strong>와 올바른 절제를 유도하는 <strong>금(금 - 명예 및 절제력)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'),
+              ('element', '목_신약', '귀하는 우직한 나무 같은 목(목)의 일간을 타고났으나 태어난 계절의 기운이 매우 건조하거나 차가워 뿌리가 상하기 쉽습니다. 따라서 성장에 꼭 필요한 생명수 같은 <strong>수(수 - 문서운 및 지혜)</strong>와 곧은 의지를 지켜줄 <strong>목(목 - 주체성 및 동료운)</strong>의 기운이 귀인 오행(용신)이 됩니다.'),
+              ('element', '금_신강', '귀하는 결단력과 정의감이 가득한 금(금)의 일간을 타고났으나 주변 기류 또한 단단한 광산이나 바위여서 사주 전체의 금기가 다소 신강(신강)해집니다. 강하고 굳은 칼날을 부드럽게 세공해 줄 <strong>수(수 - 유연함 및 융통성)</strong>와 현실적인 성취를 안겨다 줄 <strong>목(목 - 재물 및 결과)</strong>의 기운이 귀인 오행(용신)이 됩니다.'),
+              ('element', '금_신약', '귀하는 빛나고 총명한 보석인 금(금)의 일간을 타고났으나 태어난 달의 기운이 매우 뜨겁거나 나무가 많아 일간의 근원이 약해집니다. 이를 보완하고 지지해 주는 <strong>금(금 - 자양분 및 지혜)</strong>과 기운의 근원을 돕는 <strong>수(수 - 지혜 및 인덕)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'),
+              ('element', '토_신강', '귀하는 신뢰가 두텁고 무거운 대지인 토(土)의 일간을 타고났으나 주변 계절이나 시각 또한 뜨거운 태양이거나 단단한 대지여서 사주가 신강(신강)해집니다. 단단해진 흙을 부드럽게 일깨우는 <strong>금(금 - 재능 발현 및 표현)</strong>과 비옥한 결실을 줄 시원한 단비인 <strong>수(수 - 흐름 및 재물운)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'),
+              ('element', '토_신약', '귀하는 만물의 어머니 같은 토(토)의 일간을 타고났으나 태어난 계절의 기운이 너무 춥거나 척박하여 일간이 힘을 잃기 쉽습니다. 대지를 온화하게 데워줄 <strong>화(화 - 인덕 및 학업)</strong>와 든든히 받쳐줄 <strong>토(토 - 기반 및 신뢰)</strong>의 기운이 귀인 오행(용신)이 됩니다.')
+            `);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run(`
+          CREATE TABLE IF NOT EXISTS saju_data (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            category TEXT NOT NULL,
+            key TEXT NOT NULL,
+            value TEXT NOT NULL
+          );
+        `, (err) => {
+          if (err) return reject(err);
+          lottoSqlite.get('SELECT COUNT(*) as count FROM saju_data', [], (err2, row) => {
+            if (err2) return reject(err2);
+            if (row.count === 0) {
+              const stmt = lottoSqlite.prepare('INSERT INTO saju_data (category, key, value) VALUES (?, ?, ?)');
+              const items = [
+                ['zodiac', '0', '원숭이띠 (신금 申金 - 지혜와 재치)의 타고난 영민함과 끈기를 얻었습니다.'],
+                ['zodiac', '1', '닭띠 (유금 酉金 - 예리함과 총명함)의 비범함과 판단력을 타고났습니다.'],
+                ['zodiac', '2', '개띠 (술토 戌土 - 충직함과 책임감)의 우직함과 강인한 인격을 타고났습니다.'],
+                ['zodiac', '3', '돼지띠 (해수 亥水 - 풍요와 끈기)의 축복을 받아 태어난 풍요의 결실 기류가 깃들어 있습니다.'],
+                ['zodiac', '4', '쥐띠 (자수 子水 - 기회와 지혜)의 영석함과 빠른 직관을 얻어 기회포착이 유리합니다.'],
+                ['zodiac', '5', '소띠 (축토 丑土 - 우직함과 결실)의 성실함과 견고한 끈기를 타고나 대성하는 운입니다.'],
+                ['zodiac', '6', '호랑이띠 (인목 寅木 - 용맹과 자신감)의 당당함과 개척적인 자립 추진력이 있습니다.'],
+                ['zodiac', '7', '토끼띠 (묘목 卯木 - 조화와 영민함)의 온화한 처세술과 조화로운 균형 감각을 지녔습니다.'],
+                ['zodiac', '8', '용띠 (진토 辰土 - 무한한 잠재력)의 웅장한 도량과 변화무쌍한 에너지를 부여받았습니다.'],
+                ['zodiac', '9', '뱀띠 (사화 巳火 - 직관과 통찰)의 날카로운 분석력과 철두철미한 추진력을 지녔습니다.'],
+                ['zodiac', '10', '말띠 (오화 午火 - 열정과 돌파력)의 질주하는 정열과 거침없는 행동력을 얻었습니다.'],
+                ['zodiac', '11', '양띠 (미토 未土 - 온화함과 상생)의 따뜻한 인덕과 상생하는 온기를 타고났습니다.'],
+                ['season', '봄', '봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운'],
+                ['season', '여름', '여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운'],
+                ['season', '가을', '가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운'],
+                ['season', '겨울', '겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운'],
+                ['element', '화_신강', '귀하는 열정적이고 외향적인 화(火)의 일간을 타고났으나 태어난 계절의 기운 또한 화(火)가 강성하여 사주 전체의 화기가 다소 신강(身强)해집니다. 따라서 뜨거운 기운을 지혜롭게 차단하고 조화롭게 식혀주는 <strong>수(수 - 깊은 통찰력)</strong>와 <strong>금(금 - 결단력 및 재물)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'],
+                ['element', '화_신약', '귀하는 온화하고 밝게 빛나는 화(火)의 일간을 타고났으나 주변 계절이나 시각의 기운이 이를 든든하게 받쳐주지 못해 사주가 다소 신약(身弱)해집니다. 따라서 나에게 따뜻한 활력과 인덕을 채워주는 <strong>목(목 - 배움 및 조력)</strong>과 자립심을 든든하게 받쳐줄 <strong>화(화 - 독립심 및 추진력)</strong>의 기운이 귀인 오행(용신)이 됩니다.'],
+                ['element', '수_신강', '귀하는 지혜롭고 깊이 있는 수(수)의 일간을 타고났으나 태어난 계절 또한 차가운 수(수)나 토(토)가 많아 기류가 넘쳐납니다. 따라서 유연하게 흐를 수 있게 해주는 <strong>목(목 - 발산 및 창의력)</strong>과 쾌적하게 비춰주는 <strong>화(화 - 재물 및 사교성)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'],
+                ['element', '수_신약', '귀하는 유연하게 흐르는 수(수)의 일간을 타고났으나 태어난 달이나 시각의 마른 대지나 뜨거운 기운 때문에 물줄기가 다소 신약(身弱)해집니다. 이를 채우고 자양해 주는 단단한 <strong>금(금 - 자양분 및 지혜)</strong>과 기운의 근원을 돕는 <strong>수(수 - 지혜 및 인덕)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'],
+                ['element', '목_신강', '귀하는 성장과 창조를 뜻하는 목(목)의 일간을 타고났으나 태어난 계절 또한 수목(수목)이 풍부하여 기세가 한껏 신강해집니다. 따라서 기운을 개화시켜 줄 <strong>화(화 - 예술 및 표현력)</strong>와 올바른 절제를 유도하는 <strong>금(금 - 명예 및 절제력)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'],
+                ['element', '목_신약', '귀하는 우직한 나무 같은 목(목)의 일간을 타고났으나 태어난 계절의 기운이 매우 건조하거나 차가워 뿌리가 상하기 쉽습니다. 따라서 성장에 꼭 필요한 생명수 같은 <strong>수(수 - 문서운 및 지혜)</strong>와 곧은 의지를 지켜줄 <strong>목(목 - 주체성 및 동료운)</strong>의 기운이 귀인 오행(용신)이 됩니다.'],
+                ['element', '금_신강', '귀하는 결단력과 정의감이 가득한 금(금)의 일간을 타고났으나 주변 기류 또한 단단한 광산이나 바위여서 사주 전체의 금기가 다소 신강(신강)해집니다. 강하고 굳은 칼날을 부드럽게 세공해 줄 <strong>수(수 - 유연함 및 융통성)</strong>와 현실적인 성취를 안겨다 줄 <strong>목(목 - 재물 및 결과)</strong>의 기운이 귀인 오행(용신)이 됩니다.'],
+                ['element', '금_신약', '귀하는 빛나고 총명한 보석인 금(금)의 일간을 타고났으나 태어난 달의 기운이 매우 뜨겁거나 나무가 많아 일간의 근원이 약해집니다. 이를 보완하고 지지해 주는 <strong>금(금 - 자양분 및 지혜)</strong>과 기운의 근원을 돕는 <strong>수(수 - 지혜 및 인덕)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'],
+                ['element', '토_신강', '귀하는 신뢰가 두텁고 무거운 대지인 토(土)의 일간을 타고났으나 주변 계절이나 시각 또한 뜨거운 태양이거나 단단한 대지여서 사주가 신강(신강)해집니다. 단단해진 흙을 부드럽게 일깨우는 <strong>금(금 - 재능 발현 및 표현)</strong>과 비옥한 결실을 줄 시원한 단비인 <strong>수(수 - 흐름 및 재물운)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.'],
+                ['element', '토_신약', '귀하는 만물의 어머니 같은 토(토)의 일간을 타고났으나 태어난 계절의 기운이 너무 춥거나 척박하여 일간이 힘을 잃기 쉽습니다. 대지를 온화하게 데워줄 <strong>화(화 - 인덕 및 학업)</strong>와 든든히 받쳐줄 <strong>토(토 - 기반 및 신뢰)</strong>의 기운이 귀인 오행(용신)이 됩니다.']
+              ];
+              items.forEach(item => {
+                stmt.run(item[0], item[1], item[2]);
+              });
+              stmt.finalize((err3) => {
+                if (err3) reject(err3); else resolve();
+              });
+            } else resolve();
+          });
+        });
+      });
+    }
+  },
+  getAll: () => {
+    if (isPg) {
+      return pgPool.query('SELECT category, key, value FROM saju_data')
+        .then(res => res.rows);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.all('SELECT category, key, value FROM saju_data', [], (err, rows) => {
+          if (err) reject(err); else resolve(rows);
+        });
+      });
+    }
+  }
+};
+
+const hotspots = {
+  initialize: () => {
+    if (isPg) {
+      return pgPool.query(`
+        CREATE TABLE IF NOT EXISTS lotto_hotspots (
+          id SERIAL PRIMARY KEY,
+          name TEXT NOT NULL,
+          address TEXT NOT NULL,
+          wins TEXT NOT NULL,
+          description TEXT NOT NULL
+        );
+      `).then(() => {
+        return pgPool.query('SELECT COUNT(*) FROM lotto_hotspots').then(res => {
+          if (parseInt(res.rows[0].count) === 0) {
+            return pgPool.query(`
+              INSERT INTO lotto_hotspots (name, address, wins, description) VALUES 
+              ('스파복권방', '서울 노원구 상계동 707-3', '1등 48회 / 2등 180회 이상', '전국 부동의 1위 명당으로 주말마다 대기열이 수백 미터에 달하는 대한민국 최고의 로또 명가'),
+              ('천하명당복권방', '부산 동구 범일동 830-195', '1등 39회 / 2등 150회 이상', '부산과 영남 지역을 대표하는 전통 명문 명당으로 신기할 정도로 끊임없이 당첨자를 배출하는 곳'),
+              ('세진글라스', '대구 서구 평리동 1094-4', '1등 24회 / 2등 80회 이상', '안경점 내부에 위치한 대구 유일무이 최고의 당첨 기류를 가득 안은 행운의 중심지'),
+              ('로또휴게실', '경기 용인시 기흥구 하갈동 143-4', '1등 22회 / 2등 70회 이상', '국도변 기흥 저수지 옆에 위치하여 운전자들의 필수 코스로 각광받는 경기 최대의 명소'),
+              ('목화휴게소', '경남 사천시 용현면 주문리 4', '1등 19회 / 2등 60회 이상', '삼천포 앞바다가 훤히 트인 영험한 정동풍 명소로 수려한 비경과 엄청난 행운을 안겨주는 명소')
+            `);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run(`
+          CREATE TABLE IF NOT EXISTS lotto_hotspots (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            name TEXT NOT NULL,
+            address TEXT NOT NULL,
+            wins TEXT NOT NULL,
+            description TEXT NOT NULL
+          );
+        `, (err) => {
+          if (err) return reject(err);
+          lottoSqlite.get('SELECT COUNT(*) as count FROM lotto_hotspots', [], (err2, row) => {
+            if (err2) return reject(err2);
+            if (row.count === 0) {
+              const stmt = lottoSqlite.prepare('INSERT INTO lotto_hotspots (name, address, wins, description) VALUES (?, ?, ?, ?)');
+              stmt.run('스파복권방', '서울 노원구 상계동 707-3', '1등 48회 / 2등 180회 이상', '전국 부동의 1위 명당으로 주말마다 대기열이 수백 미터에 달하는 대한민국 최고의 로또 명가');
+              stmt.run('천하명당복권방', '부산 동구 범일동 830-195', '1등 39회 / 2등 150회 이상', '부산과 영남 지역을 대표하는 전통 명문 명당으로 신기할 정도로 끊임없이 당첨자를 배출하는 곳');
+              stmt.run('세진글라스', '대구 서구 평리동 1094-4', '1등 24회 / 2등 80회 이상', '안경점 내부에 위치한 대구 유일무이 최고의 당첨 기류를 가득 안은 행운의 중심지');
+              stmt.run('로또휴게실', '경기 용인시 기흥구 하갈동 143-4', '1등 22회 / 2등 70회 이상', '국도변 기흥 저수지 옆에 위치하여 운전자들의 필수 코스로 각광받는 경기 최대의 명소');
+              stmt.run('목화휴게소', '경남 사천시 용현면 주문리 4', '1등 19회 / 2등 60회 이상', '삼천포 앞바다가 훤히 트인 영험한 정동풍 명소로 수려한 비경과 엄청난 행운을 안겨주는 명소');
+              stmt.finalize((err3) => {
+                if (err3) reject(err3); else resolve();
+              });
+            } else resolve();
+          });
+        });
+      });
+    }
+  },
+  getAll: () => {
+    if (isPg) {
+      return pgPool.query('SELECT id, name, address, wins, description FROM lotto_hotspots ORDER BY id ASC')
+        .then(res => res.rows);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.all('SELECT id, name, address, wins, description FROM lotto_hotspots ORDER BY id ASC', [], (err, rows) => {
+          if (err) reject(err); else resolve(rows);
+        });
+      });
+    }
+  }
+};
+
+const board = {
+  initialize: () => {
+    if (isPg) {
+      return pgPool.query(`
+        CREATE TABLE IF NOT EXISTS board_posts (
+          id SERIAL PRIMARY KEY,
+          title TEXT NOT NULL,
+          content TEXT NOT NULL,
+          author TEXT,
+          password TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `).then(() => {
+        return pgPool.query('SELECT COUNT(*) FROM board_posts').then(res => {
+          if (parseInt(res.rows[0].count) === 0) {
+            return pgPool.query(`
+              INSERT INTO board_posts (title, content, author, password) VALUES 
+              ('로또 대박 기원합니다!', '오늘 역학 패턴 필터로 뽑아낸 조합으로 5천원씩 사왔습니다. 이번 회차 모두 대박 나세요!', '행운충전', '1234'),
+              ('사주 오행 번호 소름 돋네요.', '태어난 시간까지 넣어서 사주 돌렸는데 나온 평생 행운수 4개가 실제로 지난주 2등 번호랑 많이 겹칩니다... 이번 주 믿고 갑니다!', '만세력왕', '1234')
+            `);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run(`
+          CREATE TABLE IF NOT EXISTS board_posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            author TEXT,
+            password TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          );
+        `, (err) => {
+          if (err) return reject(err);
+          lottoSqlite.get('SELECT COUNT(*) as count FROM board_posts', [], (err2, row) => {
+            if (err2) return reject(err2);
+            if (row.count === 0) {
+              const stmt = lottoSqlite.prepare('INSERT INTO board_posts (title, content, author, password) VALUES (?, ?, ?, ?)');
+              stmt.run('로또 대박 기원합니다!', '오늘 역학 패턴 필터로 뽑아낸 조합으로 5천원씩 사왔습니다. 이번 회차 모두 대박 나세요!', '행운충전', '1234');
+              stmt.run('사주 오행 번호 소름 돋네요.', '태어난 시간까지 넣어서 사주 돌렸는데 나온 평생 행운수 4개가 실제로 지난주 2등 번호랑 많이 겹칩니다... 이번 주 믿고 갑니다!', '만세력왕', '1234');
+              stmt.finalize((err3) => {
+                if (err3) reject(err3); else resolve();
+              });
+            } else resolve();
+          });
+        });
+      });
+    }
+  },
+  getAll: () => {
+    if (isPg) {
+      return pgPool.query('SELECT id, title, content, author, created_at as "createdAt" FROM board_posts ORDER BY id DESC')
+        .then(res => res.rows);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.all('SELECT id, title, content, author, created_at as createdAt FROM board_posts ORDER BY id DESC', [], (err, rows) => {
+          if (err) reject(err); else resolve(rows);
+        });
+      });
+    }
+  },
+  insert: (title, content, author, password) => {
+    if (isPg) {
+      return pgPool.query('INSERT INTO board_posts (title, content, author, password) VALUES ($1, $2, $3, $4) RETURNING id', [title, content, author, password])
+        .then(res => res.rows[0].id);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run('INSERT INTO board_posts (title, content, author, password) VALUES (?, ?, ?, ?)', [title, content, author, password], function(err) {
+          if (err) reject(err); else resolve(this.lastID);
+        });
+      });
+    }
+  },
+  delete: (id, password) => {
+    if (isPg) {
+      return pgPool.query('SELECT password FROM board_posts WHERE id = $1', [id]).then(res => {
+        if (res.rows[0] && res.rows[0].password === password) {
+          return pgPool.query('DELETE FROM board_posts WHERE id = $1', [id]).then(() => true);
+        }
+        return false;
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.get('SELECT password FROM board_posts WHERE id = ?', [id], (err, row) => {
+          if (err) return reject(err);
+          if (row && row.password === password) {
+            lottoSqlite.run('DELETE FROM board_posts WHERE id = ?', [id], (err2) => {
+              if (err2) reject(err2); else resolve(true);
+            });
+          } else {
+            resolve(false);
+          }
+        });
+      });
+    }
+  }
+};
+
 module.exports = {
   isPg,
   initPgTables,
   lotto,
   pension,
-  news
+  news,
+  saju,
+  hotspots,
+  board
 };

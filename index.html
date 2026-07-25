@@ -1243,132 +1243,130 @@
         </div>
       </div>
 
-      <!-- 꿀팁 & 가이드 영역 -->
+            <!-- 꿀팁 & 가이드 영역 -->
       <div id="guide-section" style="display: none; width: 100%;">
         <div class="menu-card">
-          <button class="tab-btn active" onclick="switchTab('guide', 'win-info')">
-            <span class="pc-text">로또 당첨금과 세율</span>
-            <span class="mobile-text"><span>세금</span><span>안내</span></span>
+          <button class="tab-btn active" onclick="switchTab('guide', 'hotspots')">
+            <span class="pc-text">로또 전국 명당</span>
+            <span class="mobile-text"><span>전국</span><span>명당</span></span>
           </button>
-          <button class="tab-btn" onclick="switchTab('guide', 'pension-info')">
-            <span class="pc-text">연금복권 실수령액</span>
-            <span class="mobile-text"><span>연금</span><span>수령</span></span>
+          <button class="tab-btn" onclick="switchTab('guide', 'news')">
+            <span class="pc-text">최신 뉴스 기사</span>
+            <span class="mobile-text"><span>최신</span><span>뉴스</span></span>
           </button>
-          <button class="tab-btn" onclick="switchTab('guide', 'probability')">
-            <span class="pc-text">당첨 확률과 통계</span>
-            <span class="mobile-text"><span>확률</span><span>통계</span></span>
+          <button class="tab-btn" onclick="switchTab('guide', 'board')">
+            <span class="pc-text">자유 게시판</span>
+            <span class="mobile-text"><span>자유</span><span>게시판</span></span>
           </button>
-          <button class="tab-btn" onclick="switchTab('guide', 'healthy')">
-            <span class="pc-text">건전한 구매 가이드</span>
-            <span class="mobile-text"><span>건전</span><span>구매</span></span>
+          <button class="tab-btn" onclick="switchTab('guide', 'tips')">
+            <span class="pc-text">팁 & 가이드 모음</span>
+            <span class="mobile-text"><span>꿀팁</span><span>모음</span></span>
           </button>
         </div>
 
         <div class="content-card">
-          <div id="guide-tab-win-info" class="tab-content active">
-            <div class="tab-header" style="text-align: left;">
-              <h1 style="font-size: 22px; margin-bottom: 12px; color: var(--text-main);">💰 로또 당첨금 수령 방법 및 세율 안내</h1>
-              <p style="margin-bottom: 20px; color: var(--text-sub); line-height: 1.6;">로또 6/45 당첨 시 수령 방법과 당첨 금액에 따른 세금 비율을 정확하게 정리해 드립니다.</p>
-              
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8; margin-bottom: 15px;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">1. 당첨금 수령 장소</h3>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>1등 당첨금</strong>: NH농협은행 본점 (서울시 중구 소재)에서만 수령이 가능합니다. 방문 시 신분증과 당첨 복권을 필히 지참하셔야 합니다.</li>
-                  <li><strong>2등 / 3등 당첨금</strong>: NH농협은행 각 지점에서 수령할 수 있습니다. (지역 농·축협 제외)</li>
-                  <li><strong>4등 / 5등 당첨금</strong>: 일반 로또 판매점 및 농협은행 각 지점 어디서나 즉시 현금 또는 복권으로 교환이 가능합니다.</li>
-                </ul>
+          <!-- 1. 전국 명당 -->
+          <div id="guide-tab-hotspots" class="tab-content active" style="flex-direction: column; width: 100%;">
+            <div class="tab-header">
+              <h1>🗺️ 전국 로또 당첨 최다 명당 리스트</h1>
+              <p>전국에서 1등 당첨자를 가장 많이 배출해 낸 부동의 복권 명소 지도를 확인하세요.</p>
+            </div>
+            <div id="hotspotsFeedList" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; margin: 0 auto; text-align: left;">
+              <div style="color: var(--text-sub); text-align: center; padding: 20px;">전국 명당 데이터를 디비에서 가져오는 중...</div>
+            </div>
+          </div>
+
+          <!-- 2. 최신 뉴스 기사 -->
+          <div id="guide-tab-news" class="tab-content" style="flex-direction: column; width: 100%;">
+            <div class="tab-header">
+              <h1>📰 최신 복권 소식 & 정보 뉴스 피드</h1>
+              <p>기획재정부 복권위원회 소식과 화제의 복권 당첨 후기 등 최신 기사를 모아 보여드립니다.</p>
+            </div>
+            <div id="guideNewsFeedList" style="display: flex; flex-direction: column; gap: 12px; width: 100%; max-width: 600px; margin: 0 auto; text-align: left;">
+              <div style="color: var(--text-sub); text-align: center; padding: 20px;">기사를 실시간 수집하는 중...</div>
+            </div>
+          </div>
+
+          <!-- 3. 자유 게시판 -->
+          <div id="guide-tab-board" class="tab-content" style="flex-direction: column; width: 100%;">
+            <div class="tab-header">
+              <h1>💬 행운 충전 자유게시판</h1>
+              <p>오늘의 대박 꿈, 행운 비결을 공유하고 전국의 동료 복권 구매자들과 선한 대화를 나누어 보세요.</p>
+            </div>
+            
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 20px; max-width: 600px; margin: 0 auto; text-align: left;">
+              <!-- 글쓰기 카드 -->
+              <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
+                <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px; display: flex; align-items: center; gap: 6px;">✍️ 자유게시판 글쓰기</h3>
+                <div style="display: flex; flex-direction: column; gap: 10px; width: 100%;">
+                  <div style="display: flex; gap: 10px; width: 100%;">
+                    <input type="text" id="boardTitleInput" placeholder="제목을 입력하세요." style="flex: 2; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="text" id="boardAuthorInput" placeholder="닉네임" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    <input type="password" id="boardPasswordInput" placeholder="비밀번호 (삭제용)" style="flex: 1; padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  </div>
+                  <textarea id="boardContentInput" placeholder="게시글 내용을 자유롭게 남겨주세요." rows="3" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; resize: none; font-family: inherit; line-height: 1.5; width: 100%;"></textarea>
+                  <button class="action-btn" onclick="saveBoardPost()" style="align-self: flex-end; margin-top: 5px; width: auto; padding: 8px 20px;">📝 글 등록하기</button>
+                </div>
               </div>
 
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">2. 당첨금 세금 계산 (세율 안내)</h3>
-                <p style="color: var(--text-sub); margin-bottom: 10px;">복권 당첨 소득은 소득세법에 따라 '기타소득'으로 분류되며 다음과 같은 세율이 적용됩니다.</p>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>3억 원 이하</strong>: 기타소득세 20% + 지방소득세 2% = <strong>총 22% 세금 공제</strong></li>
-                  <li><strong>3억 원 초과</strong>: 기타소득세 30% + 지방소득세 3% = <strong>총 33% 세금 공제</strong></li>
-                  <li><strong>200만 원 이하 (4등, 5등 포함)</strong>: 세금이 전혀 부과되지 않는 비과세 대상입니다. 세금 공제 없이 전액 수령합니다.</li>
-                </ul>
+              <!-- 피드 리스트 -->
+              <div style="width: 100%;">
+                <h3 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin-bottom: 12px;">💬 전체 게시글 목록</h3>
+                <div id="boardPostList" style="display: flex; flex-direction: column; gap: 12px; width: 100%;">
+                  <div style="color: var(--text-sub); text-align: center; padding: 20px;">글목록을 불러오는 중...</div>
+                </div>
               </div>
             </div>
           </div>
 
-          <div id="guide-tab-pension-info" class="tab-content">
-            <div class="tab-header" style="text-align: left;">
-              <h1 style="font-size: 22px; margin-bottom: 12px; color: var(--text-main);">💵 연금복권 720+ 당첨 구조와 실수령액</h1>
-              <p style="margin-bottom: 20px; color: var(--text-sub); line-height: 1.6;">매달 나누어 받는 연금복권 720+의 당첨금 지급 구조와 세금을 제외한 실제 매월 수령 금액을 알아봅니다.</p>
-
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8; margin-bottom: 15px;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">1. 1등 당첨 시 지급액 및 매월 실수령액</h3>
-                <p style="color: var(--text-sub); margin-bottom: 10px;">연금복권 1등 당첨금은 20년간 매월 700만 원씩 지급됩니다.</p>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>명목 당첨금</strong>: 매월 700만 원 (20년간 총 16억 8천만 원)</li>
-                  <li><strong>세율 적용</strong>: 3억 원 이하 세율인 <strong>22% 세율</strong>이 매달 분할 적용됩니다. (연금식으로 받기 때문에 33%가 아닌 22%가 적용되어 세금 측면에서 유리합니다.)</li>
-                  <li><strong>매월 실수령액</strong>: 700만 원 - 세금 154만 원 = <strong>매월 546만 원</strong>을 20년 동안 받게 됩니다.</li>
-                </ul>
+          <!-- 4. 팁 & 가이드 모음 -->
+          <div id="guide-tab-tips" class="tab-content" style="flex-direction: column; width: 100%;">
+            <div style="width: 100%; display: flex; flex-direction: column; gap: 20px; text-align: left; max-width: 720px; margin: 0 auto;">
+              <!-- 팁 1: 로또 당첨금 세율 -->
+              <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                <h3 style="font-size: 16px; font-weight: bold; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">💰 로또 당첨금 수령 방법 및 세율 안내</h3>
+                <p style="color: var(--text-sub); font-size: 13.5px; line-height: 1.6; margin-bottom: 12px;">로또 6/45 당첨 시 수령 방법과 당첨 금액에 따른 세금 비율을 안내해 드립니다.</p>
+                <div style="background: var(--card-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--game-item-border); font-size: 13px; line-height: 1.7; color: var(--text-sub);">
+                  • <strong>1등 수령처</strong>: NH농협은행 본점 (서울 중구 소재). 신분증과 당첨 복권 지참 필수.<br>
+                  • <strong>2등/3등 수령처</strong>: NH농협은행 각 지점 (일반 농·축협 제외).<br>
+                  • <strong>세율 조건</strong>:<br>
+                    - 3억 이하: 총 22% 소득세 공제 (소득세 20% + 지방소득세 2%)<br>
+                    - 3억 초과: 총 33% 소득세 공제 (소득세 30% + 지방소득세 3%)<br>
+                    - 200만 원 이하: 비과세 전액 수령.
+                </div>
               </div>
 
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">2. 2등 당첨 및 보너스 당첨 실수령액</h3>
-                <p style="color: var(--text-sub); margin-bottom: 10px;">2등과 보너스 등수 역시 연금식으로 매월 당첨금이 분할 지급됩니다.</p>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>2등 / 보너스 당첨금</strong>: 10년간 매월 100만 원씩 지급됩니다. (10년간 총 1억 2천만 원)</li>
-                  <li><strong>매월 실수령액</strong>: 100만 원 - 세금 22만 원(22% 공제) = <strong>매월 78만 원</strong>을 10년 동안 정기적으로 지급받습니다.</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div id="guide-tab-probability" class="tab-content">
-            <div class="tab-header" style="text-align: left;">
-              <h1 style="font-size: 22px; margin-bottom: 12px; color: var(--text-main);">📊 복권 당첨 확률 및 통계적 이해</h1>
-              <p style="margin-bottom: 20px; color: var(--text-sub); line-height: 1.6;">과학적인 통계에 근거한 복권 당첨 확률과 재미있는 수학적 사실들을 정리하여 공개합니다.</p>
-
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8; margin-bottom: 15px;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">1. 로또 6/45 등수별 이론적 확률</h3>
-                <p style="color: var(--text-sub); margin-bottom: 10px;">로또 45개의 숫자 중 6개를 순서 상관없이 맞추는 경우의 수는 총 8,145,060가지입니다.</p>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>1등 당첨 확률</strong>: 1 / 8,145,060 (약 0.000012%)</li>
-                  <li><strong>2등 당첨 확률</strong>: 1 / 1,357,510 (약 0.000074%)</li>
-                  <li><strong>3등 당첨 확률</strong>: 1 / 35,724 (약 0.0028%)</li>
-                  <li><strong>4등 당첨 확률</strong>: 1 / 733 (약 0.136%)</li>
-                  <li><strong>5등 당첨 확률</strong>: 1 / 45 (약 2.22%)</li>
-                </ul>
+              <!-- 팁 2: 연금복권 실수령액 -->
+              <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                <h3 style="font-size: 16px; font-weight: bold; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">💵 연금복권 720+ 당첨 구조와 실수령액</h3>
+                <p style="color: var(--text-sub); font-size: 13.5px; line-height: 1.6; margin-bottom: 12px;">매달 나누어 받는 연금복권 720+의 세금을 제외한 실제 매월 수령 금액을 알아봅니다.</p>
+                <div style="background: var(--card-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--game-item-border); font-size: 13px; line-height: 1.7; color: var(--text-sub);">
+                  • <strong>1등 지급액</strong>: 20년간 매월 700만 원 지급 (총 16억 8천만 원).<br>
+                  • <strong>1등 매월 실수령액</strong>: 22% 세율이 분할 적용되어 <strong>매월 546만 원</strong> 수령 (세금 154만 원 제외).<br>
+                  • <strong>2등/보너스 지급액</strong>: 10년간 매월 100만 원 지급 (총 1억 2천만 원).<br>
+                  • <strong>2등 매월 실수령액</strong>: 22% 세율이 적용되어 <strong>매월 78만 원</strong> 수령.
+                </div>
               </div>
 
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">2. 연금복권 720+ 당첨 확률</h3>
-                <p style="color: var(--text-sub); margin-bottom: 10px;">연금복권은 조(1~5조)와 각 조의 6자리 숫자를 매칭하는 방식입니다.</p>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>1등 당첨 확률</strong>: 1 / 5,000,000 (0.00002%) 로, 로또 1등 확률(1/814만)에 비해 약 1.6배 더 높은 확률을 자랑합니다.</li>
-                  <li><strong>2등 당첨 확률</strong>: 1 / 1,250,000 (0.00008%)</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-
-          <div id="guide-tab-healthy" class="tab-content">
-            <div class="tab-header" style="text-align: left;">
-              <h1 style="font-size: 22px; margin-bottom: 12px; color: var(--text-main);">🍀 건전한 소액 복권 구매 및 이용 가이드</h1>
-              <p style="margin-bottom: 20px; color: var(--text-sub); line-height: 1.6;">복권은 즐거운 기부이자 오락입니다. 건강한 여가 생활로 즐기기 위한 약속과 원칙을 전해드립니다.</p>
-
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8; margin-bottom: 15px;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">1. 과몰입 방지를 위한 자가 원칙</h3>
-                <ul style="list-style-type: disc; margin-left: 20px; color: var(--text-sub);">
-                  <li><strong>한도 지키기</strong>: 복권 구매 한도는 1회 10만 원으로 제한되어 있습니다. 가급적 주당 1만 원 이하의 소액으로 건전하게 즐기는 것을 권장합니다.</li>
-                  <li><strong>오락으로 대하기</strong>: 복권을 투자의 목적이나 생계 수단으로 여기지 마시고, 일주일 동안 소소한 희망과 행복을 사는 건전한 엔터테인먼트로 여겨주세요.</li>
-                  <li><strong>만 19세 미만 판매 금지</strong>: 청소년은 복권을 구매할 수 없으며, 대리 구매 또한 엄격히 법적으로 제한됩니다.</li>
-                </ul>
-              </div>
-
-              <div style="background: var(--game-item-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); line-height: 1.8;">
-                <h3 style="font-size: 16px; margin-bottom: 10px; color: var(--text-main);">2. 복권 기금의 선한 영향력</h3>
-                <p style="color: var(--text-sub);">여러분이 구매하신 복권 판매 금액의 약 42%는 저소득층 주거 안정을 위한 기금, 국가 유공자 지원 사업, 소외계층 문화 지원 사업 등 공익을 위한 '복권기금'으로 투명하고 소중하게 사용됩니다. 낙첨되더라도 우리 사회의 따뜻한 나눔에 기여한 소중한 기부금이 됩니다.</p>
+              <!-- 팁 3: 복권 통계 확률 -->
+              <div style="background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                <h3 style="font-size: 16px; font-weight: bold; color: var(--text-main); margin-bottom: 10px; display: flex; align-items: center; gap: 6px;">📊 복권 당첨 확률 및 통계적 이해</h3>
+                <p style="color: var(--text-sub); font-size: 13.5px; line-height: 1.6; margin-bottom: 12px;">과학적인 통계에 근거한 복권 당첨 확률과 재미있는 수학적 사실들을 정리하여 공개합니다.</p>
+                <div style="background: var(--card-bg); padding: 14px; border-radius: 10px; border: 1px solid var(--game-item-border); font-size: 13px; line-height: 1.7; color: var(--text-sub);">
+                  • <strong>로또 6/45 등수별 당첨 확률</strong>:<br>
+                    - 1등: 1 / 8,145,060 (약 0.000012%)<br>
+                    - 2등: 1 / 1,357,510 (약 0.000074%)<br>
+                    - 3등: 1 / 35,724 (약 0.0028%)<br>
+                    - 4등: 1 / 733 (약 0.136%)<br>
+                    - 5등: 1 / 45 (약 2.22%)<br>
+                  • <strong>연금복권 720+ 등수별 당첨 확률</strong>:<br>
+                    - 1등: 1 / 5,000,000 (0.00002%). 로또 1등에 비해 1.6배 높은 당첨 확률을 가집니다.
+                </div>
               </div>
             </div>
           </div>
         </div>
       </div>
-    </div>
-  </div>
 
   <!-- 푸터 영역 -->
   <footer class="site-footer">
@@ -1463,6 +1461,7 @@
 
   <script>
     const API_BASE_URL = '';
+    let sajuDbData = null;
 
     (function() {
       const savedTheme = localStorage.getItem('theme') || 'light';
@@ -1575,7 +1574,7 @@
       contents.forEach(c => c.classList.remove('active'));
 
       if (section === 'guide') {
-        const guideTabMap = { 'win-info': 0, 'pension-info': 1, 'probability': 2, 'healthy': 3 };
+        const guideTabMap = { hotspots: 0, news: 1, board: 2, tips: 3 };
         const idx = guideTabMap[tabName];
         if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
       } else {
@@ -1595,6 +1594,12 @@
         fetchLatestDefaults();
       } else if (section === 'lotto' && tabName === 'news') {
         fetchNewsArticles();
+      } else if (section === 'guide' && tabName === 'hotspots') {
+        fetchHotspots();
+      } else if (section === 'guide' && tabName === 'news') {
+        fetchGuideNews();
+      } else if (section === 'guide' && tabName === 'board') {
+        fetchBoardPosts();
       }
     }
 
@@ -1983,6 +1988,52 @@
         luckyDigits.push(...numberMap[el]);
       });
 
+      // Pull interpretations from Saju DB Table if loaded, fallback to default if not loaded
+      let dbZodiacText = "";
+      let dbSeasonText = "";
+      let dbFavorableExplanation = "";
+
+      const zodiacIdx = (calcYear - 4) % 12;
+      const finalZodiacIdx = zodiacIdx < 0 ? zodiacIdx + 12 : zodiacIdx;
+
+      let birthMonthText = "";
+      if (calcMonth >= 3 && calcMonth <= 5) birthMonthText = "봄";
+      else if (calcMonth >= 6 && calcMonth <= 8) birthMonthText = "여름";
+      else if (calcMonth >= 9 && calcMonth <= 11) birthMonthText = "가을";
+      else birthMonthText = "겨울";
+
+      const dbElementKey = dayMasterElement + "_" + (favorableElements.includes('수') || favorableElements.includes('금') ? "신강" : "신약");
+
+      if (sajuDbData && sajuDbData.zodiac && sajuDbData.zodiac[finalZodiacIdx]) {
+        dbZodiacText = sajuDbData.zodiac[finalZodiacIdx];
+      } else {
+        const zodiacs = {
+          0: "원숭이띠 (신금 申金 - 지혜와 재치)", 1: "닭띠 (유금 酉金 - 예리함과 총명함)", 2: "개띠 (술토 戌土 - 충직함과 책임감)",
+          3: "돼지띠 (해수 亥水 - 풍요와 끈기)", 4: "쥐띠 (자수 子水 - 기회와 지혜)", 5: "소띠 (축토 丑土 - 우직함과 결실)",
+          6: "호랑이띠 (인목 寅木 - 용맹과 자신감)", 7: "토끼띠 (묘목 卯木 - 조화와 영민함)", 8: "용띠 (진토 辰土 - 무한한 잠재력)",
+          9: "뱀띠 (사화 巳火 - 직관과 통찰)", 10: "말띠 (오화 午火 - 열정과 돌파력)", 11: "양띠 (미토 未土 - 온화함과 상생)"
+        };
+        dbZodiacText = zodiacs[finalZodiacIdx] + "의 기운을 얻고 태어났습니다.";
+      }
+
+      if (sajuDbData && sajuDbData.season && sajuDbData.season[birthMonthText]) {
+        dbSeasonText = sajuDbData.season[birthMonthText];
+      } else {
+        const seasons = {
+          "봄": "봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운",
+          "여름": "여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운",
+          "가을": "가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운",
+          "겨울": "겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운"
+        };
+        dbSeasonText = seasons[birthMonthText];
+      }
+
+      if (sajuDbData && sajuDbData.element && sajuDbData.element[dbElementKey]) {
+        dbFavorableExplanation = sajuDbData.element[dbElementKey];
+      } else {
+        dbFavorableExplanation = favorableExplanation;
+      }
+
       return {
         isLunar: isLunar,
         solarDate: calcYear + '년 ' + calcMonth + '월 ' + calcDay + '일',
@@ -1993,7 +2044,9 @@
         hourPillar: hourPillarText,
         favorableElements: favorableElements,
         luckyDigits: luckyDigits,
-        favorableExplanation: favorableExplanation
+        favorableExplanation: dbFavorableExplanation,
+        zodiacText: dbZodiacText,
+        seasonText: dbSeasonText
       };
     }
 
@@ -2060,6 +2113,8 @@
                     '  - 일주: <strong>' + saju.dayPillar + ' (일간: ' + saju.dayMaster + ')</strong><br>' +
                     '  - 시주: <strong>' + saju.hourPillar + '</strong><br>' +
                     (saju.isLunar ? '  * 실제 변환된 양력 환산생일: ' + saju.solarDate + '<br>' : '') + '<br>' +
+                    '• <strong>태어난 해의 기운(띠)</strong>: ' + saju.zodiacText + '<br>' +
+                    '• <strong>태어난 계절의 기운</strong>: ' + saju.seasonText + '<br><br>' +
                     '• <strong>사주 오행 해설</strong>: ' + saju.favorableExplanation + '<br><br>' +
                     '• <strong>연금 수리 오행 조합 결과</strong>: 성명 자음 파동과 용신 오행 수리 역학(<strong>' + saju.favorableElements.join(', ') + '</strong>)에 입각하여 ' +
                     '당첨의 길수가 가장 유기적으로 공명하는 자릿수를 정밀 편향 매칭했습니다. ' +
@@ -2519,6 +2574,8 @@
                     `  - 일주: <strong>${saju.dayPillar} (일간: ${saju.dayMaster})</strong><br>` +
                     `  - 시주: <strong>${saju.hourPillar}</strong><br>` +
                     `  * ${saju.isLunar ? `실제 변환된 양력 환산생일: ${saju.solarDate}<br>` : ''}<br>` +
+                    `• <strong>태어난 해의 기운 (띠)</strong>: ${saju.zodiacText}<br>` +
+                    `• <strong>태어난 계절의 기운</strong>: ${saju.seasonText}을 얻었습니다.<br><br>` +
                     `• <strong>사주 오행 해설</strong>: ${saju.favorableExplanation}<br><br>` +
                     `• <strong>수리역학적 조합 결과</strong>: 성명 자모음 파동 기류와 용신 오행(<strong>${saju.favorableElements.join(', ')}</strong>)에 공명하는 주파수를 적용했습니다. ` +
                     `귀하의 평생 행운 번호(<strong>${saju.luckyDigits.join(', ')}</strong>)가 끝자리에 매칭되거나 포함될 확률이 400% 대폭 가중된 **대길(大吉)의 6자리 행운 비법수**를 추천해 드립니다. 우주의 조화로운 에너지와 함께 최고의 행운을 누려보세요!`;
@@ -2683,8 +2740,213 @@
       }
     }
 
+    async function fetchSajuDbData() {
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/saju`);
+        const result = await response.json();
+        if (result.success && result.data) {
+          sajuDbData = result.data;
+          console.log('✅ Saju Database loaded successfully from server');
+        }
+      } catch (e) {
+        console.error('❌ Saju Database fetch failed:', e);
+      }
+    }
+
+    async function fetchHotspots() {
+      const container = document.getElementById('hotspotsFeedList');
+      if (!container) return;
+      container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">디비에서 명당 목록을 불러오는 중...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/hotspots`);
+        const result = await response.json();
+
+        if (!result.success || !result.data || result.data.length === 0) {
+          container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">등록된 명당 정보가 없습니다.</div>';
+          return;
+        }
+
+        let html = '';
+        result.data.forEach((item, index) => {
+          html += `
+            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--game-item-border); padding-bottom: 8px; margin-bottom: 4px;">
+                <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0;">🔥 ${index + 1}위: ${item.name}</h4>
+                <span style="font-size: 12px; font-weight: bold; color: #764ba2; background: rgba(118, 75, 162, 0.1); padding: 2px 8px; border-radius: 6px;">${item.wins}</span>
+              </div>
+              <p style="font-size: 13.5px; color: var(--text-main); line-height: 1.6; margin: 4px 0;">${item.description}</p>
+              <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 4px;">
+                📍 주소: ${item.address}
+              </div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        console.error('명당 조회 실패:', e);
+        container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 명당을 불러올 수 없습니다.</div>';
+      }
+    }
+
+    async function fetchGuideNews() {
+      const container = document.getElementById('guideNewsFeedList');
+      if (!container) return;
+      container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">기사 피드를 불러오는 중...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/news`);
+        const result = await response.json();
+
+        if (!result.success || !result.data || result.data.length === 0) {
+          container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">등록된 뉴스 기사가 없습니다.</div>';
+          return;
+        }
+
+        let html = '';
+        result.data.forEach(item => {
+          const dateStr = new Date(item.createdAt || item.created_at).toLocaleDateString('ko-KR', {
+            year: 'numeric', month: 'long', day: 'numeric'
+          });
+          
+          html += `
+            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
+              <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0; line-height: 1.4;">📰 ${item.title}</h4>
+              <p style="font-size: 13.5px; color: var(--text-sub); line-height: 1.6; margin: 4px 0; white-space: pre-wrap;">${item.content}</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; border-top: 1px dashed var(--game-item-border); padding-top: 8px; font-size: 11px; color: #94a3b8;">
+                <span>✍️ 기사 제공: ${item.author}</span>
+                <span>📅 발행일: ${dateStr}</span>
+              </div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        console.error('가이드 뉴스 조회 실패:', e);
+        container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 뉴스를 불러올 수 없습니다.</div>';
+      }
+    }
+
+    async function fetchBoardPosts() {
+      const container = document.getElementById('boardPostList');
+      if (!container) return;
+      container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">게시판 글 목록을 디비에서 긁어오는 중...</div>';
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board`);
+        const result = await response.json();
+
+        if (!result.success || !result.data || result.data.length === 0) {
+          container.innerHTML = '<div style="color: var(--text-sub); text-align: center; padding: 20px;">첫 게시글을 남겨 행운을 소문내 보세요!</div>';
+          return;
+        }
+
+        let html = '';
+        result.data.forEach(item => {
+          const dateStr = new Date(item.createdAt || item.created_at).toLocaleDateString('ko-KR', {
+            year: 'numeric', month: 'long', day: 'numeric', hour: '2-digit', minute: '2-digit'
+          });
+
+          html += `
+            <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
+              <div style="display: flex; justify-content: space-between; align-items: flex-start; gap: 10px;">
+                <h4 style="font-size: 14.5px; font-weight: bold; color: var(--text-main); margin: 0; line-height: 1.4;">${item.title}</h4>
+                <button onclick="deleteBoardPost(${item.id})" style="background: none; border: none; color: #e53e3e; font-size: 11px; cursor: pointer; padding: 2px 6px; border-radius: 4px; border: 1px solid rgba(229, 62, 62, 0.2); transition: all 0.2s;">삭제</button>
+              </div>
+              <p style="font-size: 13px; color: var(--text-sub); line-height: 1.6; margin: 4px 0; white-space: pre-wrap;">${item.content}</p>
+              <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 5px; border-top: 1px dashed var(--game-item-border); padding-top: 8px; font-size: 11px; color: #94a3b8;">
+                <span style="font-weight: bold; color: #764ba2;">💬 ${item.author}</span>
+                <span>📅 ${dateStr}</span>
+              </div>
+            </div>
+          `;
+        });
+        container.innerHTML = html;
+      } catch (e) {
+        console.error('게시판 조회 실패:', e);
+        container.innerHTML = '<div style="color: #e53935; text-align: center; padding: 20px;">서버 연결에 실패하여 게시판을 불러올 수 없습니다.</div>';
+      }
+    }
+
+    async function saveBoardPost() {
+      const titleInput = document.getElementById('boardTitleInput');
+      const authorInput = document.getElementById('boardAuthorInput');
+      const passwordInput = document.getElementById('boardPasswordInput');
+      const contentInput = document.getElementById('boardContentInput');
+
+      if (!titleInput || !contentInput || !authorInput || !passwordInput) return;
+
+      const title = titleInput.value.trim();
+      const author = authorInput.value.trim();
+      const password = passwordInput.value.trim();
+      const content = contentInput.value.trim();
+
+      if (!title) { alert('게시글 제목을 입력해 주세요.'); return; }
+      if (!author) { alert('닉네임을 입력해 주세요.'); return; }
+      if (!password) { alert('삭제시 필요한 비밀번호를 입력해 주세요.'); return; }
+      if (!content) { alert('내용을 입력해 주세요.'); return; }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            title: title,
+            content: content,
+            author: author,
+            password: password
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert(result.message);
+          titleInput.value = '';
+          authorInput.value = '';
+          passwordInput.value = '';
+          contentInput.value = '';
+          fetchBoardPosts();
+        } else {
+          alert('등록 실패: ' + result.message);
+        }
+      } catch (e) {
+        console.error('등록 에러:', e);
+        alert('서버 통신 실패로 등록하지 못했습니다.');
+      }
+    }
+
+    async function deleteBoardPost(id) {
+      const password = prompt('이 게시글을 삭제하려면 작성 시 설정한 비밀번호를 입력하세요:');
+      if (password === null) return; 
+      if (!password.trim()) { alert('비밀번호를 입력해야 합니다.'); return; }
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/board/delete`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: id,
+            password: password
+          })
+        });
+
+        const result = await response.json();
+        if (result.success) {
+          alert(result.message);
+          fetchBoardPosts();
+        } else {
+          alert('삭제 실패: ' + result.message);
+        }
+      } catch (e) {
+        console.error('삭제 에러:', e);
+        alert('서버 통신 실패로 삭제하지 못했습니다.');
+      }
+    }
+
     window.onload = function() {
       initMainTab();
+      fetchSajuDbData();
+      fetchHotspots();
       
       document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
