@@ -2846,15 +2846,23 @@
 
       let html = '';
       filtered.forEach((item, index) => {
+        const rankText = region === '전체' ? `${index + 1}위` : '추천 명가';
+        const mapUrl = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(item.name + ' ' + item.address)}`;
+        
         html += `
           <div style="background: var(--card-bg); padding: 18px; border-radius: 12px; border: 1px solid var(--game-item-border); display: flex; flex-direction: column; gap: 8px;">
             <div style="display: flex; justify-content: space-between; align-items: center; border-bottom: 1px dashed var(--game-item-border); padding-bottom: 8px; margin-bottom: 4px;">
-              <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0;">🔥 [${item.region}] ${item.name}</h4>
+              <h4 style="font-size: 15px; font-weight: bold; color: var(--text-main); margin: 0;">🔥 ${rankText}: [${item.region}] ${item.name}</h4>
               <span style="font-size: 12px; font-weight: bold; color: #764ba2; background: rgba(118, 75, 162, 0.1); padding: 2px 8px; border-radius: 6px;">${item.wins}</span>
             </div>
             <p style="font-size: 13.5px; color: var(--text-main); line-height: 1.6; margin: 4px 0;">${item.description}</p>
-            <div style="font-size: 11px; color: #94a3b8; display: flex; align-items: center; gap: 4px;">
-              📍 주소: ${item.address}
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 4px; flex-wrap: wrap; gap: 8px; width: 100%;">
+              <div style="font-size: 11px; color: #94a3b8;">
+                📍 주소: ${item.address}
+              </div>
+              <a href="${mapUrl}" target="_blank" rel="noopener noreferrer" style="display: inline-flex; align-items: center; gap: 4px; font-size: 11px; font-weight: bold; color: #764ba2; border: 1px solid rgba(118, 75, 162, 0.3); padding: 4px 8px; border-radius: 6px; text-decoration: none; background: rgba(118, 75, 162, 0.05); transition: all 0.2s; white-space: nowrap;">
+                🗺️ 구글 지도 보기
+              </a>
             </div>
           </div>
         `;
