@@ -105,8 +105,15 @@
       transform: translateY(0);
     }
 
+    .pc-text { display: inline-block; }
+    .mobile-text { display: none; }
+
     /* ================= 모바일 전용 반응형 스타일 (PC는 기존 유지) ================= */
     @media (max-width: 600px) {
+      .pc-text { display: none !important; }
+      .mobile-text { display: flex !important; flex-direction: column; align-items: center; justify-content: center; gap: 2px; }
+      .mobile-text span { display: block; line-height: 1.1; }
+
       .theme-toggle {
         position: static;
         margin-bottom: 5px;
@@ -256,6 +263,17 @@
         text-align: left;
         font-size: 11px;
         flex-shrink: 0;
+      }
+
+      .game-item .balls-container {
+        flex-wrap: nowrap !important;
+        justify-content: flex-end;
+        gap: 3px;
+      }
+
+      #pension-recommend-games, #history-balls, #pension-history-balls {
+        flex-wrap: nowrap !important;
+        gap: 4px !important;
       }
 
       .pension-single-box {
@@ -764,9 +782,18 @@
       <!-- 로또 영역 -->
       <div id="lotto-section" style="width: 100%;">
         <div class="menu-card">
-          <button class="tab-btn active" onclick="switchTab('lotto', 'recommend')">로또 번호 추천</button>
-          <button class="tab-btn" onclick="switchTab('lotto', 'check')">나의 로또 번호 검색</button>
-          <button class="tab-btn" onclick="switchTab('lotto', 'history')">역대 로또 번호 조회</button>
+          <button class="tab-btn active" onclick="switchTab('lotto', 'recommend')">
+            <span class="pc-text">로또 번호 추천</span>
+            <span class="mobile-text"><span>번호</span><span>추천</span></span>
+          </button>
+          <button class="tab-btn" onclick="switchTab('lotto', 'check')">
+            <span class="pc-text">나의 로또 번호 검색</span>
+            <span class="mobile-text"><span>번호</span><span>검색</span></span>
+          </button>
+          <button class="tab-btn" onclick="switchTab('lotto', 'history')">
+            <span class="pc-text">역대 로또 번호 조회</span>
+            <span class="mobile-text"><span>번호</span><span>조회</span></span>
+          </button>
         </div>
 
         <div class="content-card">
@@ -821,9 +848,18 @@
       <!-- 연금복권 영역 -->
       <div id="pension-section" style="display: none; width: 100%;">
         <div class="menu-card">
-          <button class="tab-btn active" onclick="switchTab('pension', 'recommend')">연금복권 번호 추천</button>
-          <button class="tab-btn" onclick="switchTab('pension', 'check')">나의 연금복권 검색</button>
-          <button class="tab-btn" onclick="switchTab('pension', 'history')">역대 연금복권 조회</button>
+          <button class="tab-btn active" onclick="switchTab('pension', 'recommend')">
+            <span class="pc-text">연금복권 번호 추천</span>
+            <span class="mobile-text"><span>번호</span><span>추천</span></span>
+          </button>
+          <button class="tab-btn" onclick="switchTab('pension', 'check')">
+            <span class="pc-text">나의 연금복권 검색</span>
+            <span class="mobile-text"><span>번호</span><span>검색</span></span>
+          </button>
+          <button class="tab-btn" onclick="switchTab('pension', 'history')">
+            <span class="pc-text">역대 연금복권 조회</span>
+            <span class="mobile-text"><span>번호</span><span>조회</span></span>
+          </button>
         </div>
 
         <div class="content-card">
