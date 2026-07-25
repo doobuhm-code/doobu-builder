@@ -205,9 +205,9 @@
       }
 
       .num-inputs input, .pension-inputs-6 input {
-        padding: 8px 0;
-        font-size: 13.5px;
-        border-radius: 8px;
+        padding: clamp(5px, 1.8vw, 8px) 0;
+        font-size: clamp(11px, 3.2vw, 13px);
+        border-radius: 6px;
       }
 
       .pension-search-row {
@@ -325,16 +325,16 @@
     }
 
     .rabbit-ear {
-      width: 140px;
-      height: 50px;
+      width: clamp(90px, 28vw, 140px);
+      height: clamp(38px, 10vw, 50px);
       background: var(--ear-bg);
       border: none;
-      font-size: 15px;
+      font-size: clamp(12px, 3.8vw, 15px);
       font-weight: bold;
       color: var(--ear-text);
       cursor: pointer;
-      border-top-left-radius: 18px;
-      border-top-right-radius: 18px;
+      border-top-left-radius: clamp(10px, 3vw, 18px);
+      border-top-right-radius: clamp(10px, 3vw, 18px);
       box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
       transition: all 0.2s ease;
       display: flex;
@@ -346,8 +346,8 @@
     .rabbit-ear.active {
       background: var(--ear-active-bg);
       color: var(--ear-active-text);
-      height: 60px;
-      font-size: 16px;
+      height: clamp(44px, 12vw, 60px);
+      font-size: clamp(13px, 4vw, 16px);
       font-weight: 800;
       box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.08);
     }
@@ -371,17 +371,17 @@
 
     .tab-btn { 
       flex: 1 1 0px; 
-      height: 44px; 
-      line-height: 44px; 
+      height: clamp(34px, 9vw, 44px); 
+      line-height: clamp(34px, 9vw, 44px); 
       min-width: 0;
       background: none; 
       border: none; 
-      font-size: 15px; 
+      font-size: clamp(11px, 3.5vw, 15px); 
       font-weight: bold; 
       color: var(--tab-btn-text); 
-      padding: 0; 
+      padding: 0 clamp(4px, 1.5vw, 12px); 
       cursor: pointer; 
-      border-radius: 15px; 
+      border-radius: clamp(8px, 2vw, 15px); 
       text-align: center;
       white-space: nowrap;
       transition: all 0.2s ease;
@@ -433,8 +433,19 @@
     }
     
     .tab-header { width: 100%; text-align: center; margin-bottom: 25px; }
-    h1 { color: var(--text-main); margin-bottom: 6px; font-size: 22px; }
-    p { color: var(--text-sub); font-size: 14.5px; margin-bottom: 0; }
+    h1 { 
+      color: var(--text-main); 
+      margin-bottom: 6px; 
+      font-size: clamp(17px, 5.5vw, 22px); 
+      word-break: keep-all;
+    }
+    p { 
+      color: var(--text-sub); 
+      font-size: clamp(11.5px, 3.8vw, 14.5px); 
+      margin-bottom: 0; 
+      line-height: 1.4;
+      word-break: keep-all;
+    }
     
     input::-webkit-outer-spin-button,
     input::-webkit-inner-spin-button {
@@ -455,8 +466,8 @@
     .balls-container { display: flex; justify-content: center; gap: 8px; align-items: center; flex-wrap: wrap; }
     
     .ball {
-      width: 40px; height: 40px; border-radius: 50%; display: flex;
-      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 14px;
+      width: clamp(30px, 9.5vw, 40px); height: clamp(30px, 9.5vw, 40px); border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: clamp(11px, 3.5vw, 14px);
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12); animation: pop 0.3s ease-out;
     }
 
@@ -482,8 +493,8 @@
     }
 
     .pension-ball {
-      width: 46px; height: 46px; border-radius: 50%; display: flex;
-      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 17px;
+      width: clamp(32px, 11vw, 46px); height: clamp(32px, 11vw, 46px); border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: clamp(12px, 4vw, 17px);
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); animation: pop 0.3s ease-out;
     }
 
@@ -548,7 +559,7 @@
     .search-box input { width: 180px; padding: 10px; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 12px; text-align: center; font-size: 15px; font-weight: bold; }
     
     .num-inputs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; width: 100%; max-width: 600px; margin-bottom: 20px; }
-    .num-inputs input { width: 100%; padding: 11px 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold; }
+    .num-inputs input { width: 100%; min-width: 0; padding: clamp(8px, 2.5vw, 11px) 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: clamp(12px, 3.5vw, 15px); font-weight: bold; }
     
     .pension-search-row {
       display: flex;
@@ -566,7 +577,7 @@
       flex-grow: 1;
     }
     .pension-inputs-6 input {
-      width: 100%; padding: 11px 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold;
+      width: 100%; min-width: 0; padding: clamp(8px, 2.5vw, 11px) 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: clamp(12px, 3.5vw, 15px); font-weight: bold;
     }
 
     .result-box { 
