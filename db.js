@@ -607,7 +607,6 @@ const board = {
   initialize: () => {
     if (isPg) {
       return pgPool.query(`
-        DROP TABLE IF EXISTS board_posts;
         CREATE TABLE IF NOT EXISTS board_posts (
           id SERIAL PRIMARY KEY,
           title TEXT NOT NULL,
@@ -632,33 +631,30 @@ const board = {
       });
     } else {
       return new Promise((resolve, reject) => {
-        lottoSqlite.run('DROP TABLE IF EXISTS board_posts', (err) => {
-          if (err) return reject(err);
-          lottoSqlite.run(`
-            CREATE TABLE IF NOT EXISTS board_posts (
-              id INTEGER PRIMARY KEY AUTOINCREMENT,
-              title TEXT NOT NULL,
-              content TEXT NOT NULL,
-              author TEXT,
-              password TEXT,
-              category TEXT DEFAULT 'free',
-              created_at DATETIME DEFAULT CURRENT_TIMESTAMP
-            );
-          `, (err2) => {
-            if (err2) return reject(err2);
-            lottoSqlite.get('SELECT COUNT(*) as count FROM board_posts', [], (err3, row) => {
-              if (err3) return reject(err3);
-              if (row.count === 0) {
-                const stmt = lottoSqlite.prepare('INSERT INTO board_posts (title, content, author, password, category) VALUES (?, ?, ?, ?, ?)');
-                stmt.run('로또 대박 기원합니다!', '오늘 역학 패턴 필터로 뽑아낸 조합으로 5천원씩 사왔습니다. 이번 회차 모두 대박 나세요!', '행운충전', '1234', 'lotto');
-                stmt.run('사주 오행 번호 소름 돋네요.', '태어난 시간까지 넣어서 사주 돌렸는데 나온 평생 행운수 4개가 실제로 지난주 2등 번호랑 많이 겹칩니다... 이번 주 믿고 갑니다!', '만세력왕', '1234', 'lotto');
-                stmt.run('연금복권 1등 세후 546만원 수령 후기 보고 왔습니다.', '정말 꿈의 직장이네요. 매달 세금 떼고 546만원이 꼬박꼬박 20년 동안 들어오면 소원이 없겠습니다. 다들 대박나세요!', '연금바라기', '1234', 'pension');
-                stmt.run('게시판 개설 축하합니다!', '복권 정보 공유하고 소소하게 잡담 나눌 수 있어서 좋네요. 자주 오겠습니다.', '단골예약', '1234', 'free');
-                stmt.finalize((err4) => {
-                  if (err4) reject(err4); else resolve();
-                });
-              } else resolve();
-            });
+        lottoSqlite.run(`
+          CREATE TABLE IF NOT EXISTS board_posts (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT NOT NULL,
+            author TEXT,
+            password TEXT,
+            category TEXT DEFAULT 'free',
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          );
+        `, (err2) => {
+          if (err2) return reject(err2);
+          lottoSqlite.get('SELECT COUNT(*) as count FROM board_posts', [], (err3, row) => {
+            if (err3) return reject(err3);
+            if (row.count === 0) {
+              const stmt = lottoSqlite.prepare('INSERT INTO board_posts (title, content, author, password, category) VALUES (?, ?, ?, ?, ?)');
+              stmt.run('로또 대박 기원합니다!', '오늘 역학 패턴 필터로 뽑아낸 조합으로 5천원씩 사왔습니다. 이번 회차 모두 대박 나세요!', '행운충전', '1234', 'lotto');
+              stmt.run('사주 오행 번호 소름 돋네요.', '태어난 시간까지 넣어서 사주 돌렸는데 나온 평생 행운수 4개가 실제로 지난주 2등 번호랑 많이 겹칩니다... 이번 주 믿고 갑니다!', '만세력왕', '1234', 'lotto');
+              stmt.run('연금복권 1등 세후 546만원 수령 후기 보고 왔습니다.', '정말 꿈의 직장이네요. 매달 세금 떼고 546만원이 꼬박꼬박 20년 동안 들어오면 소원이 없겠습니다. 다들 대박나세요!', '연금바라기', '1234', 'pension');
+              stmt.run('게시판 개설 축하합니다!', '복권 정보 공유하고 소소하게 잡담 나눌 수 있어서 좋네요. 자주 오겠습니다.', '단골예약', '1234', 'free');
+              stmt.finalize((err4) => {
+                if (err4) reject(err4); else resolve();
+              });
+            } else resolve();
           });
         });
       });
