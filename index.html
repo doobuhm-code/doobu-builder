@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>행운의 복권 포털</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, sans-serif;
+      background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+      min-height: 100vh; 
+      display: flex; 
+      flex-direction: column;
+      justify-content: center; 
+      align-items: center; 
+      padding: 20px;
+      gap: 20px;
+    }
+    
+    .ad-banner {
+      width: 100%;
+      max-width: 860px;
+      height: 65px;
+      background: rgba(255, 255, 255, 0.7);
+      border: 2px dashed #cbd5e1;
+      border-radius: 14px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      color: #888;
+      font-size: 14px;
+      font-weight: bold;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.03);
+    }
+
+    .main-wrapper {
+      width: 100%;
+      max-width: 860px;
+      background: rgba(255, 255, 255, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 255, 255, 0.6);
+      border-radius: 24px;
+      padding: 65px 35px 35px; 
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column;
+      margin-top: 40px;
+    }
+
+    .container {
+      width: 100%;
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .main-menu-ears {
+      position: absolute;
+      top: -56px; 
+      left: 15px;
+      right: 15px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      z-index: 10;
+    }
+
+    .rabbit-ear {
+      width: 140px;
+      height: 50px;
+      background: #cbd5e1;
+      border: none;
+      font-size: 15px;
+      font-weight: bold;
+      color: #475569;
+      cursor: pointer;
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
+      box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
+      transition: all 0.2s ease;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      padding-bottom: 2px;
+    }
+
+    .rabbit-ear.active {
+      background: white;
+      color: #764ba2;
+      height: 60px;
+      font-size: 16px;
+      font-weight: 800;
+      box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.08);
+    }
+
+    .menu-card {
+      position: sticky;
+      top: 10px;
+      z-index: 20;
+      background: white; 
+      padding: 0 10px; 
+      height: 62px;
+      width: 100%;
+      border-radius: 20px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08); 
+      display: flex; 
+      justify-content: space-between; 
+      align-items: center;
+      gap: 10px; 
+    }
+
+    .tab-btn { 
+      flex: 1 1 0px; 
+      height: 44px; 
+      line-height: 44px; 
+      min-width: 0;
+      background: none; 
+      border: none; 
+      font-size: 15px; 
+      font-weight: bold; 
+      color: #888; 
+      padding: 0; 
+      cursor: pointer; 
+      border-radius: 15px; 
+      text-align: center;
+      white-space: nowrap;
+      transition: all 0.2s ease;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .tab-btn.active { 
+      background: #764ba2; 
+      color: white; 
+      box-shadow: 0 2px 8px rgba(118, 75, 162, 0.3);
+    }
+
+    .content-card {
+      background: white; 
+      padding: 30px 35px; 
+      border-radius: 20px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.08); 
+      text-align: center; 
+      min-height: 520px; 
+      height: auto; 
+      width: 100%;
+      margin-top: 15px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      overflow: hidden; 
+    }
+    
+    .tab-content { 
+      display: none; 
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      width: 100%;
+      height: 100%;
+    }
+
+    .tab-content.history-content {
+      justify-content: center;
+      gap: 20px;
+    }
+
+    .tab-content.active { 
+      display: flex !important; 
+    }
+    
+    .tab-header { width: 100%; text-align: center; margin-bottom: 25px; }
+    h1 { color: #333; margin-bottom: 6px; font-size: 22px; }
+    p { color: #666; font-size: 14.5px; margin-bottom: 0; }
+    
+    input::-webkit-outer-spin-button,
+    input::-webkit-inner-spin-button {
+      -webkit-appearance: none;
+      appearance: none;
+      margin: 0;
+    }
+    input[type=number] {
+      -moz-appearance: textfield;
+      appearance: textfield;
+    }
+
+    input::placeholder {
+      color: #cbd5e1;
+      opacity: 1;
+    }
+
+    .balls-container { display: flex; justify-content: center; gap: 8px; align-items: center; flex-wrap: wrap; }
+    
+    .ball {
+      width: 40px; height: 40px; border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 14px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12); animation: pop 0.3s ease-out;
+    }
+
+    .mini-ball {
+      width: 30px; height: 30px; border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; font-weight: bold; font-size: 12px;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    }
+    .mini-ball.matched { background: #38a169; color: white; }
+    .mini-ball.unmatched { background: #e2e8f0; color: #475569; }
+
+    .match-item {
+      padding: 10px; background: white; border-radius: 12px; margin-top: 6px; border: 1px solid #cbd5e1; text-align: left; width: 100%;
+    }
+    .match-header {
+      display: flex; justify-content: space-between; align-items: center; margin-bottom: 6px; font-weight: bold; font-size: 13.5px; color: #1e293b;
+    }
+    .match-balls {
+      display: flex; align-items: center; gap: 6px; flex-wrap: wrap;
+    }
+    .badge {
+      padding: 2px 8px; border-radius: 6px; font-size: 11.5px; font-weight: bold; color: white; background: #764ba2;
+    }
+
+    .pension-ball {
+      width: 46px; height: 46px; border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 17px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); animation: pop 0.3s ease-out;
+    }
+
+    .pension-all-group-badge {
+      padding: 10px 14px; border-radius: 12px; background-color: #3182ce; color: white;
+      display: flex; justify-content: center; align-items: center; font-weight: bold; font-size: 14px;
+      box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); margin-right: 6px; flex-shrink: 0;
+    }
+
+    .p-digit-0 { background-color: #e53e3e !important; }
+    .p-digit-1 { background-color: #dd6b20 !important; }
+    .p-digit-2 { background-color: #d69e2e !important; }
+    .p-digit-3 { background-color: #38a169 !important; }
+    .p-digit-4 { background-color: #3182ce !important; }
+    .p-digit-5 { background-color: #805ad5 !important; }
+    .p-digit-6 { background-color: #718096 !important; }
+
+    .range-1  { background-color: #fbc02d !important; color: white !important; }
+    .range-11 { background-color: #1e88e5 !important; color: white !important; }
+    .range-21 { background-color: #e53935 !important; color: white !important; }
+    .range-31 { background-color: #8e24aa !important; color: white !important; }
+    .range-41 { background-color: #43a047 !important; color: white !important; }
+    
+    .game-list { display: flex; flex-direction: column; gap: 8px; width: 100%; align-items: center; }
+    .game-item {
+      display: flex; align-items: center; justify-content: flex-start;
+      background: #f8fafc; padding: 6px 16px; border-radius: 12px; border: 1px solid #e2e8f0;
+      height: 52px; width: 100%; max-width: 600px;
+    }
+    .game-label { font-weight: bold; font-size: 14.5px; color: #764ba2; width: 75px; text-align: left; flex-shrink: 0; }
+    .game-item .balls-container { flex-grow: 1; justify-content: center; gap: 10px; }
+
+    .pension-single-box {
+      background: #f8fafc;
+      padding: 30px 20px;
+      border-radius: 16px;
+      border: 2px dashed #cbd5e1;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .action-btn {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); color: white; border: none;
+      padding: 11px 26px; font-size: 14.5px; font-weight: bold; border-radius: 30px; cursor: pointer;
+      box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3); transition: transform 0.1s ease;
+    }
+    .action-btn:active { transform: scale(0.97); }
+
+    .recommend-btn {
+      margin-top: 20px;
+    }
+
+    .reset-btn {
+      background: #718096; color: white; border: none;
+      padding: 11px 20px; font-size: 13.5px; font-weight: bold; border-radius: 30px; cursor: pointer; margin-left: 8px;
+    }
+    
+    .search-box { display: flex; justify-content: center; gap: 10px; width: 100%; margin-bottom: 20px; }
+    .search-box input { width: 180px; padding: 10px; border: 2px solid #ddd; border-radius: 12px; text-align: center; font-size: 15px; font-weight: bold; }
+    
+    .num-inputs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; width: 100%; max-width: 600px; margin-bottom: 20px; }
+    .num-inputs input { width: 100%; padding: 11px 0; border: 2px solid #ddd; border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold; }
+    
+    .pension-search-row {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      width: 100%;
+      max-width: 600px;
+      margin-bottom: 20px;
+    }
+    .pension-inputs-6 {
+      display: grid;
+      grid-template-columns: repeat(6, 1fr);
+      gap: 10px;
+      flex-grow: 1;
+    }
+    .pension-inputs-6 input {
+      width: 100%; padding: 11px 0; border: 2px solid #ddd; border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold;
+    }
+
+    .result-box { 
+      padding: 16px; 
+      border-radius: 12px; 
+      font-size: 13.5px; 
+      font-weight: bold; 
+      display: none; 
+      width: 100%; 
+      max-width: 620px;
+      max-height: 230px; /* 👈 이 부분을 180px에서 320px로 변경해주세요 */
+      overflow-y: auto; 
+      margin-top: 15px;
+    }
+    .result-box.safe { background: #e8f5e9; color: #2e7d32; border: 1px solid #a5d6a7; text-align: center; }
+
+    .date-info { font-size: 14.5px; color: #444; font-weight: 600; }
+
+    @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+  </style>
+</head>
+<body>
+
+  <!-- 상단 광고 배너 영역 -->
+  <!-- <div class="ad-banner">[ 상단 광고 영역 ]</div> -->
+
+  <!-- 전체 통합 레이아웃 박스 -->
+  <div class="main-wrapper">
+    <div class="container">
+      <div class="main-menu-ears">
+        <button id="ear-lotto" class="rabbit-ear" onclick="navigateMainTab('lotto')">로또</button>
+        <button id="ear-pension" class="rabbit-ear" onclick="navigateMainTab('pension')">연금복권</button>
+      </div>
+
+      <!-- 로또 영역 -->
+      <div id="lotto-section" style="width: 100%;">
+        <div class="menu-card">
+          <button class="tab-btn active" onclick="switchTab('lotto', 'recommend')">로또 번호 추천</button>
+          <button class="tab-btn" onclick="switchTab('lotto', 'check')">나의 로또 번호 검색</button>
+          <button class="tab-btn" onclick="switchTab('lotto', 'history')">역대 로또 번호 조회</button>
+        </div>
+
+        <div class="content-card">
+          <div id="lotto-tab-recommend" class="tab-content active">
+            <div class="tab-header">
+              <h1>🎰 행운의 로또 번호 추천</h1>
+              <p>버튼을 눌러 5게임의 행운 번호를 확인하세요!</p>
+            </div>
+            <div id="recommend-games" class="game-list"></div>
+            <div>
+              <button class="action-btn recommend-btn" onclick="generate5LottoGames()">추천</button>
+            </div>
+          </div>
+
+          <div id="lotto-tab-check" class="tab-content">
+            <div class="tab-header">
+              <h1>🔍 1등 당첨번호 중복 검색</h1>
+              <p>입력하신 번호 6개가 과거 1등 당첨 번호와 같은지 검색합니다.<br><small style="color:#e53e3e; font-weight:bold;">(최대 2개 다른 번호 강조)</small></p>
+            </div>
+            <div class="num-inputs">
+              <input type="number" id="cNum1" min="1" max="45" placeholder="1" oninput="validateRange(this, 1, 45)">
+              <input type="number" id="cNum2" min="1" max="45" placeholder="2" oninput="validateRange(this, 1, 45)">
+              <input type="number" id="cNum3" min="1" max="45" placeholder="3" oninput="validateRange(this, 1, 45)">
+              <input type="number" id="cNum4" min="1" max="45" placeholder="4" oninput="validateRange(this, 1, 45)">
+              <input type="number" id="cNum5" min="1" max="45" placeholder="5" oninput="validateRange(this, 1, 45)">
+              <input type="number" id="cNum6" min="1" max="45" placeholder="6" oninput="validateRange(this, 1, 45)">
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+              <button class="action-btn" onclick="checkDuplicateNumbers()">검색</button>
+              <button class="reset-btn" onclick="resetCheckForm('lotto')">초기화</button>
+            </div>
+            <div id="checkResult" class="result-box"></div>
+          </div>
+
+          <div id="lotto-tab-history" class="tab-content history-content">
+            <div class="tab-header">
+              <h1>📜 역대 로또번호 조회</h1>
+              <p>조회할 회차를 입력하고 조회 버튼을 눌러보세요.</p>
+            </div>
+            <div class="search-box">
+              <input type="number" id="drwNoInput" placeholder="회차 입력" onkeypress="if(event.keyCode==13) fetchLottoFromDB()">
+              <button class="action-btn" onclick="fetchLottoFromDB()">조회</button>
+            </div>
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div id="dateInfo" class="date-info"></div>
+              <div class="balls-container" id="history-balls"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- 연금복권 영역 -->
+      <div id="pension-section" style="display: none; width: 100%;">
+        <div class="menu-card">
+          <button class="tab-btn active" onclick="switchTab('pension', 'recommend')">연금복권 번호 추천</button>
+          <button class="tab-btn" onclick="switchTab('pension', 'check')">나의 연금복권 검색</button>
+          <button class="tab-btn" onclick="switchTab('pension', 'history')">역대 연금복권 조회</button>
+        </div>
+
+        <div class="content-card">
+          <div id="pension-tab-recommend" class="tab-content active">
+            <div class="tab-header">
+              <h1>🎰 연금복권 720+ 번호 추천</h1>
+              <p>버튼을 눌러 행운의 연금복권 번호를 확인해보세요!</p>
+            </div>
+            <div class="pension-single-box">
+              <div id="pension-recommend-games" class="balls-container" style="gap:8px;"></div>
+            </div>
+            <div>
+              <button class="action-btn recommend-btn" onclick="generateSinglePensionGame()">추천</button>
+            </div>
+          </div>
+
+          <div id="pension-tab-check" class="tab-content">
+            <div class="tab-header">
+              <h1>🔍 연금복권 당첨번호 검색</h1>
+              <p>입력하신 6개 번호와 자리가 과거 1등 당첨 번호와 같은지 검색합니다.<br><small style="color:#e53e3e; font-weight:bold;">(모든 조 기준, 4자리 이상 일치하는 기록만 표시)</small></p>
+            </div>
+            <div class="pension-search-row">
+              <div class="pension-all-group-badge">모든 조</div>
+              <div class="pension-inputs-6">
+                <input type="number" id="pNum1" min="0" max="9" placeholder="1" oninput="validateRange(this, 0, 9)">
+                <input type="number" id="pNum2" min="0" max="9" placeholder="2" oninput="validateRange(this, 0, 9)">
+                <input type="number" id="pNum3" min="0" max="9" placeholder="3" oninput="validateRange(this, 0, 9)">
+                <input type="number" id="pNum4" min="0" max="9" placeholder="4" oninput="validateRange(this, 0, 9)">
+                <input type="number" id="pNum5" min="0" max="9" placeholder="5" oninput="validateRange(this, 0, 9)">
+                <input type="number" id="pNum6" min="0" max="9" placeholder="6" oninput="validateRange(this, 0, 9)">
+              </div>
+            </div>
+            <div style="display: flex; justify-content: center; align-items: center; width: 100%;">
+              <button class="action-btn" onclick="checkPensionNumbers()">검색</button>
+              <button class="reset-btn" onclick="resetCheckForm('pension')">초기화</button>
+            </div>
+            <div id="pensionCheckResult" class="result-box"></div>
+          </div>
+
+          <div id="pension-tab-history" class="tab-content history-content">
+            <div class="tab-header">
+              <h1>📜 역대 연금복권 조회</h1>
+              <p>조회할 연금복권 회차를 확인 후 조회해 보세요.</p>
+            </div>
+            <div class="search-box">
+              <input type="number" id="pensionDrwInput" placeholder="회차 입력" onkeypress="if(event.keyCode==13) fetchPensionFromDB()">
+              <button class="action-btn" onclick="fetchPensionFromDB()">조회</button>
+            </div>
+            <div style="width: 100%; display: flex; flex-direction: column; align-items: center; gap: 10px;">
+              <div id="pensionDateInfo" class="date-info"></div>
+              <div class="balls-container" id="pension-history-balls"></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 하단 광고 배너 영역 -->
+  <div class="ad-banner">[ 하단 광고 영역 ]</div>
+
+  <script>
+    let isDataLoaded = false;
+
+    async function fetchLatestDefaults() {
+      try {
+        const lottoInput = document.getElementById('drwNoInput');
+        const pensionInput = document.getElementById('pensionDrwInput');
+
+        // 입력창이 비어있거나 최초 진입 시 최신 회차 번호 불러오기
+        if (lottoInput && !lottoInput.value) {
+          const lottoRes = await fetch('/api/lotto-latest');
+          const lottoData = await lottoRes.json();
+          if (lottoData.success && lottoData.data) {
+            lottoInput.value = lottoData.data.drwNo;
+            fetchLottoFromDB();
+          }
+        }
+
+        if (pensionInput && !pensionInput.value) {
+          const pensionRes = await fetch('/api/pension-latest');
+          const pensionData = await pensionRes.json();
+          if (pensionData.success && pensionData.data) {
+            pensionInput.value = pensionData.data.drw_no;
+            fetchPensionFromDB();
+          }
+        }
+      } catch (e) {
+        console.error('최신 회차 로드 실패:', e);
+      }
+    }
+
+    function navigateMainTab(type) {
+      const currentUrlParams = new URLSearchParams(window.location.search);
+      if (currentUrlParams.get('menu') === type) return;
+      window.location.href = `?menu=${type}`;
+    }
+
+    function initMainTab() {
+      const urlParams = new URLSearchParams(window.location.search);
+      const menuType = urlParams.get('menu') || 'lotto';
+
+      const earLotto = document.getElementById('ear-lotto');
+      const earPension = document.getElementById('ear-pension');
+
+      if (menuType === 'pension') {
+        earLotto.classList.remove('active');
+        earPension.classList.add('active');
+        document.getElementById('lotto-section').style.display = 'none';
+        document.getElementById('pension-section').style.display = 'block';
+        generateSinglePensionGame();
+      } else {
+        earLotto.classList.add('active');
+        earPension.classList.remove('active');
+        document.getElementById('lotto-section').style.display = 'block';
+        document.getElementById('pension-section').style.display = 'none';
+        generate5LottoGames();
+      }
+      
+      fetchLatestDefaults();
+    }
+
+    function validateRange(input, min, max) {
+      if (input.value !== '') {
+        let val = parseInt(input.value);
+        if (val > max) input.value = max;
+        if (val < min) input.value = min;
+      }
+    }
+
+    function switchTab(section, tabName) {
+      const sectionEl = document.getElementById(`${section}-section`);
+      const btns = sectionEl.querySelectorAll('.tab-btn');
+      const contents = sectionEl.querySelectorAll('.tab-content');
+
+      btns.forEach(btn => btn.classList.remove('active'));
+      contents.forEach(c => c.classList.remove('active'));
+
+      const tabMap = { recommend: 0, check: 1, history: 2 };
+      btns[tabMap[tabName]].classList.add('active');
+      document.getElementById(`${section}-tab-${tabName}`).classList.add('active');
+      
+      if (section === 'lotto' && tabName === 'recommend') {
+        generate5LottoGames();
+      } else if (section === 'pension' && tabName === 'recommend') {
+        generateSinglePensionGame();
+      } else if (tabName === 'history') {
+        fetchLatestDefaults();
+      }
+    }
+
+    function createBallElement(num) {
+      const ball = document.createElement('div');
+      ball.classList.add('ball');
+      ball.textContent = num;
+      ball.classList.add(getBallColorClass(num));
+      return ball;
+    }
+
+    function getBallColorClass(num) {
+      const n = Number(num);
+      if (n <= 10) return 'range-1';
+      if (n <= 20) return 'range-11';
+      if (n <= 30) return 'range-21';
+      if (n <= 40) return 'range-31';
+      return 'range-41';
+    }
+
+    function generateSingleLottoGame() {
+      const numbers = [];
+      while (numbers.length < 6) {
+        const randomNum = Math.floor(Math.random() * 45) + 1;
+        if (!numbers.includes(randomNum)) numbers.push(randomNum);
+      }
+      return numbers.sort((a, b) => a - b);
+    }
+
+    function generate5LottoGames() {
+      const container = document.getElementById('recommend-games');
+      if (!container) return;
+      container.innerHTML = '';
+      const gameLabels = ['1게임', '2게임', '3게임', '4게임', '5게임'];
+
+      gameLabels.forEach(label => {
+        const gameRow = document.createElement('div');
+        gameRow.className = 'game-item';
+
+        const labelSpan = document.createElement('span');
+        labelSpan.className = 'game-label';
+        labelSpan.textContent = label;
+
+        const ballsDiv = document.createElement('div');
+        ballsDiv.className = 'balls-container';
+
+        const numbers = generateSingleLottoGame();
+        numbers.forEach(num => ballsDiv.appendChild(createBallElement(num)));
+
+        gameRow.appendChild(labelSpan);
+        gameRow.appendChild(ballsDiv);
+        container.appendChild(gameRow);
+      });
+    }
+
+    async function checkDuplicateNumbers() {
+      const inputElements = [
+        document.getElementById('cNum1'), document.getElementById('cNum2'),
+        document.getElementById('cNum3'), document.getElementById('cNum4'),
+        document.getElementById('cNum5'), document.getElementById('cNum6')
+      ];
+
+      const nums = inputElements.map(el => el.value).filter(v => v !== '').map(v => Number(v));
+      const resultBox = document.getElementById('checkResult');
+
+      if (nums.length !== 6) return alert('1부터 45 사이의 번호 6개를 모두 입력해주세요.');
+      if (new Set(nums).size !== 6) return alert('서로 다른 6개 번호를 입력해주세요.');
+
+      try {
+        const response = await fetch('/api/lotto/check-win', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ numbers: nums })
+        });
+        
+        const data = await response.json();
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '';
+
+        if (!data.success || !data.results || data.results.length === 0) {
+          resultBox.className = 'result-box safe';
+          resultBox.innerHTML = '🎉 과거 역대 1등 번호 중 4개 이상 중복된 회차가 없습니다!';
+          return;
+        }
+
+        resultBox.className = 'result-box';
+        resultBox.style.background = '#f8fafc';
+        resultBox.style.border = '1px solid #cbd5e1';
+
+        let html = `<div style="margin-bottom:8px; font-weight:bold; color:#1e293b; font-size:13.5px; text-align:center;">🔍 총 <b>${data.results.length}건</b>의 회차에서 4개 이상 중복 발견:</div>`;
+
+        data.results.forEach(item => {
+          const drawDate = item.drwNoDate || '날짜 정보 없음';
+
+          html += `
+            <div class="match-item">
+              <div class="match-header">
+                <span>제 ${item.drwNo}회차 <small style="font-weight:normal; color:#64748b; font-size:11.5px;">(${drawDate})</small></span>
+                <span class="badge">${item.matchCount}개 일치</span>
+              </div>
+              <div class="match-balls">
+          `;
+
+          item.dbNums.forEach(num => {
+            const dbNum = Number(num);
+            const isMatched = nums.includes(dbNum);
+            const ballClass = isMatched ? 'matched' : 'unmatched';
+            html += `<div class="mini-ball ${ballClass}">${dbNum}</div>`;
+          });
+
+          const bnusNum = Number(item.bnusNo);
+          const isBnusMatched = nums.includes(bnusNum);
+          const bnusClass = isBnusMatched ? 'matched' : 'unmatched';
+
+          html += `
+                <span style="font-size:13px; color:#94a3b8; margin:0 2px;">+</span>
+                <div class="mini-ball ${bnusClass}">${bnusNum}</div>
+              </div>
+            </div>
+          `;
+        });
+
+        resultBox.innerHTML = html;
+
+      } catch (err) {
+        alert('검사 중 오류가 발생했습니다.');
+      }
+    }
+
+    async function fetchLottoFromDB() {
+      const drwNo = document.getElementById('drwNoInput').value;
+      const container = document.getElementById('history-balls');
+      const dateInfo = document.getElementById('dateInfo');
+
+      if (!drwNo) return;
+
+      try {
+        const response = await fetch(`/api/lotto/${drwNo}`);
+        const result = await response.json();
+
+        if (!result.success) {
+          dateInfo.textContent = '';
+          container.innerHTML = `<span style="color:#e53935;">${result.message}</span>`;
+          return;
+        }
+
+        dateInfo.textContent = `제 ${result.data.drwNo}회 (${result.data.drwNoDate} 추첨)`;
+        container.innerHTML = '';
+        
+        [result.data.num1, result.data.num2, result.data.num3, result.data.num4, result.data.num5, result.data.num6].forEach(num => {
+          container.appendChild(createBallElement(num));
+        });
+
+        const plus = document.createElement('span');
+        plus.style.margin = '0 4px';
+        plus.style.fontWeight = 'bold';
+        plus.textContent = '+';
+        container.appendChild(plus);
+
+        container.appendChild(createBallElement(result.data.bnusNo));
+
+      } catch (error) {
+        dateInfo.textContent = '';
+        container.innerHTML = '<span style="color:#e53935;">서버 연결 실패</span>';
+      }
+    }
+
+    function createPensionDigitBall(digit, idx) {
+      const ball = document.createElement('div');
+      ball.className = `pension-ball p-digit-${idx}`;
+      ball.textContent = digit;
+      return ball;
+    }
+
+    function generateSinglePensionGame() {
+      const container = document.getElementById('pension-recommend-games');
+      if (!container) return;
+      container.innerHTML = '';
+
+      const allGroupBadge = document.createElement('div');
+      allGroupBadge.className = 'pension-all-group-badge';
+      allGroupBadge.textContent = '모든 조';
+      container.appendChild(allGroupBadge);
+
+      for (let i = 0; i < 6; i++) {
+        const digit = Math.floor(Math.random() * 10);
+        container.appendChild(createPensionDigitBall(digit, i));
+      }
+    }
+
+    async function checkPensionNumbers() {
+      const digits = [
+        document.getElementById('pNum1').value, document.getElementById('pNum2').value,
+        document.getElementById('pNum3').value, document.getElementById('pNum4').value,
+        document.getElementById('pNum5').value, document.getElementById('pNum6').value
+      ];
+
+      const resultBox = document.getElementById('pensionCheckResult');
+
+      if (digits.includes('')) {
+        return alert('6자리 번호를 모두 입력해주세요.');
+      }
+
+      const userNums = digits.map(Number);
+
+      try {
+        const response = await fetch('/api/pension/check-win', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ n1: digits[0], n2: digits[1], n3: digits[2], n4: digits[3], n5: digits[4], n6: digits[5] })
+        });
+
+        const data = await response.json();
+        resultBox.style.display = 'block';
+        resultBox.innerHTML = '';
+
+        if (!data.success || !data.results || data.results.length === 0) {
+          resultBox.className = 'result-box safe';
+          resultBox.innerHTML = `🎉 입력하신 번호 <b>[모든 조 ${digits.join('')}]</b>와 4개 이상 일치하는 과거 1등 당첨 내역이 없습니다!`;
+          return;
+        }
+
+        resultBox.className = 'result-box';
+        resultBox.style.background = '#f8fafc';
+        resultBox.style.border = '1px solid #cbd5e1';
+
+        let html = `<div style="margin-bottom:8px; font-weight:bold; color:#1e293b; font-size:13.5px; text-align:center;">🔍 총 <b>${data.results.length}건</b>의 유사 회차(4자리 이상 일치) 발견:</div>`;
+
+        data.results.forEach(item => {
+          html += `
+            <div class="match-item">
+              <div class="match-header">
+                <span>제 ${item.drw_no}회차 <small style="font-weight:normal; color:#64748b; font-size:11.5px;">(${item.drw_no_date})</small> - ${item.win_group}조</span>
+                <span class="badge">${item.matchCount}자리 일치</span>
+              </div>
+              <div class="match-balls">
+          `;
+
+          item.dbNums.forEach((num, idx) => {
+            const isMatched = (num === userNums[idx]);
+            const ballClass = isMatched ? 'matched' : 'unmatched';
+            html += `<div class="mini-ball ${ballClass}">${num}</div>`;
+          });
+
+          html += `
+              </div>
+            </div>
+          `;
+        });
+
+        resultBox.innerHTML = html;
+
+      } catch (err) {
+        alert('연금복권 DB 검사 중 오류가 발생했습니다.');
+      }
+    }
+
+    async function fetchPensionFromDB() {
+      const drwNo = document.getElementById('pensionDrwInput').value;
+      const container = document.getElementById('pension-history-balls');
+      const dateInfo = document.getElementById('pensionDateInfo');
+
+      if (!drwNo) return;
+
+      try {
+        const response = await fetch(`/api/pension/${drwNo}`);
+        const result = await response.json();
+
+        if (!result.success) {
+          dateInfo.textContent = '';
+          container.innerHTML = `<span style="color:#e53935;">${result.message}</span>`;
+          return;
+        }
+
+        dateInfo.textContent = `제 ${result.data.drw_no}회 연금복권 720+ (${result.data.drw_no_date} 추첨)`;
+        container.innerHTML = '';
+
+        const groupBadge = document.createElement('div');
+        groupBadge.className = 'pension-all-group-badge';
+        groupBadge.textContent = `${result.data.win_group}조`;
+        container.appendChild(groupBadge);
+
+        const nums = [result.data.num1, result.data.num2, result.data.num3, result.data.num4, result.data.num5, result.data.num6];
+        nums.forEach((digit, idx) => {
+          container.appendChild(createPensionDigitBall(digit, idx));
+        });
+
+      } catch (error) {
+        dateInfo.textContent = '';
+        container.innerHTML = '<span style="color:#e53935;">서버 연결 실패</span>';
+      }
+    }
+
+    function resetCheckForm(type) {
+      if (type === 'lotto') {
+        for (let i = 1; i <= 6; i++) document.getElementById(`cNum${i}`).value = '';
+        const resultBox = document.getElementById('checkResult');
+        resultBox.style.display = 'none';
+        resultBox.innerHTML = '';
+      } else {
+        for (let i = 1; i <= 6; i++) document.getElementById(`pNum${i}`).value = '';
+        const resultBox = document.getElementById('pensionCheckResult');
+        resultBox.style.display = 'none';
+        resultBox.innerHTML = '';
+      }
+    }
+
+    window.onload = function() {
+      initMainTab();
+    };
+  </script>
+</body>
+</html>
