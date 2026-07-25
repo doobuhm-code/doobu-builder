@@ -3,7 +3,13 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>행운의 복권 포털</title>
+  <title>내 로또 번호 검색기 - 로또 및 연금복권 720+ 당첨번호 확인</title>
+  <meta name="description" content="내가 선택한 로또 번호와 연금복권 번호가 과거 1등 당첨 정보와 매칭되는지 분석하고 검색해 주는 전문 복권 도구입니다. 최신 당첨 통계와 무작위 번호 추천 서비스도 함께 제공합니다.">
+  <meta name="keywords" content="로또 번호 검색, 로또 당첨 확인, 연금복권 720+, 로또 번호 추천, 복권 당첨 조회, 내 로또 번호 검색기">
+  <link rel="canonical" href="https://lotto-search.up.railway.app">
+  
+  <!-- [애드센스 등록용] 아래 주석을 지우고 구글 애드센스에서 발급받은 <script> 코드를 이곳에 붙여넣으세요 -->
+  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -421,6 +427,128 @@
     .date-info { font-size: 14.5px; color: var(--date-info-text); font-weight: 600; }
 
     @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
+
+    /* ================= 푸터 및 모달 스타일 (애드센스 심사 통과용) ================= */
+    .site-footer {
+      width: 100%;
+      margin-top: 40px;
+      padding: 30px 20px;
+      text-align: center;
+      border-top: 1px solid var(--wrapper-border);
+      background: rgba(255, 255, 255, 0.15);
+      backdrop-filter: blur(5px);
+      border-radius: 16px;
+    }
+    [data-theme="dark"] .site-footer {
+      background: rgba(30, 41, 59, 0.4);
+    }
+    .footer-content {
+      max-width: 800px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      font-size: 13px;
+      color: var(--text-sub);
+    }
+    .footer-links {
+      display: flex;
+      justify-content: center;
+      flex-wrap: wrap;
+      gap: 10px;
+      font-weight: bold;
+    }
+    .footer-links a {
+      color: var(--btn-recommend-text);
+      text-decoration: none;
+      transition: opacity 0.2s;
+    }
+    .footer-links a:hover {
+      opacity: 0.8;
+    }
+    .footer-links .divider {
+      color: var(--wrapper-border);
+    }
+    .footer-warning {
+      font-size: 11px;
+      line-height: 1.6;
+      color: var(--text-sub);
+      opacity: 0.8;
+      margin-top: 5px;
+    }
+
+    /* 모달 오버레이 스타일 */
+    .modal-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: rgba(0, 0, 0, 0.5);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 9999;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
+    .modal-card {
+      background: var(--card-bg);
+      border: 1px solid var(--wrapper-border);
+      border-radius: 16px;
+      width: 100%;
+      max-width: 550px;
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+      overflow: hidden;
+      animation: slideUp 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+    .modal-header {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--wrapper-border);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    .modal-header h2 {
+      margin: 0;
+      font-size: 18px;
+      color: var(--text-main);
+    }
+    .close-modal-btn {
+      background: none;
+      border: none;
+      font-size: 26px;
+      cursor: pointer;
+      color: var(--text-sub);
+      line-height: 1;
+      padding: 0;
+    }
+    .close-modal-btn:hover {
+      color: var(--text-main);
+    }
+    .modal-body {
+      padding: 20px;
+      max-height: 400px;
+      overflow-y: auto;
+      font-size: 13.5px;
+      line-height: 1.7;
+      color: var(--text-main);
+      text-align: left;
+    }
+    .modal-body p {
+      margin-top: 0;
+      margin-bottom: 16px;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+    @keyframes slideUp {
+      from { transform: translateY(20px); opacity: 0; }
+      to { transform: translateY(0); opacity: 1; }
+    }
   </style>
 </head>
 <body>
@@ -557,7 +685,96 @@
     </div>
   </div>
 
-  <!-- 하단 광고 영역 제거됨 -->
+  <!-- 푸터 영역 (AdSense 심사 통과를 위한 필수 페이지 링크 포함) -->
+  <footer class="site-footer">
+    <div class="footer-content">
+      <p>© 2026 내 로또 번호 검색기. All rights reserved.</p>
+      <div class="footer-links">
+        <a href="#" onclick="openModal('privacy-modal'); return false;">개인정보처리방침</a>
+        <span class="divider">|</span>
+        <a href="#" onclick="openModal('terms-modal'); return false;">이용약관</a>
+        <span class="divider">|</span>
+        <a href="#" onclick="openModal('disclaimer-modal'); return false;">책임의 한계 및 법적고지</a>
+        <span class="divider">|</span>
+        <a href="#" onclick="openModal('about-modal'); return false;">소개 및 문의</a>
+      </div>
+      <p class="footer-warning">본 사이트는 번호 조회 편의 및 통계 분석 서비스만 제공하며, 어떠한 경우에도 당첨 결과를 보장하거나 대리 구매를 하지 않습니다. 복권 구매는 만 19세 이상만 가능하며, 과도한 몰입은 해가 될 수 있습니다.</p>
+    </div>
+  </footer>
+
+  <!-- 개인정보처리방침 모달 -->
+  <div id="privacy-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>🔒 개인정보처리방침</h2>
+        <button class="close-modal-btn" onclick="closeModal('privacy-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>수집하는 개인정보 항목 및 목적</strong><br>
+        본 사이트는 사용자의 개인 식별 정보(이름, 이메일, 전화번호 등)를 일체 수집 및 저장하지 않습니다. 사이트 이용 기록, IP 주소 및 로컬 저장소(Local Storage)는 서비스 최적화 및 광고 게재(쿠키 사용 등)를 목적으로 브라우저 및 구글 애드센스 등 제3자 광고 시스템을 통해 사용될 수 있습니다.</p>
+        
+        <p><strong>쿠키(Cookie)의 사용 및 거부</strong><br>
+        구글(Google)을 포함한 제3자 제공업체는 사용자의 이전 웹사이트 방문 기록을 바탕으로 맞춤형 광고를 제공하기 위해 쿠키를 사용합니다. 사용자는 브라우저 설정이나 구글 광고 설정(https://adssettings.google.com)을 통해 맞춤 광고 쿠키를 관리하거나 거부할 수 있습니다.</p>
+        
+        <p><strong>개인정보 보호 문의</strong><br>
+        개인정보 처리와 관련된 문의사항은 '소개 및 문의' 메뉴를 통해 연락 주시기 바랍니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 이용약관 모달 -->
+  <div id="terms-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>📋 이용약관</h2>
+        <button class="close-modal-btn" onclick="closeModal('terms-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>제1조 (목적)</strong><br>
+        본 약관은 '내 로또 번호 검색기'(이하 "사이트")가 제공하는 로또/연금복권 검색, 분석 및 추천 기능(이하 "서비스")의 이용 조건 및 절차에 관한 사항을 규정함을 목적으로 합니다.</p>
+        
+        <p><strong>제2조 (서비스의 한계 및 책임)</strong><br>
+        1. 사이트에서 제공되는 모든 데이터(추천 번호, 과거 당첨 내역 등)는 동행복권 공식 데이터를 바탕으로 가공된 참고 정보입니다.<br>
+        2. 제공하는 정보의 정확성을 위해 최선을 다하나, 시스템 지연이나 데이터 오류 등으로 인해 공식 당첨 정보와 일시적으로 상이할 수 있으므로, 최종 당첨 여부는 반드시 동행복권 공식 사이트나 판매점에서 직접 확인하시기 바랍니다.<br>
+        3. 사이트 이용 과정에서 발생한 직/간접적 손실에 대해 사이트 운영자는 법적인 책임을 지지 않습니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 책임 한계 모달 -->
+  <div id="disclaimer-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>⚠️ 책임의 한계 및 법적고지</h2>
+        <button class="close-modal-btn" onclick="closeModal('disclaimer-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>정보 제공 목적으로만 제한됨</strong><br>
+        본 사이트에서 제공하는 로또 번호 추천, 역대 회차 당첨번호 중복 검사 등 모든 정보는 참고용 오락 및 분석 데이터일 뿐이며, 실제 당첨 여부와는 독립적입니다. 본 서비스가 생성한 추천 번호가 당첨 확률을 높이거나 당첨을 보장하지 않습니다.</p>
+        
+        <p><strong>최종 확인의 책임</strong><br>
+        네트워크 장애, 서버 일시 오류, 동행복권 서버의 지연 등으로 당첨 정보 조회 결과에 오차가 생길 수 있습니다. 당첨 여부의 최종적인 공식 확인은 반드시 동행복권 공식 홈페이지를 이용하셔야 하며, 본 사이트의 오류 정보로 인한 불이익에 대해 어떠한 법적 보상이나 책임도 지지 않음을 알려드립니다.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- 소개 및 문의 모달 -->
+  <div id="about-modal" class="modal-overlay">
+    <div class="modal-card">
+      <div class="modal-header">
+        <h2>📮 소개 및 문의</h2>
+        <button class="close-modal-btn" onclick="closeModal('about-modal')">×</button>
+      </div>
+      <div class="modal-body">
+        <p><strong>서비스 소개</strong><br>
+        '내 로또 번호 검색기'는 복권 매니아들을 위한 깔끔하고 직관적인 전용 대시보드입니다. 모바일과 데스크톱 어디서나 최적화된 화면으로 로또 6/45 및 연금복권 720+의 최근 당첨 정보와 내 번호 맞춤 대조 기능을 빠르고 간편하게 이용할 수 있도록 돕습니다.</p>
+        
+        <p><strong>제안 및 기술 문의</strong><br>
+        서비스 오류 제보, 제휴 제안, 개선 아이디어 등은 아래의 이메일 주소로 편하게 연락 주시면 신속하게 검토 후 조치해 드리겠습니다.</p>
+        <p>📧 이메일: <strong>doobu.hm@gmail.com</strong></p>
+      </div>
+    </div>
+  </div>
 
   <script>
     // API BASE URL - 백엔드 서버 주소 (Cloudflare Pages 등 배포 시 이곳에 백엔드 주소를 입력해 주세요)
@@ -983,8 +1200,34 @@
       }
     }
 
+    // ================= 모달 제어 함수 (애드센스 심사 통과용) =================
+    function openModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'flex';
+        document.body.style.overflow = 'hidden'; // 배경 스크롤 차단
+      }
+    }
+
+    function closeModal(id) {
+      const modal = document.getElementById(id);
+      if (modal) {
+        modal.style.display = 'none';
+        document.body.style.overflow = ''; // 배경 스크롤 복구
+      }
+    }
+
     window.onload = function() {
       initMainTab();
+      
+      // 모달 바깥쪽 영역(오버레이)을 클릭해도 모달이 닫히도록 바인딩
+      document.querySelectorAll('.modal-overlay').forEach(overlay => {
+        overlay.addEventListener('click', (e) => {
+          if (e.target === overlay) {
+            closeModal(overlay.id);
+          }
+        });
+      });
     };
   </script>
 </body>
