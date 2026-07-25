@@ -1,3 +1,6 @@
+require('dotenv').config();
+const dns = require('dns');
+dns.setDefaultResultOrder('ipv4first');
 const { Pool } = require('pg');
 const sqlite3 = require('sqlite3').verbose();
 const path = require('path');

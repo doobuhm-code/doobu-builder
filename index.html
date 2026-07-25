@@ -560,6 +560,10 @@
   <!-- 하단 광고 영역 제거됨 -->
 
   <script>
+    // API BASE URL - 백엔드 서버 주소 (Cloudflare Pages 등 배포 시 이곳에 백엔드 주소를 입력해 주세요)
+    // 예: const API_BASE_URL = 'https://my-lottery-backend.onrender.com';
+    const API_BASE_URL = 'https://doobu-builder-production.up.railway.app';
+
     // 테마 설정 (깜빡임 방지용 즉시 실행 함수)
     (function() {
       const savedTheme = localStorage.getItem('theme') || 'light';
@@ -595,7 +599,7 @@
 
         // 입력창이 비어있거나 최초 진입 시 최신 회차 번호 불러오기
         if (lottoInput && !lottoInput.value) {
-          const lottoRes = await fetch('/api/lotto-latest');
+          const lottoRes = await fetch(`${API_BASE_URL}/api/lotto-latest`);
           const lottoData = await lottoRes.json();
           if (lottoData.success && lottoData.data) {
             lottoInput.value = lottoData.data.drwNo;
@@ -604,7 +608,7 @@
         }
 
         if (pensionInput && !pensionInput.value) {
-          const pensionRes = await fetch('/api/pension-latest');
+          const pensionRes = await fetch(`${API_BASE_URL}/api/pension-latest`);
           const pensionData = await pensionRes.json();
           if (pensionData.success && pensionData.data) {
             pensionInput.value = pensionData.data.drw_no;
@@ -741,7 +745,7 @@
       if (new Set(nums).size !== 6) return alert('서로 다른 6개 번호를 입력해주세요.');
 
       try {
-        const response = await fetch('/api/lotto/check-win', {
+        const response = await fetch(`${API_BASE_URL}/api/lotto/check-win`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ numbers: nums })
@@ -809,7 +813,7 @@
       if (!drwNo) return;
 
       try {
-        const response = await fetch(`/api/lotto/${drwNo}`);
+        const response = await fetch(`${API_BASE_URL}/api/lotto/${drwNo}`);
         const result = await response.json();
 
         if (!result.success) {
@@ -878,7 +882,7 @@
       const userNums = digits.map(Number);
 
       try {
-        const response = await fetch('/api/pension/check-win', {
+        const response = await fetch(`${API_BASE_URL}/api/pension/check-win`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ n1: digits[0], n2: digits[1], n3: digits[2], n4: digits[3], n5: digits[4], n6: digits[5] })
@@ -937,7 +941,7 @@
       if (!drwNo) return;
 
       try {
-        const response = await fetch(`/api/pension/${drwNo}`);
+        const response = await fetch(`${API_BASE_URL}/api/pension/${drwNo}`);
         const result = await response.json();
 
         if (!result.success) {
