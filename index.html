@@ -8,8 +8,6 @@
   <meta name="keywords" content="로또 번호 검색, 로또 당첨 확인, 연금복권 720+, 로또 번호 추천, 복권 당첨 조회, 내 로또 번호 검색기">
   <link rel="canonical" href="https://lotto-search.up.railway.app">
   
-  <!-- [애드센스 등록용] 아래 주석을 지우고 구글 애드센스에서 발급받은 <script> 코드를 이곳에 붙여넣으세요 -->
-  <!-- <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-XXXXXXXXXXXXXXXX" crossorigin="anonymous"></script> -->
   <style>
     :root {
       --bg-gradient: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
@@ -107,120 +105,135 @@
       transform: translateY(0);
     }
 
-    /* ================= 모바일 레이아웃 및 반응형 스타일 (모바일 겹침 방지) ================= */
+    /* ================= 모바일 전용 반응형 스타일 (PC는 기존 유지) ================= */
     @media (max-width: 600px) {
       .theme-toggle {
         position: static;
-        margin-bottom: 15px;
+        margin-bottom: 5px;
         align-self: flex-end;
-        font-size: 12px;
-        padding: 6px 12px;
+        font-size: 11px;
+        padding: 5px 10px;
       }
 
       .main-wrapper {
-        padding: 45px 12px 20px;
-        margin-top: 35px;
+        padding: 25px 10px 16px;
+        margin-top: 15px;
         border-radius: 16px;
       }
 
       .content-card {
         padding: 20px 10px;
-        min-height: auto; /* 고정 최소 높이 제거하여 콘텐츠가 늘어나도록 설정 */
+        min-height: auto;
         height: auto;
-        border-radius: 16px;
+        border-radius: 14px;
       }
 
       .tab-content {
-        height: auto; /* 고정 100% 높이를 해제하여 세로 겹침 현상 원천 차단 */
+        height: auto;
         justify-content: flex-start;
-        gap: 15px;
+        gap: 12px;
       }
 
+      /* 귀 메뉴(상단 로또/연금복권 탭)를 박스 안쪽 상단에 깔끔하게 배치 */
       .main-menu-ears {
-        top: -42px;
-        left: 10px;
-        right: 10px;
+        position: relative;
+        top: 0;
+        left: 0;
+        right: 0;
+        margin-bottom: 12px;
+        justify-content: center;
+        gap: 10px;
       }
 
       .rabbit-ear {
-        width: 100px;
-        height: 38px;
+        width: 110px;
+        height: 36px;
         font-size: 13px;
-        border-top-left-radius: 12px;
-        border-top-right-radius: 12px;
+        border-radius: 10px !important;
+        box-shadow: 0 2px 5px rgba(0,0,0,0.05);
       }
 
       .rabbit-ear.active {
-        height: 44px;
-        font-size: 14px;
+        height: 38px;
+        font-size: 13.5px;
+        box-shadow: 0 3px 8px rgba(118, 75, 162, 0.2);
       }
 
+      /* 중 메뉴(탭 버튼) 2줄로 3개 배치 (위 2개, 아래 1개) */
       .menu-card {
         height: auto;
         padding: 6px;
         border-radius: 14px;
-        gap: 4px;
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 6px;
       }
 
       .tab-btn {
-        font-size: 11px;
-        height: 34px;
-        line-height: 34px;
+        width: 100%;
+        height: 36px;
+        font-size: 11.5px;
+        line-height: 36px;
+        padding: 0 4px;
         border-radius: 8px;
+        white-space: nowrap;
       }
 
-      .tab-btn.active {
-        box-shadow: 0 1px 4px rgba(118, 75, 162, 0.2);
+      /* 세 번째 버튼(역대 조회)은 아래 칸에서 전체 너비(2칸 차지)로 중앙 정렬 */
+      .tab-btn:nth-child(3) {
+        grid-column: span 2;
+        max-width: 70%;
+        margin: 0 auto;
       }
 
       h1 {
-        font-size: 18px;
+        font-size: 17px;
       }
 
       p {
-        font-size: 12.5px;
-      }
-
-      .ball {
-        width: 32px;
-        height: 32px;
         font-size: 12px;
       }
 
+      .ball {
+        width: 30px;
+        height: 30px;
+        font-size: 11px;
+      }
+
       .pension-ball {
-        width: 34px;
-        height: 34px;
-        font-size: 13.5px;
+        width: 32px;
+        height: 32px;
+        font-size: 13px;
       }
 
       .pension-all-group-badge {
         padding: 6px 10px;
-        font-size: 12px;
+        font-size: 11px;
         margin-right: 0;
       }
 
       .num-inputs, .pension-inputs-6 {
-        gap: 6px;
-        margin-bottom: 15px;
+        gap: 4px;
+        margin-bottom: 12px;
       }
 
       .num-inputs input, .pension-inputs-6 input {
-        padding: clamp(5px, 1.8vw, 8px) 0;
-        font-size: clamp(11px, 3.2vw, 13px);
+        padding: 6px 0;
+        font-size: 12px;
         border-radius: 6px;
       }
 
       .pension-search-row {
         flex-direction: column;
-        gap: 10px;
-        margin-bottom: 15px;
+        gap: 8px;
+        margin-bottom: 12px;
       }
 
       .game-item {
         height: auto;
-        padding: 10px 12px;
+        padding: 8px 10px;
         flex-direction: column;
-        gap: 8px;
+        gap: 6px;
         align-items: center;
         border-radius: 10px;
       }
@@ -228,31 +241,31 @@
       .game-label {
         width: auto;
         text-align: center;
-        font-size: 12.5px;
+        font-size: 12px;
       }
 
       .pension-single-box {
-        padding: 20px 10px;
-        border-radius: 12px;
+        padding: 15px 8px;
+        border-radius: 10px;
       }
 
       .site-footer {
-        margin-top: 25px;
-        padding: 20px 10px;
-        border-radius: 12px;
+        margin-top: 20px;
+        padding: 15px 8px;
+        border-radius: 10px;
       }
 
       .footer-content {
-        gap: 10px;
-        font-size: 11.5px;
+        gap: 8px;
+        font-size: 11px;
       }
 
       .footer-links {
-        gap: 6px;
+        gap: 4px;
       }
 
       .footer-warning {
-        font-size: 10px;
+        font-size: 9.5px;
       }
 
       .modal-card {
@@ -261,17 +274,17 @@
       }
 
       .modal-header {
-        padding: 14px 16px;
+        padding: 12px 14px;
       }
 
       .modal-header h2 {
-        font-size: 16px;
+        font-size: 15px;
       }
 
       .modal-body {
-        padding: 16px;
-        max-height: 320px;
-        font-size: 12px;
+        padding: 14px;
+        max-height: 280px;
+        font-size: 11.5px;
       }
     }
     
@@ -325,16 +338,16 @@
     }
 
     .rabbit-ear {
-      width: clamp(90px, 28vw, 140px);
-      height: clamp(38px, 10vw, 50px);
+      width: 140px;
+      height: 50px;
       background: var(--ear-bg);
       border: none;
-      font-size: clamp(12px, 3.8vw, 15px);
+      font-size: 15px;
       font-weight: bold;
       color: var(--ear-text);
       cursor: pointer;
-      border-top-left-radius: clamp(10px, 3vw, 18px);
-      border-top-right-radius: clamp(10px, 3vw, 18px);
+      border-top-left-radius: 18px;
+      border-top-right-radius: 18px;
       box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.05);
       transition: all 0.2s ease;
       display: flex;
@@ -346,8 +359,8 @@
     .rabbit-ear.active {
       background: var(--ear-active-bg);
       color: var(--ear-active-text);
-      height: clamp(44px, 12vw, 60px);
-      font-size: clamp(13px, 4vw, 16px);
+      height: 60px;
+      font-size: 16px;
       font-weight: 800;
       box-shadow: 0 -6px 12px rgba(0, 0, 0, 0.08);
     }
@@ -371,17 +384,17 @@
 
     .tab-btn { 
       flex: 1 1 0px; 
-      height: clamp(34px, 9vw, 44px); 
-      line-height: clamp(34px, 9vw, 44px); 
+      height: 44px; 
+      line-height: 44px; 
       min-width: 0;
       background: none; 
       border: none; 
-      font-size: clamp(11px, 3.5vw, 15px); 
+      font-size: 15px; 
       font-weight: bold; 
       color: var(--tab-btn-text); 
-      padding: 0 clamp(4px, 1.5vw, 12px); 
+      padding: 0 12px; 
       cursor: pointer; 
-      border-radius: clamp(8px, 2vw, 15px); 
+      border-radius: 15px; 
       text-align: center;
       white-space: nowrap;
       transition: all 0.2s ease;
@@ -436,12 +449,12 @@
     h1 { 
       color: var(--text-main); 
       margin-bottom: 6px; 
-      font-size: clamp(17px, 5.5vw, 22px); 
+      font-size: 22px; 
       word-break: keep-all;
     }
     p { 
       color: var(--text-sub); 
-      font-size: clamp(11.5px, 3.8vw, 14.5px); 
+      font-size: 14.5px; 
       margin-bottom: 0; 
       line-height: 1.4;
       word-break: keep-all;
@@ -466,8 +479,8 @@
     .balls-container { display: flex; justify-content: center; gap: 8px; align-items: center; flex-wrap: wrap; }
     
     .ball {
-      width: clamp(30px, 9.5vw, 40px); height: clamp(30px, 9.5vw, 40px); border-radius: 50%; display: flex;
-      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: clamp(11px, 3.5vw, 14px);
+      width: 40px; height: 40px; border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 14px;
       box-shadow: 0 2px 4px rgba(0, 0, 0, 0.12); animation: pop 0.3s ease-out;
     }
 
@@ -493,8 +506,8 @@
     }
 
     .pension-ball {
-      width: clamp(32px, 11vw, 46px); height: clamp(32px, 11vw, 46px); border-radius: 50%; display: flex;
-      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: clamp(12px, 4vw, 17px);
+      width: 46px; height: 46px; border-radius: 50%; display: flex;
+      justify-content: center; align-items: center; color: white; font-weight: bold; font-size: 17px;
       box-shadow: 0 3px 6px rgba(0, 0, 0, 0.15); animation: pop 0.3s ease-out;
     }
 
@@ -559,7 +572,7 @@
     .search-box input { width: 180px; padding: 10px; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 12px; text-align: center; font-size: 15px; font-weight: bold; }
     
     .num-inputs { display: grid; grid-template-columns: repeat(6, 1fr); gap: 10px; width: 100%; max-width: 600px; margin-bottom: 20px; }
-    .num-inputs input { width: 100%; min-width: 0; padding: clamp(8px, 2.5vw, 11px) 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: clamp(12px, 3.5vw, 15px); font-weight: bold; }
+    .num-inputs input { width: 100%; min-width: 0; padding: 11px 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold; }
     
     .pension-search-row {
       display: flex;
@@ -577,7 +590,7 @@
       flex-grow: 1;
     }
     .pension-inputs-6 input {
-      width: 100%; min-width: 0; padding: clamp(8px, 2.5vw, 11px) 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: clamp(12px, 3.5vw, 15px); font-weight: bold;
+      width: 100%; min-width: 0; padding: 11px 0; border: 2px solid var(--input-border); background-color: var(--input-bg); color: var(--input-text); border-radius: 10px; text-align: center; font-size: 15px; font-weight: bold;
     }
 
     .result-box { 
@@ -588,7 +601,7 @@
       display: none; 
       width: 100%; 
       max-width: 620px;
-      max-height: 230px; /* 👈 이 부분을 180px에서 320px로 변경해주세요 */
+      max-height: 230px; 
       overflow-y: auto; 
       margin-top: 15px;
     }
@@ -599,7 +612,7 @@
 
     @keyframes pop { 0% { transform: scale(0); } 100% { transform: scale(1); } }
 
-    /* ================= 푸터 및 모달 스타일 (애드센스 심사 통과용) ================= */
+    /* ================= 푸터 및 모달 스타일 ================= */
     .site-footer {
       width: 100%;
       margin-top: 40px;
@@ -648,7 +661,6 @@
       margin-top: 5px;
     }
 
-    /* 모달 오버레이 스타일 */
     .modal-overlay {
       position: fixed;
       top: 0;
@@ -856,7 +868,7 @@
     </div>
   </div>
 
-  <!-- 푸터 영역 (AdSense 심사 통과를 위한 필수 페이지 링크 포함) -->
+  <!-- 푸터 영역 -->
   <footer class="site-footer">
     <div class="footer-content">
       <p>© 2026 내 로또 번호 검색기. All rights reserved.</p>
@@ -948,11 +960,8 @@
   </div>
 
   <script>
-    // API BASE URL - 백엔드 서버 주소 (Cloudflare Pages 등 배포 시 이곳에 백엔드 주소를 입력해 주세요)
-    // 예: const API_BASE_URL = 'https://my-lottery-backend.onrender.com';
     const API_BASE_URL = 'https://lotto-search.up.railway.app';
 
-    // 테마 설정 (깜빡임 방지용 즉시 실행 함수)
     (function() {
       const savedTheme = localStorage.getItem('theme') || 'light';
       document.documentElement.setAttribute('data-theme', savedTheme);
@@ -985,7 +994,6 @@
         const lottoInput = document.getElementById('drwNoInput');
         const pensionInput = document.getElementById('pensionDrwInput');
 
-        // 입력창이 비어있거나 최초 진입 시 최신 회차 번호 불러오기
         if (lottoInput && !lottoInput.value) {
           const lottoRes = await fetch(`${API_BASE_URL}/api/lotto-latest`);
           const lottoData = await lottoRes.json();
@@ -1123,7 +1131,7 @@
       const inputElements = [
         document.getElementById('cNum1'), document.getElementById('cNum2'),
         document.getElementById('cNum3'), document.getElementById('cNum4'),
-        document.getElementById('cNum5'), document.getElementById('cNum6')
+        document.getElementById('cNum5'), document.getElementById('cNum6']
       ];
 
       const nums = inputElements.map(el => el.value).filter(v => v !== '').map(v => Number(v));
@@ -1371,12 +1379,11 @@
       }
     }
 
-    // ================= 모달 제어 함수 (애드센스 심사 통과용) =================
     function openModal(id) {
       const modal = document.getElementById(id);
       if (modal) {
         modal.style.display = 'flex';
-        document.body.style.overflow = 'hidden'; // 배경 스크롤 차단
+        document.body.style.overflow = 'hidden';
       }
     }
 
@@ -1384,14 +1391,13 @@
       const modal = document.getElementById(id);
       if (modal) {
         modal.style.display = 'none';
-        document.body.style.overflow = ''; // 배경 스크롤 복구
+        document.body.style.overflow = '';
       }
     }
 
     window.onload = function() {
       initMainTab();
       
-      // 모달 바깥쪽 영역(오버레이)을 클릭해도 모달이 닫히도록 바인딩
       document.querySelectorAll('.modal-overlay').forEach(overlay => {
         overlay.addEventListener('click', (e) => {
           if (e.target === overlay) {
