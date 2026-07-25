@@ -987,16 +987,126 @@
         </div>
 
         <div class="content-card">
-          <div id="pension-tab-recommend" class="tab-content active">
-            <div class="tab-header">
-              <h1>🎰 연금복권 720+ 번호 추천</h1>
-              <p>버튼을 눌러 행운의 연금복권 번호를 확인해보세요!</p>
+          <div id="pension-tab-recommend" class="tab-content active" style="flex-direction: column; width: 100%;">
+            <!-- 연금복권 추천 전용 서브 메뉴바 -->
+            <div class="sub-menu-bar" style="display: flex; justify-content: center; gap: 8px; width: 100%; max-width: 500px; margin: 0 auto 20px; background: var(--game-item-bg); padding: 5px; border-radius: 12px; border: 1px solid var(--game-item-border);">
+              <button class="p-sub-tab-btn active" onclick="switchPensionSubTab('default')" style="flex: 1; padding: 8px 10px; border: none; background: #764ba2; font-size: 13px; font-weight: bold; color: #ffffff; border-radius: 8px; cursor: pointer; transition: all 0.2s; box-shadow: 0 2px 8px rgba(118, 75, 162, 0.25);">기본 1게임</button>
+              <button class="p-sub-tab-btn" onclick="switchPensionSubTab('saju')" style="flex: 1; padding: 8px 10px; border: none; background: none; font-size: 13px; font-weight: bold; color: var(--tab-btn-text); border-radius: 8px; cursor: pointer; transition: all 0.2s;">사주 오행 추천</button>
+              <button class="p-sub-tab-btn" onclick="switchPensionSubTab('pattern')" style="flex: 1; padding: 8px 10px; border: none; background: none; font-size: 13px; font-weight: bold; color: var(--tab-btn-text); border-radius: 8px; cursor: pointer; transition: all 0.2s;">패턴 필터 조합</button>
             </div>
-            <div class="pension-single-box">
-              <div id="pension-recommend-games" class="balls-container" style="gap:8px;"></div>
+
+            <!-- 서브탭 1: 기본 1게임 추천 -->
+            <div id="p-sub-panel-default" class="p-sub-panel" style="display: flex; flex-direction: column; align-items: center; width: 100%;">
+              <div class="tab-header">
+                <h1>🎰 연금복권 720+ 번호 추천</h1>
+                <p>버튼을 눌러 행운의 연금복권 번호를 확인해보세요!</p>
+              </div>
+              <div class="pension-single-box" style="width: 100%; display: flex; justify-content: center; margin-bottom: 20px;">
+                <div id="pension-recommend-games" class="balls-container" style="gap:8px; justify-content: center;"></div>
+              </div>
+              <div>
+                <button class="action-btn recommend-btn" onclick="generateSinglePensionGame()">추천</button>
+              </div>
             </div>
-            <div>
-              <button class="action-btn recommend-btn" onclick="generateSinglePensionGame()">추천</button>
+
+            <!-- 서브탭 2: 사주 오행 추천 -->
+            <div id="p-sub-panel-saju" class="p-sub-panel" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+              <div class="tab-header">
+                <h1>🔮 연금 사주 행운의 번호</h1>
+                <p>성명학적 자모음 파동 연산과 귀하가 태어난 연도의 띠, 계절 오행 상생 기운을 정밀 연산하여 연금복권 행운의 조와 6자리 길수를 점지합니다.</p>
+              </div>
+              
+              <div style="width: 100%; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto;">
+                <!-- 이름/사주 입력 폼 -->
+                <div id="p-form-saju-name" style="display: flex; flex-direction: column; gap: 12px; background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">성함 (한글 또는 초성)</label>
+                    <input type="text" id="pSajuNameInput" placeholder="예: 홍길동 또는 ㅎㄱㄷ" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                  </div>
+                  <div style="display: flex; gap: 10px;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 연도</label>
+                      <input type="number" id="pSajuBirthYear" min="1930" max="2026" value="1995" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
+                    </div>
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 월/일</label>
+                      <input type="text" id="pSajuBirthDate" placeholder="예: 0524" maxlength="4" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; text-align: center;">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 결과 버튼 -->
+                <button class="action-btn" onclick="generatePensionSajuNumbers()" style="margin-top: 5px;">🔮 연금 운명의 번호 추출하기</button>
+
+                <!-- 결과 박스 -->
+                <div id="pSajuResultBox" class="result-box" style="display: none; padding: 20px; background: var(--game-item-bg); border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
+                  <div id="pSajuAnalysisText" style="font-size: 14px; line-height: 1.6; color: var(--text-main); margin-bottom: 15px; text-align: left; border-bottom: 1px dashed var(--game-item-border); padding-bottom: 12px;"></div>
+                  <h4 style="font-size: 13px; font-weight: bold; color: var(--text-sub); margin-bottom: 10px; text-align: center;">🍀 추천하는 행운의 조와 번호</h4>
+                  <div id="pSajuBallsContainer" class="balls-container" style="justify-content: center; gap: 10px; width: 100%;"></div>
+                </div>
+              </div>
+            </div>
+
+            <!-- 서브탭 3: 패턴 필터 조합 추천 -->
+            <div id="p-sub-panel-pattern" class="p-sub-panel" style="display: none; flex-direction: column; align-items: center; width: 100%;">
+              <div class="tab-header">
+                <h1>📊 연금 패턴 필터 조합기</h1>
+                <p>조 선택 및 일의 자리 홀짝 비율 필터, 중복 자릿수 억제 및 최신 당첨 번호 배제 필터를 탑재한 지능형 연금 조합기입니다.</p>
+              </div>
+
+              <div style="width: 100%; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto;">
+                <div style="display: flex; flex-direction: column; gap: 12px; background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
+                  <!-- 1. 조 선택 -->
+                  <div style="display: flex; flex-direction: column; gap: 6px;">
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">1. 조(Group) 선택 필터</label>
+                    <select id="pPatternGroup" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; cursor: pointer;">
+                      <option value="all">모든 조 (1등 + 모든 조 2등 당첨 타겟)</option>
+                      <option value="random">랜덤 조 추출</option>
+                      <option value="1">1조</option>
+                      <option value="2">2조</option>
+                      <option value="3">3조</option>
+                      <option value="4">4조</option>
+                      <option value="5">5조</option>
+                    </select>
+                  </div>
+
+                  <!-- 2. 마지막 일의 자리 홀짝 -->
+                  <div style="display: flex; flex-direction: column; gap: 6px; margin-top: 5px;">
+                    <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">2. 마지막 일의 자리 홀짝 필터 (7등 당첨 직결)</label>
+                    <select id="pPatternLastOddEven" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; cursor: pointer;">
+                      <option value="random">랜덤 홀짝 (필터 해제)</option>
+                      <option value="odd">홀수 단번으로 지정</option>
+                      <option value="even">짝수 단번으로 지정</option>
+                    </select>
+                  </div>
+
+                  <!-- 3. 동일 숫자 3연속 중복 억제 -->
+                  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 5px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: var(--text-main); text-align: left;">
+                      <input type="checkbox" id="pPatternRepeatFilter" checked style="accent-color: #764ba2; width: 16px; height: 16px;">
+                      3. 동일 숫자 3회 연속 출현 제한 (예: 555812 방지)
+                    </label>
+                    <p style="font-size: 11px; color: var(--text-sub); text-align: left; line-height: 1.4; margin-left: 24px;">* '777'과 같이 동일한 숫자가 3회 이상 연달아 배열되는 부자연스러운 조성을 방지합니다.</p>
+                  </div>
+
+                  <!-- 4. 직전 회차 제외 -->
+                  <div style="display: flex; flex-direction: column; gap: 4px; margin-top: 5px;">
+                    <label style="display: flex; align-items: center; gap: 8px; cursor: pointer; font-size: 14px; font-weight: bold; color: var(--text-main); text-align: left;">
+                      <input type="checkbox" id="pPatternExcludeLatest" checked style="accent-color: #764ba2; width: 16px; height: 16px;">
+                      4. 직전 회차 1등 당첨번호 완전 제외 필터
+                    </label>
+                    <p style="font-size: 11px; color: var(--text-sub); text-align: left; line-height: 1.4; margin-left: 24px;">* 최신 회차 연금복권에 선정된 6자리 당첨 번호는 이번 추출 배열에서 배제합니다.</p>
+                  </div>
+                </div>
+
+                <!-- 조합 생성 버튼 -->
+                <button class="action-btn" onclick="generatePatternPensionGame()">📊 패턴 필터 연금번호 생성</button>
+
+                <!-- 조합 결과 박스 -->
+                <div id="pPatternResultBox" class="result-box" style="display: none; padding: 20px; background: var(--game-item-bg); border-radius: 16px; border: 1px solid var(--game-item-border); width: 100%;">
+                  <div id="pPatternBallsContainer" class="balls-container" style="justify-content: center; gap: 10px; width: 100%;"></div>
+                </div>
+              </div>
             </div>
           </div>
 
@@ -1578,6 +1688,233 @@
         const digit = Math.floor(Math.random() * 10);
         container.appendChild(createPensionDigitBall(digit, i));
       }
+    }
+
+    function switchPensionSubTab(subTabName) {
+      const btns = document.querySelectorAll('.p-sub-tab-btn');
+      const panels = document.querySelectorAll('.p-sub-panel');
+
+      btns.forEach(btn => {
+        btn.classList.remove('active');
+        btn.style.background = 'none';
+        btn.style.color = 'var(--tab-btn-text)';
+        btn.style.boxShadow = 'none';
+      });
+
+      panels.forEach(panel => panel.style.display = 'none');
+
+      btns.forEach(btn => {
+        if (btn.getAttribute('onclick').includes(`'${subTabName}'`)) {
+          btn.classList.add('active');
+          btn.style.background = '#764ba2';
+          btn.style.color = '#ffffff';
+          btn.style.boxShadow = '0 2px 8px rgba(118, 75, 162, 0.25)';
+        }
+      });
+
+      const targetPanel = document.getElementById(`p-sub-panel-${subTabName}`);
+      if (targetPanel) {
+        targetPanel.style.display = 'flex';
+        if (subTabName === 'default') {
+          generateSinglePensionGame();
+        }
+      }
+    }
+
+    function generatePensionSajuNumbers() {
+      const resultBox = document.getElementById('pSajuResultBox');
+      const analysisText = document.getElementById('pSajuAnalysisText');
+      const ballsContainer = document.getElementById('pSajuBallsContainer');
+      
+      const name = document.getElementById('pSajuNameInput').value.trim();
+      const year = document.getElementById('pSajuBirthYear').value;
+      const monthDay = document.getElementById('pSajuBirthDate').value.trim();
+
+      if (!name) {
+        alert('성함(또는 초성)을 입력해 주세요.');
+        return;
+      }
+      if (!monthDay || monthDay.length !== 4) {
+        alert('태어난 월/일 4자리를 정확히 입력해 주세요. (예: 0524)');
+        return;
+      }
+
+      // Seeded random generation based on name + year + monthDay
+      const seed = name + year + monthDay + "pension";
+      
+      // Seeded random number generator
+      let hash = 0;
+      for (let i = 0; i < seed.length; i++) {
+        hash = seed.charCodeAt(i) + ((hash << 5) - hash);
+      }
+      function seededRandom() {
+        let x = Math.sin(hash++) * 10000;
+        return x - Math.floor(x);
+      }
+
+      // Generate group (1 to 5)
+      const group = Math.floor(seededRandom() * 5) + 1;
+
+      // Generate 6 digits
+      const digits = [];
+      for (let i = 0; i < 6; i++) {
+        digits.push(Math.floor(seededRandom() * 10));
+      }
+
+      // Zodiac mapping
+      const zodiacs = {
+        0: "원숭이띠 (신금 申金 - 지혜와 재치)",
+        1: "닭띠 (유금 酉金 - 예리함과 총명함)",
+        2: "개띠 (술토 戌土 - 충직함과 책임감)",
+        3: "돼지띠 (해수 亥水 - 풍요와 끈기)",
+        4: "쥐띠 (자수 子水 - 기회와 지혜)",
+        5: "소띠 (축토 丑土 - 우직함과 결실)",
+        6: "호랑이띠 (인목 寅木 - 용맹과 자신감)",
+        7: "토끼띠 (묘목 卯木 - 조화와 영민함)",
+        8: "용띠 (진토 辰土 - 무한한 잠재력)",
+        9: "뱀띠 (사화 巳火 - 직관과 통찰)",
+        10: "말띠 (오화 午火 - 열정과 돌파력)",
+        11: "양띠 (미토 未土 - 온화함과 상생)"
+      };
+      const zodiacIdx = (parseInt(year) - 4) % 12;
+      const zodiacText = zodiacs[zodiacIdx < 0 ? zodiacIdx + 12 : zodiacIdx];
+
+      // Season mapping
+      const birthMonth = parseInt(monthDay.slice(0, 2));
+      let seasonText = "";
+      if (birthMonth >= 3 && birthMonth <= 5) {
+        seasonText = "봄의 왕성한 생명력과 목(木 - 창조 및 시작)의 기운";
+      } else if (birthMonth >= 6 && birthMonth <= 8) {
+        seasonText = "여름의 뜨거운 열정과 화(火 - 확장 및 화합)의 기운";
+      } else if (birthMonth >= 9 && birthMonth <= 11) {
+        seasonText = "가을의 풍요로운 결실과 금(金 - 집중 및 결단)의 기운";
+      } else {
+        seasonText = "겨울의 고요한 지혜와 수(水 - 저장 및 통찰)의 기운";
+      }
+
+      // Generate customized fortune explanation
+      const explanation = `🔮 <strong>${name} (${year}년 생 / ${birthMonth}월 생)님의 정통 연금 사주 분석</strong><br><br>` +
+                    `• <strong>태어난 해의 기운</strong>: 귀하는 <strong>${zodiacText}</strong>의 해에 태어나 해당 지신의 풍요로운 조력 성향을 지녔습니다.<br>` +
+                    `• <strong>태어난 계절의 기운</strong>: 계절상 <strong>${seasonText}</strong>을 얻어 일평생 끊이지 않는 상생 수류(水流) 기류가 깃들어 있습니다.<br><br>` +
+                    `• <strong>연금형 수리역학 연산 결과</strong>: 성명학적 자모음 파동 수치와 사주 음양의 상생 가치를 종합 조율한 결과, ` +
+                    `일정하고 차분하게 매달 연금식으로 들어오는 복권의 성질과 가장 길하게 궁합을 이루는 오행 기류가 형성됩니다. ` +
+                    `<strong>오직 ${name}님만을 위해 배정된 행운의 조 및 6자리 길수</strong>를 도출해 드렸으니 대박의 기운과 함께 풍요의 기쁨을 누려보세요!`;
+
+      // Display results
+      analysisText.innerHTML = explanation;
+      ballsContainer.innerHTML = '';
+      
+      const groupBadge = document.createElement('div');
+      groupBadge.className = 'pension-all-group-badge';
+      groupBadge.textContent = `${group}조`;
+      ballsContainer.appendChild(groupBadge);
+
+      digits.forEach((digit, idx) => {
+        ballsContainer.appendChild(createPensionDigitBall(digit, idx));
+      });
+
+      resultBox.style.display = 'block';
+    }
+
+    async function generatePatternPensionGame() {
+      const groupChoice = document.getElementById('pPatternGroup').value;
+      const lastOddEven = document.getElementById('pPatternLastOddEven').value;
+      const repeatFilterEnabled = document.getElementById('pPatternRepeatFilter').checked;
+      const excludeLatest = document.getElementById('pPatternExcludeLatest').checked;
+      const container = document.getElementById('pPatternBallsContainer');
+      const resultBox = document.getElementById('pPatternResultBox');
+
+      if (!container) return;
+      container.innerHTML = '조합 연산 중...';
+      resultBox.style.display = 'block';
+
+      let excludeNumbers = [];
+      if (excludeLatest) {
+        try {
+          const res = await fetch(`${API_BASE_URL}/api/pension-latest`);
+          const data = await res.json();
+          if (data.success && data.data) {
+            excludeNumbers = [data.data.num1, data.data.num2, data.data.num3, data.data.num4, data.data.num5, data.data.num6];
+          }
+        } catch (e) {
+          console.error('최신 연금복권 조회 실패 (제외수 없이 진행):', e);
+        }
+      }
+
+      // Helper validators
+      function validateLastDigit(digits) {
+        if (lastOddEven === 'random') return true;
+        const lastDigit = digits[5];
+        if (lastOddEven === 'odd') return lastDigit % 2 !== 0;
+        if (lastOddEven === 'even') return lastDigit % 2 === 0;
+        return true;
+      }
+
+      function validateRepeat(digits) {
+        if (!repeatFilterEnabled) return true;
+        // Check for 3 consecutive repeating digits (e.g. 5, 5, 5)
+        for (let i = 0; i < digits.length - 2; i++) {
+          if (digits[i] === digits[i+1] && digits[i+1] === digits[i+2]) {
+            return false;
+          }
+        }
+        return true;
+      }
+
+      function validateExclude(digits) {
+        if (!excludeLatest || excludeNumbers.length === 0) return true;
+        // Check if generated digits match the latest winning numbers
+        let matchCount = 0;
+        for (let i = 0; i < 6; i++) {
+          if (digits[i] === excludeNumbers[i]) matchCount++;
+        }
+        return matchCount < 6; // Fail if exactly same as latest
+      }
+
+      let attempts = 0;
+      let finalDigits = [];
+      while (finalDigits.length < 6 && attempts < 2000) {
+        attempts++;
+        const temp = [];
+        for (let i = 0; i < 6; i++) {
+          temp.push(Math.floor(Math.random() * 10));
+        }
+
+        if (validateLastDigit(temp) && validateRepeat(temp) && validateExclude(temp)) {
+          finalDigits = temp;
+          break;
+        }
+      }
+
+      if (finalDigits.length !== 6) {
+        // Fallback
+        finalDigits = [];
+        for (let i = 0; i < 6; i++) {
+          finalDigits.push(Math.floor(Math.random() * 10));
+        }
+      }
+
+      // Decide group
+      let finalGroup = "";
+      if (groupChoice === 'all') {
+        finalGroup = "모든 조";
+      } else if (groupChoice === 'random') {
+        finalGroup = `${Math.floor(Math.random() * 5) + 1}조`;
+      } else {
+        finalGroup = `${groupChoice}조`;
+      }
+
+      // Display
+      container.innerHTML = '';
+      
+      const groupBadge = document.createElement('div');
+      groupBadge.className = 'pension-all-group-badge';
+      groupBadge.textContent = finalGroup;
+      container.appendChild(groupBadge);
+
+      finalDigits.forEach((digit, idx) => {
+        container.appendChild(createPensionDigitBall(digit, idx));
+      });
     }
 
     async function checkPensionNumbers() {
