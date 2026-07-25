@@ -2,7 +2,6 @@ require('dotenv').config();
 const dns = require('dns');
 dns.setDefaultResultOrder('ipv4first');
 const { Pool } = require('pg');
-const sqlite3 = require('sqlite3').verbose();
 const path = require('path');
 
 const isPg = !!process.env.DATABASE_URL;
@@ -18,6 +17,7 @@ if (isPg) {
   });
 } else {
   console.log('🎰 Local SQLite3 DB Connection Activated');
+  const sqlite3 = require('sqlite3').verbose();
   lottoSqlite = new sqlite3.Database(path.join(__dirname, 'lotto.db'), (err) => {
     if (err) console.error('Lotto SQLite connection failed:', err.message);
   });
