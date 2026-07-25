@@ -140,6 +140,42 @@ app.post('/api/pension/check-win', async (req, res) => {
   }
 });
 
+// ================= 로또 뉴스 & 컬럼 API =================
+app.get('/api/news', async (req, res) => {
+  try {
+    const list = await db.news.getAll();
+    res.json({ success: true, data: list });
+  } catch (err) {
+    console.error('뉴스 조회 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
+app.post('/api/news', async (req, res) => {
+  const { title, content, author } = req.body;
+  if (!title || !content) {
+    return res.status(400).json({ success: false, message: '제목과 내용을 채워주세요.' });
+  }
+  try {
+    const newsId = await db.news.insert(title, content, author || '익명 기고가');
+    res.json({ success: true, id: newsId, message: '뉴스가 성공적으로 저장되었습니다!' });
+  } catch (err) {
+    console.error('뉴스 등록 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
+app.delete('/api/news/:id', async (req, res) => {
+  const { id } = req.params;
+  try {
+    await db.news.delete(id);
+    res.json({ success: true, message: '성공적으로 삭제되었습니다.' });
+  } catch (err) {
+    console.error('뉴스 삭제 에러:', err);
+    res.status(500).json({ success: false, message: 'DB 에러' });
+  }
+});
+
 // ================= 서버 구동 및 자동 수집 실행 =================
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`🚀 복권 포털 서버 실행 중: http://localhost:${PORT}`);
@@ -148,7 +184,10 @@ app.listen(PORT, '0.0.0.0', async () => {
     // 1. PostgreSQL 연결 환경일 시 테이블 자동 초기화
     await db.initPgTables();
     
-    // 2. 서버 실행 시 누락된 최신 데이터 백그라운드에서 즉시 수집 시작
+    // 2. 뉴스 및 컬럼 테이블 자동 초기화 및 시딩
+    await db.news.initialize();
+    
+    // 3. 서버 실행 시 누락된 최신 데이터 백그라운드에서 즉시 수집 시작
     console.log('🔄 [자동 수집] 최신 복권 당첨 정보를 동기화하는 중...');
     runLottoCollector();
     runPensionCollector();

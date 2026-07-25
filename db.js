@@ -220,9 +220,98 @@ const pension = {
   }
 };
 
+const news = {
+  initialize: () => {
+    if (isPg) {
+      return pgPool.query(`
+        CREATE TABLE IF NOT EXISTS lotto_news (
+          id SERIAL PRIMARY KEY,
+          title TEXT NOT NULL,
+          content TEXT,
+          author TEXT,
+          created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+        );
+      `).then(() => {
+        return pgPool.query('SELECT COUNT(*) FROM lotto_news').then(res => {
+          if (parseInt(res.rows[0].count) === 0) {
+            return pgPool.query(`
+              INSERT INTO lotto_news (title, content, author) VALUES 
+              ('로또 1등 당첨자의 생생한 농협 본점 방문 수령 후기', '지난주 로또 6/45 1등 당첨자가 NH농협은행 본점을 직접 방문하여 당첨금을 수령한 생생한 체험기가 공개되었습니다. 당첨자는 "정문 통과부터 심장이 쿵광거렸고, 1층 VIP실로 안내받는 순간 비로소 실감이 났다"고 소감을 밝혔습니다. 농협 관계자는 세금 공제 및 연금식 전환 팁을 친절히 조율해주었다며 감사 인사를 전했습니다.', '김행운 기자'),
+              ('복권위원회 발표: 내년도 복권기금 공익사업 2조 원 돌파', '기획재정부 복권위원회가 발표한 자료에 따르면, 국민들이 소액으로 즐긴 복권 판매 대금 중 약 2조 3천억 원이 내년도 소외계층 주거안정, 국가유공자 복지, 다문화가정 지원사업 등 다양한 공익적 배정에 투입됩니다. 복권 구매가 따뜻한 사회적 기여로 환원되고 있습니다.', '박사회 기자'),
+              ('전국 로또 명당 지도 분석: 진짜 명소의 당첨 비결은 무엇일까?', '서울 노원구, 부산 동구 등 전국적으로 유명한 이른바 로또 명당들의 비밀이 전격 분석되었습니다. 통계 분석 전문가들은 "명당의 당첨 확률 자체가 물리적으로 높은 것이 아니라, 유동 인구가 많아 하루 판매량이 압도적이기 때문에 비례해서 당첨 횟수가 많은 착시 현상"이라며 소소한 재미로 집 주변 판매점을 이용할 것을 당부했습니다.', '이통계 기자')
+            `);
+          }
+        });
+      });
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run(`
+          CREATE TABLE IF NOT EXISTS lotto_news (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            title TEXT NOT NULL,
+            content TEXT,
+            author TEXT,
+            created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+          );
+        `, (err) => {
+          if (err) return reject(err);
+          lottoSqlite.get('SELECT COUNT(*) as count FROM lotto_news', [], (err2, row) => {
+            if (err2) return reject(err2);
+            if (row.count === 0) {
+              const stmt = lottoSqlite.prepare('INSERT INTO lotto_news (title, content, author) VALUES (?, ?, ?)');
+              stmt.run('로또 1등 당첨자의 생생한 농협 본점 방문 수령 후기', '지난주 로또 6/45 1등 당첨자가 NH농협은행 본점을 직접 방문하여 당첨금을 수령한 생생한 체험기가 공개되었습니다. 당첨자는 "정문 통과부터 심장이 쿵광거렸고, 1층 VIP실로 안내받는 순간 비로소 실감이 났다"고 소감을 밝혔습니다. 농협 관계자는 세금 공제 및 연금식 전환 팁을 친절히 조율해주었다며 감사 인사를 전했습니다.', '김행운 기자');
+              stmt.run('복권위원회 발표: 내년도 복권기금 공익사업 2조 원 돌파', '기획재정부 복권위원회가 발표한 자료에 따르면, 국민들이 소액으로 즐긴 복권 판매 대금 중 약 2조 3천억 원이 내년도 소외계층 주거안정, 국가유공자 복지, 다문화가정 지원사업 등 다양한 공익적 배정에 투입됩니다. 복권 구매가 따뜻한 사회적 기여로 환원되고 있습니다.', '박사회 기자');
+              stmt.run('전국 로또 명당 지도 분석: 진짜 명소의 당첨 비결은 무엇일까?', '서울 노원구, 부산 동구 등 전국적으로 유명한 이른바 로또 명당들의 비밀이 전격 분석되었습니다. 통계 분석 전문가들은 "명당의 당첨 확률 자체가 물리적으로 높은 것이 아니라, 유동 인구가 많아 하루 판매량이 압도적이기 때문에 비례해서 당첨 횟수가 많은 착시 현상"이라며 소소한 재미로 집 주변 판매점을 이용할 것을 당부했습니다.', '이통계 기자');
+              stmt.finalize((err3) => {
+                if (err3) reject(err3); else resolve();
+              });
+            } else resolve();
+          });
+        });
+      });
+    }
+  },
+  getAll: () => {
+    if (isPg) {
+      return pgPool.query('SELECT id, title, content, author, created_at as "createdAt" FROM lotto_news ORDER BY id DESC')
+        .then(res => res.rows);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.all('SELECT id, title, content, author, created_at as createdAt FROM lotto_news ORDER BY id DESC', [], (err, rows) => {
+          if (err) reject(err); else resolve(rows);
+        });
+      });
+    }
+  },
+  insert: (title, content, author) => {
+    if (isPg) {
+      return pgPool.query('INSERT INTO lotto_news (title, content, author) VALUES ($1, $2, $3) RETURNING id', [title, content, author])
+        .then(res => res.rows[0].id);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run('INSERT INTO lotto_news (title, content, author) VALUES (?, ?, ?)', [title, content, author], function(err) {
+          if (err) reject(err); else resolve(this.lastID);
+        });
+      });
+    }
+  },
+  delete: (id) => {
+    if (isPg) {
+      return pgPool.query('DELETE FROM lotto_news WHERE id = $1', [id]);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run('DELETE FROM lotto_news WHERE id = ?', [id], (err) => {
+          if (err) reject(err); else resolve();
+        });
+      });
+    }
+  }
+};
+
 module.exports = {
   isPg,
   initPgTables,
   lotto,
-  pension
+  pension,
+  news
 };
