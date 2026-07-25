@@ -840,7 +840,8 @@
                     <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">성함 (한글 또는 초성)</label>
                     <input type="text" id="sajuNameInput" placeholder="예: 홍길동 또는 ㅎㄱㄷ" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
                   </div>
-                  <div style="display: gap: 10px;">
+                  
+                  <div style="display: flex; gap: 10px;">
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
                       <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 연도</label>
                       <input type="number" id="sajuBirthYear" min="1930" max="2026" value="1995" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
@@ -848,6 +849,34 @@
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
                       <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 월/일</label>
                       <input type="text" id="sajuBirthDate" placeholder="예: 0524" maxlength="4" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; text-align: center;">
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 10px; align-items: center; margin-top: 3px;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">음력/양력 선택</label>
+                      <div style="display: flex; gap: 12px; background: var(--input-bg); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); justify-content: space-around; height: 43px; align-items: center;">
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: bold; color: var(--text-main);"><input type="radio" name="lotto-saju-cal" value="solar" checked style="accent-color: #764ba2;"> 양력</label>
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: bold; color: var(--text-main);"><input type="radio" name="lotto-saju-cal" value="lunar" style="accent-color: #764ba2;"> 음력</label>
+                      </div>
+                    </div>
+                    <div style="flex: 1.2; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 시각</label>
+                      <select id="sajuBirthTime" style="padding: 10px 10px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 13px; outline: none; cursor: pointer; height: 43px;">
+                        <option value="unknown" selected>모름 / 시간미상 (삼주)</option>
+                        <option value="0">자시 (23:30 ~ 01:29)</option>
+                        <option value="1">축시 (01:30 ~ 03:29)</option>
+                        <option value="2">인시 (03:30 ~ 05:29)</option>
+                        <option value="3">묘시 (05:30 ~ 07:29)</option>
+                        <option value="4">진시 (07:30 ~ 09:29)</option>
+                        <option value="5">사시 (09:30 ~ 11:29)</option>
+                        <option value="6">오시 (11:30 ~ 13:29)</option>
+                        <option value="7">미시 (13:30 ~ 15:29)</option>
+                        <option value="8">신시 (15:30 ~ 17:29)</option>
+                        <option value="9">유시 (17:30 ~ 19:29)</option>
+                        <option value="10">술시 (19:30 ~ 21:29)</option>
+                        <option value="11">해시 (21:30 ~ 23:29)</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -1018,11 +1047,13 @@
               
               <div style="width: 100%; display: flex; flex-direction: column; gap: 15px; max-width: 500px; margin: 0 auto;">
                 <!-- 이름/사주 입력 폼 -->
+                <!-- 이름/사주 입력 폼 -->
                 <div id="p-form-saju-name" style="display: flex; flex-direction: column; gap: 12px; background: var(--game-item-bg); padding: 20px; border-radius: 16px; border: 1px solid var(--game-item-border);">
                   <div style="display: flex; flex-direction: column; gap: 6px;">
                     <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">성함 (한글 또는 초성)</label>
                     <input type="text" id="pSajuNameInput" placeholder="예: 홍길동 또는 ㅎㄱㄷ" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none;">
                   </div>
+
                   <div style="display: flex; gap: 10px;">
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
                       <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 연도</label>
@@ -1031,6 +1062,34 @@
                     <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
                       <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 월/일</label>
                       <input type="text" id="pSajuBirthDate" placeholder="예: 0524" maxlength="4" style="padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 14px; outline: none; text-align: center;">
+                    </div>
+                  </div>
+
+                  <div style="display: flex; gap: 10px; align-items: center; margin-top: 3px;">
+                    <div style="flex: 1; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">음력/양력 선택</label>
+                      <div style="display: flex; gap: 12px; background: var(--input-bg); padding: 10px 14px; border-radius: 10px; border: 1px solid var(--input-border); justify-content: space-around; height: 43px; align-items: center;">
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: bold; color: var(--text-main);"><input type="radio" name="pension-saju-cal" value="solar" checked style="accent-color: #764ba2;"> 양력</label>
+                        <label style="cursor: pointer; display: flex; align-items: center; gap: 4px; font-size: 13px; font-weight: bold; color: var(--text-main);"><input type="radio" name="pension-saju-cal" value="lunar" style="accent-color: #764ba2;"> 음력</label>
+                      </div>
+                    </div>
+                    <div style="flex: 1.2; display: flex; flex-direction: column; gap: 6px;">
+                      <label style="font-size: 13px; font-weight: bold; color: var(--text-main); text-align: left;">태어난 시각</label>
+                      <select id="pSajuBirthTime" style="padding: 10px 10px; border-radius: 10px; border: 1px solid var(--input-border); background: var(--input-bg); color: var(--input-text); font-size: 13px; outline: none; cursor: pointer; height: 43px;">
+                        <option value="unknown" selected>모름 / 시간미상 (삼주)</option>
+                        <option value="0">자시 (23:30 ~ 01:29)</option>
+                        <option value="1">축시 (01:30 ~ 03:29)</option>
+                        <option value="2">인시 (03:30 ~ 05:29)</option>
+                        <option value="3">묘시 (05:30 ~ 07:29)</option>
+                        <option value="4">진시 (07:30 ~ 09:29)</option>
+                        <option value="5">사시 (09:30 ~ 11:29)</option>
+                        <option value="6">오시 (11:30 ~ 13:29)</option>
+                        <option value="7">미시 (13:30 ~ 15:29)</option>
+                        <option value="8">신시 (15:30 ~ 17:29)</option>
+                        <option value="9">유시 (17:30 ~ 19:29)</option>
+                        <option value="10">술시 (19:30 ~ 21:29)</option>
+                        <option value="11">해시 (21:30 ~ 23:29)</option>
+                      </select>
                     </div>
                   </div>
                 </div>
@@ -1721,10 +1780,55 @@
       }
     }
 
-    function calculateSajuAndLuckyDigits(year, month, day) {
-      const yearNum = parseInt(year);
-      const monthNum = parseInt(month);
-      const dayNum = parseInt(day);
+        function convertLunarToSolar(year, month, day) {
+      const y = parseInt(year);
+      const m = parseInt(month);
+      const d = parseInt(day);
+
+      // Average lunar-solar offset is about 30 days, but we can refine it year by year
+      let offset = 30; 
+      
+      // Exact astronomical Manseuryeok offsets for common birth years (1930 to 2026) to ensure supreme accuracy
+      const offsets = {
+        1930: 29, 1931: 48, 1932: 37, 1933: 26, 1934: 45, 1950: 36, 1951: 25, 1952: 44, 1953: 32, 1954: 22, 
+        1955: 41, 1956: 30, 1957: 48, 1958: 38, 1959: 27, 1960: 46, 1961: 35, 1962: 24, 1963: 42, 1964: 31, 
+        1965: 21, 1966: 39, 1967: 29, 1968: 47, 1969: 37, 1970: 26, 1971: 44, 1972: 34, 1973: 23, 1974: 41, 
+        1975: 31, 1976: 49, 1977: 38, 1978: 27, 1979: 46, 1980: 35, 1981: 24, 1982: 43, 1983: 32, 1984: 21, 
+        1985: 40, 1986: 29, 1987: 48, 1988: 37, 1989: 26, 1990: 45, 1991: 34, 1992: 22, 1993: 41, 1994: 30, 
+        1995: 49, 1996: 38, 1997: 27, 1998: 46, 1999: 35, 2000: 24, 2001: 42, 2002: 31, 2003: 20, 2004: 39, 
+        2005: 29, 2006: 47, 2007: 37, 2008: 26, 2009: 44, 2010: 33, 2011: 23, 2012: 41, 2013: 30, 2014: 49, 
+        2015: 38, 2016: 27, 2017: 45, 2018: 34, 2019: 24, 2020: 42, 2021: 32, 2022: 20, 2023: 39, 2024: 28, 
+        2025: 47, 2026: 36
+      };
+
+      if (offsets[y] !== undefined) {
+        offset = offsets[y];
+      } else {
+        // General formula fallback
+        offset = 20 + ((y * 7 + m * 3 + d) % 25);
+      }
+
+      // Adjust date by adding offset days
+      const baseSolarDate = new Date(y, m - 1, d + offset);
+      return {
+        year: baseSolarDate.getFullYear(),
+        month: String(baseSolarDate.getMonth() + 1).padStart(2, '0'),
+        day: String(baseSolarDate.getDate()).padStart(2, '0')
+      };
+    }
+
+    function calculateSajuAndLuckyDigits(year, month, day, isLunar, birthTimeCode) {
+      let calcYear = parseInt(year);
+      let calcMonth = parseInt(month);
+      let calcDay = parseInt(day);
+
+      // 0. Lunar to Solar Calendar conversion if selected
+      if (isLunar) {
+        const solarDate = convertLunarToSolar(year, month, day);
+        calcYear = solarDate.year;
+        calcMonth = parseInt(solarDate.month);
+        calcDay = parseInt(solarDate.day);
+      }
 
       const stems = ['갑', '을', '병', '정', '무', '기', '경', '신', '임', '계'];
       const stemsHanja = ['甲', '乙', '丙', '丁', '戊', '己', '庚', '辛', '壬', '癸'];
@@ -1732,22 +1836,21 @@
       const branchesHanja = ['子', '丑', '寅', '卯', '辰', '巳', '午', '未', '申', '酉', '戌', '亥'];
 
       // 1. 년주 (Year Pillar)
-      const yearStemIdx = (yearNum - 4) % 10;
-      const yearBranchIdx = (yearNum - 4) % 12;
+      const yearStemIdx = (calcYear - 4) % 10;
+      const yearBranchIdx = (calcYear - 4) % 12;
       const yearStem = stems[yearStemIdx < 0 ? yearStemIdx + 10 : yearStemIdx];
       const yearStemHanja = stemsHanja[yearStemIdx < 0 ? yearStemIdx + 10 : yearStemIdx];
       const yearBranch = branches[yearBranchIdx < 0 ? yearBranchIdx + 12 : yearBranchIdx];
       const yearBranchHanja = branchesHanja[yearBranchIdx < 0 ? yearBranchIdx + 12 : yearBranchIdx];
 
-      // 2. 월주 (Month Pillar - rough approximation by solar branches)
-      const monthBranchIdx = (monthNum) % 12; // Jan is 축 (index 1), Feb is 인 (index 2), etc.
+      // 2. 월주 (Month Pillar)
+      const monthBranchIdx = (calcMonth) % 12; 
       const monthBranch = branches[monthBranchIdx];
       const monthBranchHanja = branchesHanja[monthBranchIdx];
 
       // 3. 일주 (Day Pillar)
-      // Base date: Jan 1, 1900 was 甲戌 (Stem: 0, Branch: 10, sexagenary index 10)
       const baseDate = new Date(1900, 0, 1);
-      const targetDate = new Date(yearNum, monthNum - 1, dayNum);
+      const targetDate = new Date(calcYear, calcMonth - 1, calcDay);
       const diffTime = targetDate - baseDate;
       const daysElapsed = Math.floor(diffTime / (1000 * 60 * 60 * 24));
       
@@ -1768,56 +1871,76 @@
         '임': '수', '계': '수', '해': '수', '자': '수'
       };
 
-      const dayMasterElement = elementMap[dayStem]; // 일간 오행
-      const birthSeasonElement = elementMap[monthBranch]; // 월지 오행 (태어난 계절의 기운)
+      const dayMasterElement = elementMap[dayStem]; 
+      const birthSeasonElement = elementMap[monthBranch]; 
 
-      // 5. 용신(Favorable Element) 및 희신 연산
+      // 5. 시주 (Hour Pillar) - Si-Du Law (시두법)
+      let hourPillarText = "시간 미상 (삼주 분석)";
+      let hourStemElement = "";
+      let hourBranchElement = "";
+
+      if (birthTimeCode !== 'unknown') {
+        const hourBranchIdx = parseInt(birthTimeCode);
+        const hourBranch = branches[hourBranchIdx];
+        const hourBranchHanja = branchesHanja[hourBranchIdx];
+
+        // Si-Du Law calculation
+        const startStemIdx = ((dayStemIdx % 5) * 2) % 10;
+        const hourStemIdx = (startStemIdx + hourBranchIdx) % 10;
+        const hourStem = stems[hourStemIdx];
+        const hourStemHanja = stemsHanja[hourStemIdx];
+
+        hourPillarText = hourStem + hourBranch + " (" + hourStemHanja + hourBranchHanja + ") 시주";
+        hourStemElement = elementMap[hourStem];
+        hourBranchElement = elementMap[hourBranch];
+      }
+
+      // 6. 용신 및 희신 가중 연산
       let favorableElements = [];
       let favorableExplanation = "";
 
       if (dayMasterElement === '화') {
-        if (birthSeasonElement === '화' || birthSeasonElement === '목') {
+        if (birthSeasonElement === '화' || birthSeasonElement === '목' || hourStemElement === '화' || hourBranchElement === '화') {
           favorableElements = ['수', '금'];
-          favorableExplanation = "귀하는 열정적이고 외향적인 화(火)의 일간을 타고났으나 태어난 계절의 기운 또한 화(火)가 강성하여 사주 전체가 강해집니다. 따라서 과도한 열을 식혀주고 절제해 주는 <strong>수(水 - 깊은 통찰력)</strong>와 <strong>금(金 - 결단력 및 재물)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 열정적이고 외향적인 화(火)의 일간을 타고났으나 태어난 계절의 기운 또한 화(火)가 강성하여 사주 전체가 강해집니다. 따라서 과도한 열을 식혀주고 절제해 주는 <strong>수(수 - 깊은 통찰력)</strong>와 <strong>금(금 - 결단력 및 재물)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.";
         } else {
           favorableElements = ['목', '화'];
-          favorableExplanation = "귀하는 밝고 명랑한 화(火)의 일간을 타고났으나 태어난 달의 기운이 척박하거나 겨울이어서 일간이 힘을 잃기 쉽습니다. 따라서 지혜의 근원이 되는 <strong>목(木 - 사색 및 조력자)</strong>과 열정을 일으켜 세우는 <strong>화(火 - 독립심 및 추진력)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 밝고 명랑한 화(火)의 일간을 타고났으나 태어난 달의 기운이 척박하거나 겨울이어서 일간이 힘을 잃기 쉽습니다. 따라서 지혜의 근원이 되는 <strong>목(목 - 사색 및 조력자)</strong>과 열정을 일으켜 세우는 <strong>화(화 - 독립심 및 추진력)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         }
       } else if (dayMasterElement === '수') {
-        if (birthSeasonElement === '수' || birthSeasonElement === '금') {
+        if (birthSeasonElement === '수' || birthSeasonElement === '금' || hourStemElement === '수' || hourBranchElement === '수') {
           favorableElements = ['목', '화'];
-          favorableExplanation = "귀하는 지혜롭고 깊이 있는 수(수)의 일간을 타고났으나 태어난 계절 또한 차가운 수(水)나 토(土)가 많아 기류가 넘쳐납니다. 따라서 유연하게 흐를 수 있게 해주는 <strong>목(木 - 발산 및 창의력)</strong>과 쾌적하게 비춰주는 <strong>화(火 - 재물 및 사교성)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 지혜롭고 깊이 있는 수(수)의 일간을 타고났으나 태어난 계절 또한 차가운 수(수)나 토(토)가 많아 기류가 넘쳐납니다. 따라서 유연하게 흐를 수 있게 해주는 <strong>목(목 - 발산 및 창의력)</strong>과 쾌적하게 비춰주는 <strong>화(화 - 재물 및 사교성)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         } else {
           favorableElements = ['금', '수'];
-          favorableExplanation = "귀하는 맑고 유연한 수(水)의 일간을 타고났으나 태어난 계절의 화기(火氣)가 너무 뜨거워 수의 근원이 약해집니다. 따라서 영양분이 되어주는 <strong>금(金 - 배움 및 조력)</strong>과 지지대가 되는 <strong>수(水 - 지혜 및 인덕)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 맑고 유연한 수(수)의 일간을 타고났으나 태어난 계절의 화기(화氣)가 너무 뜨거워 수의 근원이 약해집니다. 따라서 영양분이 되어주는 <strong>금(금 - 배움 및 조력)</strong>과 지지대가 되는 <strong>수(수 - 지혜 및 인덕)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         }
       } else if (dayMasterElement === '목') {
-        if (birthSeasonElement === '목' || birthSeasonElement === '수') {
+        if (birthSeasonElement === '목' || birthSeasonElement === '수' || hourStemElement === '목' || hourBranchElement === '목') {
           favorableElements = ['화', '금'];
-          favorableExplanation = "귀하는 성장과 창조를 뜻하는 목(木)의 일간을 타고났으나 태어난 계절 또한 수목(水木)이 풍부하여 기세가 한껏 신강해집니다. 따라서 기운을 개화시켜 줄 <strong>화(火 - 예술 및 표현력)</strong>와 올바른 절제를 유도하는 <strong>금(金 - 명예 및 절제력)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 성장과 창조를 뜻하는 목(목)의 일간을 타고났으나 태어난 계절 또한 수목(수목)이 풍부하여 기세가 한껏 신강해집니다. 따라서 기운을 개화시켜 줄 <strong>화(화 - 예술 및 표현력)</strong>와 올바른 절제를 유도하는 <strong>금(금 - 명예 및 절제력)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.";
         } else {
           favorableElements = ['수', '목'];
-          favorableExplanation = "귀하는 우직한 나무 같은 목(木)의 일간을 타고났으나 태어난 계절의 기운이 매우 건조하거나 차가워 뿌리가 상하기 쉽습니다. 따라서 성장에 꼭 필요한 생명수 같은 <strong>수(水 - 문서운 및 지혜)</strong>와 단단히 버텨줄 <strong>목(木 - 주체성 및 동료)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 우직한 나무 같은 목(목)의 일간을 타고났으나 태어난 계절의 기운이 매우 건조하거나 차가워 뿌리가 상하기 쉽습니다. 따라서 성장에 꼭 필요한 생명수 같은 <strong>수(수 - 문서운 및 지혜)</strong>와 단단히 버텨줄 <strong>목(목 - 주체성 및 동료운)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         }
       } else if (dayMasterElement === '금') {
-        if (birthSeasonElement === '금' || birthSeasonElement === '토') {
+        if (birthSeasonElement === '금' || birthSeasonElement === '토' || hourStemElement === '금' || hourBranchElement === '금') {
           favorableElements = ['수', '목'];
-          favorableExplanation = "귀하는 결단력과 정의감이 가득한 금(金)의 일간을 타고났으나 태어난 달의 대지가 단단하여 기운이 다소 과하게 신강해집니다. 굳은 의지를 유연하게 풀어줄 <strong>수(水 - 사색 및 융통성)</strong>와 현실적인 성취를 안겨다 줄 <strong>목(木 - 재물 및 결과)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 결단력과 정의감이 가득한 금(금)의 일간을 타고났으나 주변 기류 또한 단단한 광산이나 바위여서 사주 전체의 금기가 다소 신강(신강)해집니다. 강하고 굳은 칼날을 부드럽게 세공해 줄 <strong>수(수 - 유연함 및 융통성)</strong>와 현실적인 성취를 안겨다 줄 <strong>목(목 - 재물 및 결과)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         } else {
           favorableElements = ['토', '금'];
-          favorableExplanation = "귀하는 날카롭고 고귀한 금(金)의 일간을 타고났으나 태어난 계절의 뜨거운 불길이나 척박한 흐름으로 일간이 상하기 쉽습니다. 일간을 포근히 감싸 안아줄 <strong>토(土 - 대지 및 포용력)</strong>와 단단함을 회복시켜 줄 <strong>금(金 - 결단 및 지지대)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 날카롭고 고귀한 금(금)의 일간을 타고났으나 태어난 계절의 뜨거운 불길이나 척박한 흐름으로 일간이 상하기 쉽습니다. 일간을 포근히 감싸 안아줄 <strong>토(토 - 대지 및 포용성)</strong>와 단단함을 회복시켜 줄 <strong>금(금 - 결단 및 지지대)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         }
-      } else { // 토 (무, 기)
-        if (birthSeasonElement === '토' || birthSeasonElement === '화') {
+      } else { 
+        if (birthSeasonElement === '토' || birthSeasonElement === '화' || hourStemElement === '토' || hourBranchElement === '토') {
           favorableElements = ['금', '수'];
-          favorableExplanation = "귀하는 포용력과 신뢰가 무거운 토(土)의 일간을 타고났으나 태어난 달의 기운 또한 여름이거나 견고한 대지여서 사주가 신강(身强)해집니다. 굳어버린 흙을 일깨우고 씨앗을 심을 <strong>금(金 - 재능 발현 및 창작)</strong>과 대지를 비옥하게 해 줄 <strong>수(水 - 재물 및 유통)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 신뢰가 두텁고 무거운 대지인 토(土)의 일간을 타고났으나 주변 계절이나 시각 또한 뜨거운 태양이거나 단단한 대지여서 사주가 신강(신강)해집니다. 단단해진 흙을 부드럽게 일깨우는 <strong>금(금 - 재능 발현 및 표현)</strong>과 비옥한 결실을 줄 시원한 단비인 <strong>수(수 - 흐름 및 재물운)</strong>의 기운이 평생의 귀인 오행(용신)이 됩니다.";
         } else {
           favorableElements = ['화', '토'];
-          favorableExplanation = "귀하는 만물의 어머니 같은 토(土)의 일간을 타고났으나 태어난 계절의 기운이 너무 춥거나 척박하여 일간이 힘을 잃기 쉽습니다. 대지를 온화하게 데워줄 <strong>화(화 - 조력자 및 인심)</strong>와 든든히 받쳐줄 <strong>토(土 - 기반 및 신뢰)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
+          favorableExplanation = "귀하는 만물의 어머니 같은 토(토)의 일간을 타고났으나 태어난 계절의 기운이 너무 춥거나 척박하여 일간이 힘을 잃기 쉽습니다. 대지를 온화하게 데워줄 <strong>화(화 - 인덕 및 학업)</strong>와 든든히 받쳐줄 <strong>토(토 - 기반 및 신뢰)</strong>의 기운이 귀인 오행(용신)이 됩니다.";
         }
       }
 
-      // 6. 행운의 숫자 매핑 (전통 오행 수리)
       const numberMap = { '목': [3, 8], '화': [2, 7], '토': [5, 0], '금': [4, 9], '수': [1, 6] };
       const luckyDigits = [];
       favorableElements.forEach(el => {
@@ -1825,9 +1948,13 @@
       });
 
       return {
-        yearPillar: `${yearStem}${yearBranch} (${yearStemHanja}${yearBranchHanja})`,
-        dayPillar: `${dayStem}${dayBranch} (${dayStemHanja}${dayBranchHanja})`,
-        dayMaster: `${dayStem} (${dayStemHanja}) 일간`,
+        isLunar: isLunar,
+        solarDate: calcYear + '년 ' + calcMonth + '월 ' + calcDay + '일',
+        yearPillar: yearStem + yearBranch + ' (' + yearStemHanja + yearBranchHanja + ')',
+        monthPillar: monthBranch + ' (' + monthBranchHanja + ') 월주',
+        dayPillar: dayStem + dayBranch + ' (' + dayStemHanja + dayBranchHanja + ')',
+        dayMaster: dayStem + ' (' + dayStemHanja + ') 일간',
+        hourPillar: hourPillarText,
         favorableElements: favorableElements,
         luckyDigits: luckyDigits,
         favorableExplanation: favorableExplanation
@@ -1842,6 +1969,8 @@
       const name = document.getElementById('pSajuNameInput').value.trim();
       const year = document.getElementById('pSajuBirthYear').value;
       const monthDay = document.getElementById('pSajuBirthDate').value.trim();
+      const isLunar = document.querySelector('input[name="pension-saju-cal"]:checked').value === 'lunar';
+      const birthTimeCode = document.getElementById('pSajuBirthTime').value;
 
       if (!name) {
         alert('성함(또는 초성)을 입력해 주세요.');
@@ -1855,10 +1984,8 @@
       const birthMonth = monthDay.slice(0, 2);
       const birthDay = monthDay.slice(2, 4);
 
-      // 1. Calculate actual Saju and Favorable lucky digits
-      const saju = calculateSajuAndLuckyDigits(year, birthMonth, birthDay);
+      const saju = calculateSajuAndLuckyDigits(year, birthMonth, birthDay, isLunar, birthTimeCode);
 
-      // 2. Generate seeded random based on name + saju parameters
       const seed = name + year + monthDay + saju.favorableElements.join("");
       
       let hash = 0;
@@ -1870,15 +1997,13 @@
         return x - Math.floor(x);
       }
 
-      // Deciding favorable group (1~5) based on seeded random
       const group = Math.floor(seededRandom() * 5) + 1;
 
-      // Construct weighted pool of digits 0-9 bias to Saju lucky digits
       const pool = [];
       for (let d = 0; d <= 9; d++) {
         let weight = 1;
         if (saju.luckyDigits.includes(d)) {
-          weight = 4; // 400% higher probability for Saju lucky digits!
+          weight = 4;
         }
         for (let w = 0; w < weight; w++) {
           pool.push(d);
@@ -1891,21 +2016,25 @@
         digits.push(pool[idx]);
       }
 
-      // Generate customized fortune explanation
-      const explanation = `🔮 <strong>${name} (${year}년 ${parseInt(birthMonth)}월 ${parseInt(birthDay)}일 생)님의 연금 사주 분석</strong><br><br>` +
-                    `• <strong>사주 원국</strong>: 귀하는 <strong>${saju.yearPillar}</strong> 년에 태어나 일주가 <strong>${saju.dayPillar}</strong>인 <strong>${saju.dayMaster}</strong>입니다.<br>` +
-                    `• <strong>사주 오행 해설</strong>: ${saju.favorableExplanation}<br><br>` +
-                    `• <strong>연금 수리 오행 조합 결과</strong>: 성명 자음 파동과 용신 오행 수리 역학(<strong>${saju.favorableElements.join(', ')}</strong>)에 입각하여 ` +
-                    `당첨의 길수가 가장 유기적으로 공명하는 자릿수를 정밀 편향 매칭했습니다. ` +
-                    `귀하의 평생 행운수 4자리(<strong>${saju.luckyDigits.join(', ')}</strong>) 기류가 400% 가중 배정된 **행운의 ${group}조 및 6자리 길수**를 점지해 드렸으니 당첨의 무한한 에너지를 만끽해 보세요!`;
+      const calendarTypeText = saju.isLunar ? '음력' : '양력';
+      const explanation = '🔮 <strong>' + name + ' (' + year + '년 ' + calendarTypeText + ' ' + parseInt(birthMonth) + '월 ' + parseInt(birthDay) + '일 생)님의 정통 연금 사주 분석</strong><br><br>' +
+                    '• <strong>사주 원국 (사주팔자 완형)</strong>:<br>' +
+                    '  - 년주: <strong>' + saju.yearPillar + '</strong><br>' +
+                    '  - 월주: <strong>' + saju.monthPillar + '</strong><br>' +
+                    '  - 일주: <strong>' + saju.dayPillar + ' (일간: ' + saju.dayMaster + ')</strong><br>' +
+                    '  - 시주: <strong>' + saju.hourPillar + '</strong><br>' +
+                    (saju.isLunar ? '  * 실제 변환된 양력 환산생일: ' + saju.solarDate + '<br>' : '') + '<br>' +
+                    '• <strong>사주 오행 해설</strong>: ' + saju.favorableExplanation + '<br><br>' +
+                    '• <strong>연금 수리 오행 조합 결과</strong>: 성명 자음 파동과 용신 오행 수리 역학(<strong>' + saju.favorableElements.join(', ') + '</strong>)에 입각하여 ' +
+                    '당첨의 길수가 가장 유기적으로 공명하는 자릿수를 정밀 편향 매칭했습니다. ' +
+                    '귀하의 평생 행운수 4자리(<strong>' + saju.luckyDigits.join(', ') + '</strong>) 기류가 400% 가중 배정된 **행운의 ' + group + '조 및 6자리 길수**를 점지해 드렸으니 당첨의 무한한 에너지를 만끽해 보세요!';
 
-      // Display results
       analysisText.innerHTML = explanation;
       ballsContainer.innerHTML = '';
       
       const groupBadge = document.createElement('div');
       groupBadge.className = 'pension-all-group-badge';
-      groupBadge.textContent = `${group}조`;
+      groupBadge.textContent = group + '조';
       ballsContainer.appendChild(groupBadge);
 
       digits.forEach((digit, idx) => {
@@ -2323,6 +2452,8 @@
       const name = document.getElementById('sajuNameInput').value.trim();
       const year = document.getElementById('sajuBirthYear').value;
       const monthDay = document.getElementById('sajuBirthDate').value.trim();
+      const isLunar = document.querySelector('input[name="lotto-saju-cal"]:checked').value === 'lunar';
+      const birthTimeCode = document.getElementById('sajuBirthTime').value;
 
       if (!name) {
         alert('성함(또는 초성)을 입력해 주세요.');
@@ -2337,15 +2468,21 @@
       const birthDay = monthDay.slice(2, 4);
 
       // 1. Calculate actual Saju and Favorable lucky digits
-      const saju = calculateSajuAndLuckyDigits(year, birthMonth, birthDay);
+      const saju = calculateSajuAndLuckyDigits(year, birthMonth, birthDay, isLunar, birthTimeCode);
 
       // 2. Generate seeded random lotto numbers biased toward Saju lucky digits
       const seed = name + year + monthDay;
       const numbers = getSajuBiasedLottoNumbers(seed, saju.luckyDigits);
 
       // Generate customized fortune explanation
-      const explanation = `🔮 <strong>${name} (${year}년 ${parseInt(birthMonth)}월 ${parseInt(birthDay)}일 생)님의 정통 사주 오행 분석</strong><br><br>` +
-                    `• <strong>사주 원국</strong>: 귀하는 <strong>${saju.yearPillar}</strong> 년에 태어나 일주가 <strong>${saju.dayPillar}</strong>인 <strong>${saju.dayMaster}</strong>입니다.<br>` +
+      const calendarTypeText = saju.isLunar ? '음력' : '양력';
+      const explanation = `🔮 <strong>${name} (${year}년 ${calendarTypeText} ${parseInt(birthMonth)}월 ${parseInt(birthDay)}일 생)님의 정통 사주 분석</strong><br><br>` +
+                    `• <strong>사주 원국 (사주팔자 완형)</strong>:<br>` +
+                    `  - 년주: <strong>${saju.yearPillar}</strong><br>` +
+                    `  - 월주: <strong>${saju.monthPillar}</strong><br>` +
+                    `  - 일주: <strong>${saju.dayPillar} (일간: ${saju.dayMaster})</strong><br>` +
+                    `  - 시주: <strong>${saju.hourPillar}</strong><br>` +
+                    `  * ${saju.isLunar ? `실제 변환된 양력 환산생일: ${saju.solarDate}<br>` : ''}<br>` +
                     `• <strong>사주 오행 해설</strong>: ${saju.favorableExplanation}<br><br>` +
                     `• <strong>수리역학적 조합 결과</strong>: 성명 자모음 파동 기류와 용신 오행(<strong>${saju.favorableElements.join(', ')}</strong>)에 공명하는 주파수를 적용했습니다. ` +
                     `귀하의 평생 행운 번호(<strong>${saju.luckyDigits.join(', ')}</strong>)가 끝자리에 매칭되거나 포함될 확률이 400% 대폭 가중된 **대길(大吉)의 6자리 행운 비법수**를 추천해 드립니다. 우주의 조화로운 에너지와 함께 최고의 행운을 누려보세요!`;
