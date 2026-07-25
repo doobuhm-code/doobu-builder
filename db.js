@@ -581,6 +581,17 @@ const hotspots = {
         });
       });
     }
+  },
+  updateWins: (id, wins, firstWins) => {
+    if (isPg) {
+      return pgPool.query('UPDATE lotto_hotspots SET wins = $1, first_wins = $2 WHERE id = $3', [wins, firstWins, id]);
+    } else {
+      return new Promise((resolve, reject) => {
+        lottoSqlite.run('UPDATE lotto_hotspots SET wins = ?, first_wins = ? WHERE id = ?', [wins, firstWins, id], (err) => {
+          if (err) reject(err); else resolve();
+        });
+      });
+    }
   }
 };
 
