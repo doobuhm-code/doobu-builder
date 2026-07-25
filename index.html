@@ -116,16 +116,17 @@
       }
 
       .main-wrapper {
-        padding: 25px 10px 16px;
+        padding: 20px 8px 15px; /* 모바일에서 좌우 패딩을 더 줄여 콘텐츠 너비 극대화 */
         margin-top: 15px;
         border-radius: 16px;
       }
 
       .content-card {
-        padding: 20px 10px;
+        padding: 15px 6px; /* 모바일에서 카드 여백 최적화로 공간 극대화 */
         min-height: auto;
         height: auto;
         border-radius: 14px;
+        margin-top: 6px; /* 중메뉴(menu-card)와 밀착 배치 */
       }
 
       .tab-content {
@@ -134,13 +135,13 @@
         gap: 12px;
       }
 
-      /* 귀 메뉴(상단 로또/연금복권 탭)를 박스 안쪽 상단에 깔끔하게 배치 */
+      /* 대메뉴와 중메뉴 간격 밀착 배치 */
       .main-menu-ears {
         position: relative;
         top: 0;
         left: 0;
         right: 0;
-        margin-bottom: 12px;
+        margin-bottom: 4px; /* 대메뉴와 중메뉴를 딱 붙여주는 간격 */
         justify-content: center;
         gap: 10px;
       }
@@ -159,56 +160,65 @@
         box-shadow: 0 3px 8px rgba(118, 75, 162, 0.2);
       }
 
-      /* 중 메뉴(탭 버튼) 2줄로 3개 배치 (위 2개, 아래 1개) */
+      /* 중메뉴 3개 가로 1열로 나란히 배치 (줄바꿈 허용으로 겹침 철저 방지) */
       .menu-card {
         height: auto;
-        padding: 6px;
-        border-radius: 14px;
-        display: grid;
-        grid-template-columns: repeat(2, 1fr);
-        gap: 6px;
+        padding: 5px;
+        border-radius: 12px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-between;
+        align-items: stretch;
+        gap: 5px;
       }
 
       .tab-btn {
-        width: 100%;
-        height: 36px;
-        font-size: 11.5px;
-        line-height: 36px;
-        padding: 0 4px;
+        flex: 1 1 0px;
+        width: auto;
+        height: auto;
+        min-height: 42px;
+        line-height: 1.25;
+        font-size: 10px; /* 글자 크기 폰에 딱 맞게 최적화 */
+        padding: 4px 2px;
         border-radius: 8px;
-        white-space: nowrap;
+        white-space: normal; /* 텍스트가 긴 경우 메뉴당 2줄로 자연스럽게 줄바꿈 허용 */
+        word-break: keep-all; /* 단어 단위 줄바꿈 */
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
       }
 
-      /* 세 번째 버튼(역대 조회)은 아래 칸에서 전체 너비(2칸 차지)로 중앙 정렬 */
+      /* 기존 2행 그리드 관련 override 해제 */
       .tab-btn:nth-child(3) {
-        grid-column: span 2;
-        max-width: 70%;
-        margin: 0 auto;
+        grid-column: auto;
+        max-width: none;
+        margin: 0;
       }
 
       h1 {
-        font-size: 17px;
+        font-size: 16px;
       }
 
       p {
-        font-size: 12px;
+        font-size: 11.5px;
       }
 
       .ball {
-        width: 30px;
-        height: 30px;
-        font-size: 11px;
+        width: 25px; /* 로또 공 크기 축소로 한 줄 정렬 보장 */
+        height: 25px;
+        font-size: 10px;
       }
 
       .pension-ball {
-        width: 32px;
-        height: 32px;
-        font-size: 13px;
+        width: 28px; /* 연금복권 공 크기 축소 */
+        height: 28px;
+        font-size: 11.5px;
       }
 
       .pension-all-group-badge {
-        padding: 6px 10px;
-        font-size: 11px;
+        padding: 4px 8px;
+        font-size: 10px;
         margin-right: 0;
       }
 
@@ -229,19 +239,23 @@
         margin-bottom: 12px;
       }
 
+      /* 추천 번호 게임당 가로 1줄 배치로 완벽 최적화 */
       .game-item {
-        height: auto;
-        padding: 8px 10px;
-        flex-direction: column;
-        gap: 6px;
+        height: 38px; /* 슬림한 한 줄 높이 */
+        padding: 0 10px;
+        flex-direction: row; /* 가로 정렬 */
+        justify-content: space-between;
         align-items: center;
-        border-radius: 10px;
+        gap: 4px;
+        border-radius: 8px;
+        width: 100%;
       }
 
       .game-label {
-        width: auto;
-        text-align: center;
-        font-size: 12px;
+        width: 42px; /* 라벨 가로폭 최소화로 공 공간 확보 */
+        text-align: left;
+        font-size: 11px;
+        flex-shrink: 0;
       }
 
       .pension-single-box {
