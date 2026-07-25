@@ -1256,9 +1256,18 @@
       btns.forEach(btn => btn.classList.remove('active'));
       contents.forEach(c => c.classList.remove('active'));
 
-      const tabMap = { recommend: 0, check: 1, history: 2 };
-      btns[tabMap[tabName]].classList.add('active');
-      document.getElementById(`${section}-tab-${tabName}`).classList.add('active');
+      if (section === 'guide') {
+        const guideTabMap = { 'win-info': 0, 'pension-info': 1, 'probability': 2, 'healthy': 3 };
+        const idx = guideTabMap[tabName];
+        if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
+      } else {
+        const tabMap = { recommend: 0, check: 1, history: 2 };
+        const idx = tabMap[tabName];
+        if (idx !== undefined && btns[idx]) btns[idx].classList.add('active');
+      }
+
+      const contentEl = document.getElementById(`${section}-tab-${tabName}`);
+      if (contentEl) contentEl.classList.add('active');
       
       if (section === 'lotto' && tabName === 'recommend') {
         generate5LottoGames();
