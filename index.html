@@ -2836,8 +2836,8 @@
       }
 
       const filtered = region === '전체' 
-        ? loadedHotspots 
-        : loadedHotspots.filter(h => h.region === region);
+        ? loadedHotspots.slice(0, 10) 
+        : loadedHotspots.filter(h => h.region === region).slice(0, 5);
 
       if (filtered.length === 0) {
         container.innerHTML = `<div style="color: var(--text-sub); text-align: center; padding: 20px;">'${region}' 지역에 등록된 명당 정보가 없습니다.</div>`;
