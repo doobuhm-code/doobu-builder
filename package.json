@@ -6,7 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node server.js",
-    "deploy": "git add . && git commit -m \"Update and deploy\" && git push"
+    "deploy": "git add . && git commit -m \"Update and deploy\" && git push", "postinstall": "npm rebuild sqlite3 --build-from-source"
   },
   "keywords": [],
   "author": "",
