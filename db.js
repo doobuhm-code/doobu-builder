@@ -66,7 +66,7 @@ const lotto = {
     } else {
       return new Promise((resolve, reject) => {
         lottoSqlite.get('SELECT * FROM lotto_history ORDER BY drwNo DESC LIMIT 1', [], (err, row) => {
-          if (err) {
+          if (err || !row) {
             lottoSqlite.get('SELECT * FROM lotto ORDER BY drwNo DESC LIMIT 1', [], (err2, row2) => {
               if (err2) reject(err2); else resolve(row2);
             });
@@ -82,7 +82,7 @@ const lotto = {
     } else {
       return new Promise((resolve, reject) => {
         lottoSqlite.get('SELECT * FROM lotto_history WHERE drwNo = ?', [drwNo], (err, row) => {
-          if (err) {
+          if (err || !row) {
             lottoSqlite.get('SELECT * FROM lotto WHERE drwNo = ?', [drwNo], (err2, row2) => {
               if (err2) reject(err2); else resolve(row2);
             });

@@ -2,8 +2,9 @@ const express = require('express');
 const cors = require('cors');
 const path = require('path');
 const db = require('./db');
-const runLottoCollector = require('./collector_lotto');
+const { runLottoCollector, updateHotspotsFromLatestDraw } = require('./collector_lotto');
 const runPensionCollector = require('./collector_pension');
+const cron = require('node-cron');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -262,16 +263,46 @@ app.listen(PORT, '0.0.0.0', async () => {
     
     // 3. 서버 실행 시 누락된 최신 데이터 백그라운드에서 즉시 수집 시작
     console.log('🔄 [자동 수집] 최신 복권 당첨 정보를 동기화하는 중...');
-    runLottoCollector();
-    runPensionCollector();
+    (async () => {
+      await runLottoCollector();
+      await runPensionCollector();
+      const maxNo = await db.lotto.getMaxDrwNo();
+      if (maxNo > 0) {
+        await updateHotspotsFromLatestDraw(maxNo);
+      }
+    })();
   } catch (err) {
     console.error('❌ 서버 초기 가동 에러:', err);
   }
 });
 
-// 3. 12시간마다 주기적으로 동기화 작업 실행 (실시간 수집 차단 방지 및 주기 설정)
-setInterval(() => {
-  console.log('⏰ [정기 스케줄러] 복권 결과 최신화 작업 수행 중...');
-  runLottoCollector();
-  runPensionCollector();
-}, 12 * 60 * 60 * 1000);
+// ================= 크론탭 스케줄러 등록 =================
+// 1. 로또복권 및 명당 업데이트: 매주 토요일 21:00 (Asia/Seoul timezone)
+cron.schedule('0 21 * * 6', async () => {
+  console.log('⏰ [크론 스케줄러] 토요일 21:00 - 로또 결과 및 명당 업데이트 시작...');
+  try {
+    await runLottoCollector();
+    const maxNo = await db.lotto.getMaxDrwNo();
+    if (maxNo > 0) {
+      await updateHotspotsFromLatestDraw(maxNo);
+    }
+    console.log('✅ [크론 스케줄러] 로또 결과 및 명당 업데이트 완료!');
+  } catch (err) {
+    console.error('❌ [크론 스케줄러] 로또/명당 업데이트 오류:', err);
+  }
+}, {
+  timezone: "Asia/Seoul"
+});
+
+// 2. 연금복권 업데이트: 매주 목요일 19:30 (Asia/Seoul timezone)
+cron.schedule('30 19 * * 4', async () => {
+  console.log('⏰ [크론 스케줄러] 목요일 19:30 - 연금복권 결과 업데이트 시작...');
+  try {
+    await runPensionCollector();
+    console.log('✅ [크론 스케줄러] 연금복권 결과 업데이트 완료!');
+  } catch (err) {
+    console.error('❌ [크론 스케줄러] 연금복권 업데이트 오류:', err);
+  }
+}, {
+  timezone: "Asia/Seoul"
+});

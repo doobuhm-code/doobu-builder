@@ -4,14 +4,104 @@ async function fetchLatestLotto(drwNo) {
   try {
     const url = `https://www.dhlottery.co.kr/common.do?method=getLottoNumber&drwNo=${drwNo}`;
     const response = await fetch(url, {
+      headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' },
+      signal: AbortSignal.timeout(3000)
+    });
+    if (response.ok) {
+      const data = await response.json();
+      if (data && data.returnValue === 'success') {
+        return data;
+      }
+    }
+  } catch (e) {
+    // Fail silently and fall back to Naver
+  }
+
+  // Fallback to Naver Search Scraping
+  try {
+    const query = encodeURIComponent(`로또 ${drwNo}회 당첨번호`);
+    const res = await fetch(`https://search.naver.com/search.naver?query=${query}`, {
       headers: { 'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)' }
     });
-    if (!response.ok) return null;
-    const data = await response.json();
-    return data.returnValue === 'success' ? data : null;
-  } catch (e) {
-    return null;
+    if (!res.ok) return null;
+    const html = await res.text();
+    const cleanText = html.replace(/<\/?[^>]+(>|$)/g, " ");
+    
+    // Pattern 1: Highly general pattern (handles commas, spaces, text, dots, etc.)
+    const regex1 = /(\d+)회\D+당첨\s*번호\D+(\d+)\D+(\d+)\D+(\d+)\D+(\d+)\D+(\d+)\D+(\d+)\D+보너스\D+(\d+)/i;
+    let match = cleanText.match(regex1);
+    
+    // Pattern 2: Dot separated numbers
+    if (!match) {
+      const regex2 = /(\d+)회\D+당첨\s*번호\D+(\d+)\s*·\s*(\d+)\s*·\s*(\d+)\s*·\s*(\d+)\s*·\s*(\d+)\s*·\s*(\d+)\D+보너스\D+(\d+)/i;
+      match = cleanText.match(regex2);
+    }
+    
+    // Pattern 3: Literal comma-separated standard pattern
+    if (!match) {
+      const regex3 = /(\d+)회\s*\((\d{4}\.\d{2}\.\d{2})\s*추첨\)\s*당첨번호\s*(\d+),\s*(\d+),\s*(\d+),\s*(\d+),\s*(\d+),\s*(\d+),\s*보너스\s*(\d+)/i;
+      match = cleanText.match(regex3);
+    }
+    
+    if (match) {
+      const round = parseInt(match[1]);
+      if (round !== drwNo) return null;
+      
+      // Attempt to extract draw date from surrounding text or from match 3 if available
+      let date = null;
+      const dateMatch = cleanText.substring(match.index - 500, match.index + 500).match(/(\d{4})\.(\d{2})\.(\d{2})/);
+      if (dateMatch) {
+        date = `${dateMatch[1]}-${dateMatch[2]}-${dateMatch[3]}`;
+      } else {
+        const dateMatch2 = cleanText.substring(match.index - 500, match.index + 500).match(/(\d{4})년\s*(\d{1,2})월\s*(\d{1,2})일/);
+        if (dateMatch2) {
+          const year = dateMatch2[1];
+          const month = String(dateMatch2[2]).padStart(2, '0');
+          const day = String(dateMatch2[3]).padStart(2, '0');
+          date = `${year}-${month}-${day}`;
+        }
+      }
+      
+      // If we used Pattern 3, we have the exact indices
+      const isPattern3 = match.length === 10;
+      const numStartIndex = isPattern3 ? 3 : 2;
+      const bonusIndex = isPattern3 ? 9 : 8;
+      
+      const nums = [
+        parseInt(match[numStartIndex]),
+        parseInt(match[numStartIndex + 1]),
+        parseInt(match[numStartIndex + 2]),
+        parseInt(match[numStartIndex + 3]),
+        parseInt(match[numStartIndex + 4]),
+        parseInt(match[numStartIndex + 5])
+      ];
+      const bonus = parseInt(match[bonusIndex]);
+      
+      // Safety Checks: Valid lotto numbers are between 1 and 45, and winning numbers must be unique.
+      if (nums.some(n => n < 1 || n > 45) || bonus < 1 || bonus > 45) {
+        return null;
+      }
+      if (new Set(nums).size !== 6) {
+        return null;
+      }
+      
+      return {
+        returnValue: 'success',
+        drwNo: round,
+        drwNoDate: date || new Date().toISOString().split('T')[0],
+        drwtNo1: nums[0],
+        drwtNo2: nums[1],
+        drwtNo3: nums[2],
+        drwtNo4: nums[3],
+        drwtNo5: nums[4],
+        drwtNo6: nums[5],
+        bnusNo: bonus
+      };
+    }
+  } catch (err) {
+    console.error(`❌ [네이버 크롤러 오류] 제 ${drwNo}회차:`, err.message);
   }
+  return null;
 }
 
 async function updateHotspotsFromLatestDraw(drwNo) {
@@ -84,4 +174,7 @@ if (require.main === module) {
   })();
 }
 
-module.exports = runLottoCollector;
+module.exports = {
+  runLottoCollector,
+  updateHotspotsFromLatestDraw
+};
