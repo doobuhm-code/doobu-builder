@@ -2,3 +2,6 @@ node_modules/
 .DS_Store
 .vscode/
 .env
+.npm/
+*.db-shm
+*.db-wal
