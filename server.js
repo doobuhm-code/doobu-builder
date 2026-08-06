@@ -247,6 +247,33 @@ app.post('/api/board/delete', async (req, res) => {
   }
 });
 
+// ================= 외부 동기화 API 등록 (cron-job.org 연동용) =================
+app.get('/api/update-all', async (req, res) => {
+  console.log('⏰ [API 호출] 외부 요청에 의한 복권 정보 동기화 시작...');
+  try {
+    await runLottoCollector();
+    await runPensionCollector();
+    
+    const maxLottoNo = await db.lotto.getMaxDrwNo();
+    if (maxLottoNo > 0) {
+      await updateHotspotsFromLatestDraw(maxLottoNo);
+    }
+    
+    const maxPensionNo = await db.pension.getMaxDrwNo();
+    
+    res.json({
+      success: true,
+      message: '복권 정보 동기화가 성공적으로 완료되었습니다!',
+      latestLottoRound: maxLottoNo,
+      latestPensionRound: maxPensionNo,
+      timestamp: new Date().toISOString()
+    });
+  } catch (err) {
+    console.error('❌ [API 호출] 복권 동기화 오류:', err);
+    res.status(500).json({ success: false, message: '복권 동기화 중 오류가 발생했습니다.', error: err.message });
+  }
+});
+
 // ================= 서버 구동 및 자동 수집 실행 =================
 app.listen(PORT, '0.0.0.0', async () => {
   console.log(`🚀 복권 포털 서버 실행 중: http://localhost:${PORT}`);
